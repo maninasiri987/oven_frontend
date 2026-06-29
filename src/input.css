@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .glass {
+    @apply bg-white/70 dark:bg-space-indigo/70 backdrop-blur-xl border border-white/20 dark:border-dusty-grape/30;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20;
+  }
+
+  .sticky-blur {
+    @apply sticky top-0 z-40 bg-white/80 dark:bg-space-indigo/80 backdrop-blur-xl;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .faq-content {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .faq-item.open .faq-content {
+    opacity: 1;
+  }
+}

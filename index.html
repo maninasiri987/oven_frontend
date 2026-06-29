@@ -1,208 +1,629 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oven</title>
-  <link rel="icon" type="image/png" href="assets/oven.png">
+  <title>Oven — وب‌سایتی که کسب‌وکارت رو رشد می‌ده</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="stylesheet" href="src/output.css">
+  <script>
+    (function(){
+      var t=localStorage.getItem('oven-theme');
+      if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');
+    })();
+  </script>
   <style>
-    @font-face {
-      font-family: 'Vazirmatn';
-      src: url('assets/fonts/Vazirmatn-Regular.ttf') format('truetype');
-      font-weight: 400;
-    }
-    @font-face {
-      font-family: 'Vazirmatn';
-      src: url('assets/fonts/Vazirmatn-Medium.ttf') format('truetype');
-      font-weight: 500;
-    }
-    @font-face {
-      font-family: 'Vazirmatn';
-      src: url('assets/fonts/Vazirmatn-SemiBold.ttf') format('truetype');
-      font-weight: 600;
-    }
+    @font-face { font-family: 'Vazirmatn'; src: url('assets/fonts/Vazirmatn-Regular.ttf') format('truetype'); font-weight: 400; }
+    @font-face { font-family: 'Vazirmatn'; src: url('assets/fonts/Vazirmatn-Medium.ttf') format('truetype'); font-weight: 500; }
+    @font-face { font-family: 'Vazirmatn'; src: url('assets/fonts/Vazirmatn-SemiBold.ttf') format('truetype'); font-weight: 600; }
     @media (min-width: 640px) {
-      .social-ig, .social-tg {
-        position: relative;
-        overflow: hidden;
-      }
-      .social-ig::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        opacity: 0;
-        transition: opacity 0.2s ease-in-out;
-        z-index: 0;
-      }
-      .social-tg::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: linear-gradient(45deg, #2AABEE, #229ED9);
-        opacity: 0;
-        transition: opacity 0.2s ease-in-out;
-        z-index: 0;
-      }
-      .social-ig:hover::after,
-      .social-tg:hover::after {
-        opacity: 1;
-      }
-      .social-ig svg, .social-tg svg {
-        position: relative;
-        z-index: 1;
-      }
+      .social-ig, .social-tg { position: relative; overflow: hidden; }
+      .social-ig::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 0; }
+      .social-tg::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(45deg, #2AABEE, #229ED9); opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 0; }
+      .social-ig:hover::after, .social-tg:hover::after { opacity: 1; }
+      .social-ig svg, .social-tg svg { position: relative; z-index: 1; }
     }
+    .slot-word { transition: transform 0.8s cubic-bezier(0.23,1,0.32,1), opacity 0.8s cubic-bezier(0.23,1,0.32,1); }
   </style>
 </head>
-<body class="min-h-screen overflow-x-hidden" style="font-family: 'Vazirmatn', sans-serif;">
-  <div id="main-content" class="transition-all duration-300 ease-in-out">
-  <header class="h-16 w-full flex items-center justify-between px-3 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out">
-    <div class="flex items-center gap-3">
-      <a href="#" class="bg-space-indigo text-parchment text-sm font-medium px-5 py-2 rounded-lg sm:hover:bg-dusty-grape transition-colors duration-150 ease-in-out whitespace-nowrap">شروع پروژه</a>
-      <a href="tel:09105362403" class="flex items-center justify-center sm:gap-2 text-sm font-medium sm:text-lilac-ash text-space-indigo sm:bg-transparent bg-parchment sm:p-0 p-2 sm:rounded-none rounded-lg sm:hover:text-dusty-grape transition-colors duration-150 ease-in-out sm:h-auto sm:w-auto w-9 h-9">
-        <i data-lucide="phone" class="w-4 h-4 shrink-0"></i>
-        <span class="hidden sm:inline pt-0.5">09105362403</span>
-      </a>
-    </div>
-    <div class="flex items-center gap-2 md:gap-6">
-      <nav class="hidden md:flex items-center gap-8">
-        <a href="#" class="relative pb-1 text-sm font-medium text-dusty-grape hover:text-space-indigo transition-colors duration-150 ease-in-out group">خدمات<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative pb-1 text-sm font-medium text-dusty-grape hover:text-space-indigo transition-colors duration-150 ease-in-out group">نمونه کار<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative pb-1 text-sm font-medium text-dusty-grape hover:text-space-indigo transition-colors duration-150 ease-in-out group">پلن ها<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative pb-1 text-sm font-medium text-dusty-grape hover:text-space-indigo transition-colors duration-150 ease-in-out group">درباره ما<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-      </nav>
-      <div class="hidden md:block w-px h-8 bg-almond-silk"></div>
-      <a href="index.html" class="cursor-pointer hidden sm:block">
-        <img src="assets/oven.png" alt="Oven" class="h-20">
-      </a>
-      <button id="menu-btn" class="md:hidden cursor-pointer">
-        <i data-lucide="menu" class="w-6 h-6 text-dusty-grape"></i>
-      </button>
-    </div>
-  </header>
+<body class="min-h-screen overflow-x-hidden bg-parchment dark:bg-space-indigo text-space-indigo dark:text-parchment transition-colors duration-300" style="font-family: 'Vazirmatn', sans-serif;">
 
-  <footer class="bg-space-indigo text-parchment">
-    <div class="max-w-6xl mx-auto px-6 py-10 md:py-12">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        <div class="flex flex-col gap-5">
-          <h3 class="text-base font-semibold">ارتباط با ما</h3>
-          <a href="tel:09105362403" class="text-lilac-ash text-sm hover:text-parchment transition-colors duration-200">09105362403</a>
-          <a href="mailto:maninasiri987@gmail.com" class="text-lilac-ash text-sm hover:text-parchment transition-colors duration-200">maninasiri987@gmail.com</a>
+  <div id="main-content" class="transition-all duration-300 ease-in-out">
+
+    <!-- HEADER -->
+    <header class="sticky-blur h-16 w-full flex items-center justify-between px-3 sm:px-6 transition-all duration-300">
+      <div class="flex items-center gap-3">
+        <a href="tel:09105362403" class="flex items-center justify-center sm:gap-2 text-sm font-medium sm:text-lilac-ash text-space-indigo sm:bg-transparent bg-parchment sm:p-0 p-2 sm:rounded-none rounded-lg sm:hover:text-dusty-grape transition-colors duration-150 sm:h-auto sm:w-auto w-9 h-9">
+          <i data-lucide="phone" class="w-4 h-4 shrink-0"></i>
+          <span class="hidden sm:inline pt-0.5" dir="ltr">09105362403</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-2 md:gap-6">
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="services.html" class="relative pb-1 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 group">خدمات<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo dark:bg-parchment transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="portfolio.html" class="relative pb-1 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 group">نمونه کار<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo dark:bg-parchment transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="plans.html" class="relative pb-1 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 group">پلن ها<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo dark:bg-parchment transition-all duration-300 group-hover:w-full"></span></a>
+          <a href="about.html" class="relative pb-1 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 group">درباره ما<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-space-indigo dark:bg-parchment transition-all duration-300 group-hover:w-full"></span></a>
+        </nav>
+        <div class="hidden md:block w-px h-8 bg-almond-silk dark:bg-dusty-grape"></div>
+        <button onclick="toggleTheme()" class="hidden md:flex items-center justify-center w-9 h-9 rounded-lg hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-colors duration-150 cursor-pointer">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark-icon"></i>
+          <i data-lucide="moon" class="w-4 h-4 light-icon"></i>
+        </button>
+        <a href="index.html" class="cursor-pointer hidden sm:block">
+          <img src="assets/logo.png" alt="Oven" class="h-20">
+        </a>
+        <button id="menu-btn" class="md:hidden cursor-pointer">
+          <i data-lucide="menu" class="w-6 h-6 text-dusty-grape dark:text-almond-silk"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="min-h-[88vh] max-h-[960px] flex items-center px-6 sm:px-10 lg:px-16">
+      <div class="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center">
+        <div class="reveal">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6 text-right">
+            <span class="block">وب‌سایتی که</span>
+            <span class="block mt-2">کسب‌وکارت رو رشد می‌ده</span>
+          </h1>
+          <p class="text-lilac-ash dark:text-almond-silk text-base sm:text-lg mb-8 max-w-md leading-relaxed text-right">
+            طراحی سایت وردپرسی و اختصاصی<br>برای کسب‌وکارهایی که به رشد فکر می‌کنند.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="project.html" class="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</a>
+            <a href="plans.html" class="border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-6 py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-colors duration-150">مشاهده پلن‌ها</a>
+          </div>
         </div>
-        <div class="flex flex-col gap-5">
-          <h3 class="text-base font-semibold">ما را دنبال کنید</h3>
-          <div class="flex items-center gap-3">
-            <a href="#" class="social-ig w-10 h-10 flex items-center justify-center rounded-full bg-dusty-grape/40 transition-all duration-200">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            </a>
-            <a href="#" class="social-tg w-10 h-10 flex items-center justify-center rounded-full bg-dusty-grape/40 transition-all duration-200">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            </a>
+
+        <!-- Slot box (desktop) -->
+        <div class="hidden md:flex items-center justify-center reveal" data-delay="150">
+          <div class="relative h-80 w-full max-w-sm flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-b from-dusty-grape/5 to-transparent dark:from-parchment/5 rounded-3xl"></div>
+            <div class="relative text-center" dir="rtl">
+              <p class="text-xl sm:text-2xl text-lilac-ash dark:text-almond-silk/60 tracking-wide mb-6">چرا Oven؟ چون:</p>
+              <div class="relative mx-auto overflow-hidden border-y border-dusty-grape/20 dark:border-almond-silk/20" style="width:180px;height:50px;">
+                <div id="slot-desktop" class="absolute inset-0"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slot box (mobile) -->
+        <div class="md:hidden text-center reveal" data-delay="150">
+          <p class="text-lg text-lilac-ash dark:text-almond-silk/60 mb-4" dir="rtl">چرا Oven؟ چون:</p>
+          <div class="relative mx-auto overflow-hidden border-y border-dusty-grape/20 dark:border-almond-silk/20" style="width:150px;height:36px;">
+            <div id="slot-mobile" class="absolute inset-0"></div>
           </div>
         </div>
       </div>
-      <div class="mt-10 pt-10 border-t border-dusty-grape/20" dir="rtl">
-        <h3 class="text-base font-semibold mb-3">طراحی سایت با اوون</h3>
-        <p class="text-lilac-ash text-sm leading-relaxed max-w-lg">در اوون تلاش می‌کنیم وب‌سایت‌هایی طراحی کنیم که ساده، سریع و مناسب رشد کسب‌وکارها باشند. تمرکز ما روی ساخت تجربه‌ای تمیز، حرفه‌ای و قابل توسعه است.</p>
+    </section>
+
+    <!-- SECTION 2 — Quick Selection -->
+    <section class="py-20 px-6 sm:px-10">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right reveal">انتخاب سریع</h2>
+        <p class="text-lilac-ash dark:text-almond-silk text-center mb-12 reveal" data-delay="50">کدوم پلن مناسب کسب‌وکارته؟</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Fast Web -->
+          <div class="glass card-hover rounded-2xl p-8 relative reveal" data-delay="100">
+            <div class="mb-6 text-right">
+              <div class="flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 text-dusty-grape dark:text-almond-silk" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.18 1.897-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                <span class="text-sm text-dusty-grape dark:text-almond-silk font-medium">برای شروع سریع</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Fast Web</h3>
+            </div>
+            <div class="space-y-3 mb-6 text-right">
+              <div class="flex items-center justify-end gap-2 text-sm text-lilac-ash dark:text-almond-silk/80">
+                <span>۷ تا ۱۰ روز</span>
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div class="text-sm text-lilac-ash dark:text-almond-silk/80">شروع از</div>
+              <div class="text-lg font-semibold">۶٬۹۰۰٬۰۰۰ تومان</div>
+            </div>
+            <div class="bg-dusty-grape/10 dark:bg-parchment/10 rounded-xl p-3 mb-6 text-center">
+              <span class="text-xs text-dusty-grape dark:text-almond-silk font-medium">اولین همکاری با Oven؟ ۱۵٪ تخفیف شروع همکاری</span>
+            </div>
+            <a href="plans.html" class="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-semibold py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-all duration-250">مشاهده</a>
+          </div>
+          <!-- Pro Web -->
+          <div class="glass card-hover rounded-2xl p-8 reveal" data-delay="200">
+            <div class="mb-6 text-right">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-sm text-dusty-grape dark:text-almond-silk font-medium">برای ساخت اختصاصی</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Pro Web</h3>
+            </div>
+            <div class="space-y-3 mb-6 text-right">
+              <div class="flex items-center justify-end gap-2 text-sm text-lilac-ash dark:text-almond-silk/80">
+                <span>۱ تا ۲ ماه</span>
+                <i data-lucide="clock" class="w-4 h-4"></i>
+              </div>
+              <div class="text-sm text-lilac-ash dark:text-almond-silk/80">شروع از</div>
+              <div class="text-lg font-semibold">۲۴٬۹۰۰٬۰۰۰ تومان</div>
+            </div>
+            <div class="h-[52px] mb-6"></div>
+            <a href="plans.html" class="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-250">مشاهده</a>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="border-t border-dusty-grape/20 mt-4">
-      <div class="w-full px-6 py-6">
-        <p class="text-lilac-ash text-xs text-center">© ۲۰۲۶ اوون</p>
+    </section>
+
+    <!-- SECTION 3 — Process Timeline -->
+    <section class="py-20 px-6 sm:px-10 bg-almond-silk/30 dark:bg-dusty-grape/10">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-12 reveal">فرآیند کار</h2>
+        <div class="relative">
+          <div class="absolute right-4 sm:right-1/2 top-4 bottom-4 w-px bg-dusty-grape/20 dark:bg-almond-silk/20 sm:-translate-x-px"></div>
+          <div class="flex flex-col gap-8">
+            <div class="relative flex items-center justify-center reveal" data-delay="0">
+              <div class="w-full sm:w-1/2 sm:pl-12 flex items-center gap-4 sm:justify-end">
+                <div class="relative z-10 bg-parchment dark:bg-space-indigo w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 border-dusty-grape/30 dark:border-almond-silk/30 shrink-0">۱</div>
+                <span class="text-sm font-medium">ثبت پروژه</span>
+              </div>
+              <div class="hidden sm:block w-1/2"></div>
+            </div>
+            <div class="relative flex items-center justify-center reveal" data-delay="80">
+              <div class="hidden sm:block w-1/2"></div>
+              <div class="w-full sm:w-1/2 sm:pr-12 flex items-center gap-4 sm:justify-start">
+                <span class="text-sm font-medium">بررسی نیاز</span>
+                <div class="relative z-10 bg-parchment dark:bg-space-indigo w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 border-dusty-grape/30 dark:border-almond-silk/30 shrink-0">۲</div>
+              </div>
+            </div>
+            <div class="relative flex items-center justify-center reveal" data-delay="160">
+              <div class="w-full sm:w-1/2 sm:pl-12 flex items-center gap-4 sm:justify-end">
+                <div class="relative z-10 bg-parchment dark:bg-space-indigo w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 border-dusty-grape/30 dark:border-almond-silk/30 shrink-0">۳</div>
+                <span class="text-sm font-medium">طراحی و اجرا</span>
+              </div>
+              <div class="hidden sm:block w-1/2"></div>
+            </div>
+            <div class="relative flex items-center justify-center reveal" data-delay="240">
+              <div class="hidden sm:block w-1/2"></div>
+              <div class="w-full sm:w-1/2 sm:pr-12 flex items-center gap-4 sm:justify-start">
+                <span class="text-sm font-medium">تحویل و پشتیبانی</span>
+                <div class="relative z-10 bg-parchment dark:bg-space-indigo w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 border-dusty-grape/30 dark:border-almond-silk/30 shrink-0">۴</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
+
+    <!-- SECTION 4 — Services Preview -->
+    <section class="py-20 px-6 sm:px-10">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right reveal">خدمات</h2>
+        <p class="text-lilac-ash dark:text-almond-silk text-center mb-12 reveal" data-delay="50">هر چیزی که برای رشد آنلاینت نیاز داری</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="0">
+            <h3 class="font-semibold mb-2">Fast Web</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">سایت وردپرسی سریع و حرفه‌ای برای شروع سریع کسب‌وکار.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب کسب‌وکارهای نوپا</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="60">
+            <h3 class="font-semibold mb-2">Pro Web</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">وب‌سایت اختصاصی با امکانات سفارشی و طراحی منحصربفرد.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب کسب‌وکارهای رشدیافته</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="120">
+            <h3 class="font-semibold mb-2">سئو</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">بهینه‌سازی سایت برای موتورهای جستجو و افزایش ترافیک.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب همه سایت‌ها</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="180">
+            <h3 class="font-semibold mb-2">طراحی قالب اختصاصی</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">طراحی و کدنویسی قالب وردپرسی متناسب با برند شما.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب برندهای خاص</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="240">
+            <h3 class="font-semibold mb-2">نجات سایت</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">اصلاح و بازسازی سایت‌های آسیب‌دیده یا کند.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب سایت‌های مشکل‌دار</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+          <div class="glass rounded-2xl p-6 reveal text-right hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="300">
+            <h3 class="font-semibold mb-2">پشتیبانی</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80 mb-3">نگهداری، بروزرسانی و پشتیبانی فنی مداوم سایت شما.</p>
+            <p class="text-xs text-dusty-grape dark:text-almond-silk mb-4">مناسب همه سایت‌ها</p>
+            <a href="services.html" class="text-sm text-dusty-grape dark:text-almond-silk hover:underline">← بیشتر</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 — برآورد اولیه -->
+    <section class="py-20 px-6 sm:px-10 bg-almond-silk/30 dark:bg-dusty-grape/10">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right reveal">برآورد اولیه</h2>
+        <p class="text-lilac-ash dark:text-almond-silk text-center mb-12 reveal" data-delay="50">بدون تعهد، هزینه تقریبی پروژه‌تون رو ببینید</p>
+        <div class="glass rounded-2xl p-8 reveal" data-delay="100">
+          <div id="estimate-prompt" class="text-center py-8">
+            <p class="text-sm text-lilac-ash dark:text-almond-silk">ابتدا نوع پروژه را انتخاب کنید</p>
+          </div>
+          <div id="estimate-body" class="hidden">
+            <div class="mb-8 text-right">
+              <label class="text-sm font-medium mb-3 block">نوع پروژه</label>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <label class="flex items-center gap-3 p-4 rounded-xl border border-dusty-grape/20 dark:border-almond-silk/20 cursor-pointer has-[:checked]:border-dusty-grape dark:has-[:checked]:border-almond-silk has-[:checked]:bg-dusty-grape/5 dark:has-[:checked]:bg-almond-silk/5 transition-all duration-200">
+                  <input type="radio" name="plan" id="plan-fast" value="fast" class="accent-dusty-grape dark:accent-almond-silk">
+                  <div>
+                    <div class="text-sm font-medium">Fast Web</div>
+                    <div class="text-xs text-lilac-ash dark:text-almond-silk/60">وردپرسی</div>
+                  </div>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl border border-dusty-grape/20 dark:border-almond-silk/20 cursor-pointer has-[:checked]:border-dusty-grape dark:has-[:checked]:border-almond-silk has-[:checked]:bg-dusty-grape/5 dark:has-[:checked]:bg-almond-silk/5 transition-all duration-200">
+                  <input type="radio" name="plan" id="plan-pro" value="pro" class="accent-dusty-grape dark:accent-almond-silk">
+                  <div>
+                    <div class="text-sm font-medium">Pro Web</div>
+                    <div class="text-xs text-lilac-ash dark:text-almond-silk/60">اختصاصی</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div id="features-fast" class="mb-8 hidden text-right">
+              <label class="text-sm font-medium mb-3 block">امکانات</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>سئو (+۲٬۴۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="seo">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>بخش‌های سفارشی (+۱٬۴۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="sections">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>صفحات اضافه (+۵۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="pages">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>وبلاگ (+۹۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="blog">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>پشتیبانی (+۷۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="support">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>انیمیشن (+۱٬۱۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-fast accent-dusty-grape dark:accent-almond-silk" data-key="animation">
+                </label>
+              </div>
+              <label class="flex items-center justify-end gap-2 text-sm p-3 mt-3 rounded-lg bg-dusty-grape/5 dark:bg-almond-silk/5 cursor-pointer">
+                <span class="text-dusty-grape dark:text-almond-silk font-medium">این اولین همکاری من با Oven است (۱۵٪ تخفیف)</span>
+                <input type="checkbox" id="first-time" class="accent-dusty-grape dark:accent-almond-silk">
+              </label>
+            </div>
+
+            <div id="features-pro" class="mb-8 hidden text-right">
+              <label class="text-sm font-medium mb-3 block">امکانات</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>پنل مدیریت (+۳٬۹۰۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-pro accent-dusty-grape dark:accent-almond-silk" data-key="admin">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>سئو حرفه‌ای (+۳٬۹۰۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-pro accent-dusty-grape dark:accent-almond-silk" data-key="seo">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>چند زبانه (+۲٬۹۰۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-pro accent-dusty-grape dark:accent-almond-silk" data-key="multilang">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>انیمیشن (+۲٬۴۹۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-pro accent-dusty-grape dark:accent-almond-silk" data-key="animation">
+                </label>
+                <label class="flex items-center justify-end gap-2 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+                  <span>سیستم سفارشی (+۶٬۹۰۰٬۰۰۰)</span>
+                  <input type="checkbox" class="feature-pro accent-dusty-grape dark:accent-almond-silk" data-key="custom">
+                </label>
+              </div>
+            </div>
+
+            <div class="border-t border-dusty-grape/10 dark:border-almond-silk/10 pt-6">
+              <div class="flex items-center justify-between">
+                <span id="estimate-result" class="text-xl font-semibold">یک پلن انتخاب کنید</span>
+                <span class="text-sm text-lilac-ash dark:text-almond-silk">برآورد اولیه</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6 — Why Oven -->
+    <section class="py-20 px-6 sm:px-10">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-12 text-right reveal">چرا Oven؟</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="0">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="eye" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">شفافیت</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">بدون ابهام، همه چیز مشخصه.</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="60">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="calendar-check" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">تحویل مشخص</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">زمان تحویل از ابتدا مشخصه.</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="120">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="headphones" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">پشتیبانی</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">بعد از تحویل تنها نیستید.</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="180">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">سادگی</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">پیچیدگی نداره، ساده و شفاف.</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="240">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="award" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">کیفیت اجرا</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">تمرکز روی جزئیات و کیفیت.</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-right reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="300">
+            <div class="w-10 h-10 mb-4 rounded-full bg-dusty-grape/10 dark:bg-almond-silk/10 flex items-center justify-center">
+              <i data-lucide="trending-up" class="w-5 h-5 text-dusty-grape dark:text-almond-silk"></i>
+            </div>
+            <h3 class="font-semibold mb-2">قابل توسعه</h3>
+            <p class="text-sm text-lilac-ash dark:text-almond-silk/80">سایتی که با شما رشد می‌کنه.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7 — Portfolio -->
+    <section class="py-20 px-6 sm:px-10 bg-almond-silk/30 dark:bg-dusty-grape/10">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right reveal">نمونه کار</h2>
+        <p class="text-lilac-ash dark:text-almond-silk text-center mb-12 reveal" data-delay="50">پروژه‌های مفهومی Oven</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl overflow-hidden reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="0">
+            <div class="h-48 bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo flex items-center justify-center">
+              <i data-lucide="shopping-bag" class="w-12 h-12 text-dusty-grape/40 dark:text-almond-silk/40"></i>
+            </div>
+            <div class="p-5 text-right">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk px-2 py-0.5 rounded-full">نمونه مفهومی</span>
+                <h3 class="font-semibold">فروشگاهی</h3>
+              </div>
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80">فروشگاه آنلاین مدرن با تجربه خرید روان.</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="80">
+            <div class="h-48 bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo flex items-center justify-center">
+              <i data-lucide="heart-pulse" class="w-12 h-12 text-dusty-grape/40 dark:text-almond-silk/40"></i>
+            </div>
+            <div class="p-5 text-right">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk px-2 py-0.5 rounded-full">نمونه مفهومی</span>
+                <h3 class="font-semibold">کلینیک</h3>
+              </div>
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80">سایت کلینیک پزشکی با نوبت‌دهی آنلاین.</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl overflow-hidden reveal hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-dusty-grape/20 transition-all duration-250 ease-out" data-delay="160">
+            <div class="h-48 bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo flex items-center justify-center">
+              <i data-lucide="rocket" class="w-12 h-12 text-dusty-grape/40 dark:text-almond-silk/40"></i>
+            </div>
+            <div class="p-5 text-right">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk px-2 py-0.5 rounded-full">نمونه مفهومی</span>
+                <h3 class="font-semibold">استارتاپ</h3>
+              </div>
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80">لندینگ پیج استارتاپ با تمرکز بر تبدیل.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8 — FAQ -->
+    <section class="py-20 px-6 sm:px-10">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-center mb-12 text-right reveal">سوالات متداول</h2>
+        <div class="space-y-3">
+          <div class="faq-item glass rounded-xl overflow-hidden reveal" data-delay="0">
+            <button class="faq-trigger w-full flex items-center justify-between p-5 text-right cursor-pointer">
+              <span class="text-sm font-medium">چقدر زمان می‌برد؟</span>
+              <i data-lucide="chevron-down" class="faq-chevron w-4 h-4 text-lilac-ash dark:text-almond-silk shrink-0 transition-transform duration-250"></i>
+            </button>
+            <div class="faq-content px-5 pb-5 opacity-0 transition-opacity duration-250">
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80 leading-relaxed">بسته به پلن انتخابی: Fast Web بین ۷ تا ۱۰ روز و Pro Web بین ۱ تا ۲ ماه زمان می‌برد.</p>
+            </div>
+          </div>
+          <div class="faq-item glass rounded-xl overflow-hidden reveal" data-delay="50">
+            <button class="faq-trigger w-full flex items-center justify-between p-5 text-right cursor-pointer">
+              <span class="text-sm font-medium">هزینه‌ها چطور محاسبه می‌شود؟</span>
+              <i data-lucide="chevron-down" class="faq-chevron w-4 h-4 text-lilac-ash dark:text-almond-silk shrink-0 transition-transform duration-250"></i>
+            </button>
+            <div class="faq-content px-5 pb-5 opacity-0 transition-opacity duration-250">
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80 leading-relaxed">هزینه بر اساس پلن پایه و امکانات اضافی محاسبه می‌شود. با استفاده از ابزار برآورد اولیه می‌توانید هزینه تقریبی را ببینید.</p>
+            </div>
+          </div>
+          <div class="faq-item glass rounded-xl overflow-hidden reveal" data-delay="100">
+            <button class="faq-trigger w-full flex items-center justify-between p-5 text-right cursor-pointer">
+              <span class="text-sm font-medium">بعد از تحویل چه می‌شود؟</span>
+              <i data-lucide="chevron-down" class="faq-chevron w-4 h-4 text-lilac-ash dark:text-almond-silk shrink-0 transition-transform duration-250"></i>
+            </button>
+            <div class="faq-content px-5 pb-5 opacity-0 transition-opacity duration-250">
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80 leading-relaxed">مالکیت کامل سایت و فایل‌ها به شما منتقل می‌شود. امکان اضافه کردن پشتیبانی ماهانه هم وجود دارد.</p>
+            </div>
+          </div>
+          <div class="faq-item glass rounded-xl overflow-hidden reveal" data-delay="150">
+            <button class="faq-trigger w-full flex items-center justify-between p-5 text-right cursor-pointer">
+              <span class="text-sm font-medium">پشتیبانی دارید؟</span>
+              <i data-lucide="chevron-down" class="faq-chevron w-4 h-4 text-lilac-ash dark:text-almond-silk shrink-0 transition-transform duration-250"></i>
+            </button>
+            <div class="faq-content px-5 pb-5 opacity-0 transition-opacity duration-250">
+              <p class="text-sm text-lilac-ash dark:text-almond-silk/80 leading-relaxed">بله، پشتیبانی ماهانه با هزینه جداگانه قابل اضافه شدن است. شامل بروزرسانی، پشتیبانی فنی و رفع مشکلات می‌شود.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-24 px-6 sm:px-10 bg-almond-silk/30 dark:bg-dusty-grape/10">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <h2 class="text-2xl sm:text-3xl font-semibold mb-8">وقت ساخت نسخه‌ی بعدی کسب‌وکارت رسیده</h2>
+        <a href="project.html" class="inline-block bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-8 py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-space-indigo text-parchment">
+      <div class="max-w-6xl mx-auto px-6 py-10 md:py-12 text-right">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+          <div class="flex flex-col gap-5">
+            <h3 class="text-base font-semibold">ارتباط با ما</h3>
+            <a href="tel:09105362403" class="text-lilac-ash text-sm hover:text-parchment transition-colors duration-200" dir="ltr">09105362403</a>
+            <a href="mailto:maninasiri987@gmail.com" class="text-lilac-ash text-sm hover:text-parchment transition-colors duration-200">maninasiri987@gmail.com</a>
+          </div>
+          <div class="flex flex-col gap-5">
+            <h3 class="text-base font-semibold">ما را دنبال کنید</h3>
+            <div class="flex items-center gap-3">
+              <a href="#" class="social-ig w-10 h-10 flex items-center justify-center rounded-full bg-dusty-grape/40 transition-all duration-200">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="#" class="social-tg w-10 h-10 flex items-center justify-center rounded-full bg-dusty-grape/40 transition-all duration-200">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10 pt-10 border-t border-dusty-grape/20">
+          <h3 class="text-base font-semibold mb-3">طراحی سایت با اوون</h3>
+          <p class="text-lilac-ash text-sm leading-relaxed max-w-lg">در اوون تلاش می‌کنیم وب‌سایت‌هایی طراحی کنیم که ساده، سریع و مناسب رشد کسب‌وکارها باشند. تمرکز ما روی ساخت تجربه‌ای تمیز، حرفه‌ای و قابل توسعه است.</p>
+        </div>
+      </div>
+      <div class="border-t border-dusty-grape/20 mt-4">
+        <div class="w-full px-6 py-6">
+          <p class="text-lilac-ash text-xs text-center">© ۲۰۲۶ اوون</p>
+        </div>
+      </div>
+    </footer>
+
   </div>
 
-  <div id="mobile-menu" class="fixed inset-0 z-50 flex justify-end pointer-events-none">
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 flex justify-end pointer-events-none md:hidden">
     <div id="menu-overlay" class="absolute inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out"></div>
     <div id="menu-panel" class="relative w-72 h-full bg-space-indigo/80 backdrop-blur-xl flex flex-col items-center py-10 px-6 translate-x-full transition-transform duration-300 ease-in-out">
       <button id="menu-close" class="absolute top-5 left-5 cursor-pointer">
         <i data-lucide="x" class="w-5 h-5 text-parchment"></i>
       </button>
-      <img src="assets/logo.png" alt="Oven" class="h-24 bg-transparent">
+      <img src="assets/logo.png" alt="Oven" class="h-24 bg-transparent mb-4">
       <nav class="flex flex-col items-center w-full">
-        <a href="#" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 ease-in-out group w-full text-center border-b border-dusty-grape/30">خدمات<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-parchment transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 ease-in-out group w-full text-center border-b border-dusty-grape/30">نمونه کار<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-parchment transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 ease-in-out group w-full text-center border-b border-dusty-grape/30">پلن ها<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-parchment transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
-        <a href="#" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 ease-in-out group w-full text-center">درباره ما<span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-parchment transition-all duration-300 ease-in-out group-hover:w-full"></span></a>
+        <a href="services.html" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 group w-full text-center border-b border-dusty-grape/30">خدمات</a>
+        <a href="portfolio.html" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 group w-full text-center border-b border-dusty-grape/30">نمونه کار</a>
+        <a href="plans.html" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 group w-full text-center border-b border-dusty-grape/30">پلن ها</a>
+        <a href="about.html" class="relative py-4 text-sm font-medium text-almond-silk hover:text-parchment transition-colors duration-150 group w-full text-center">درباره ما</a>
       </nav>
       <div class="mt-auto flex items-center justify-center gap-3 w-full">
-        <button id="theme-toggle" class="flex items-center justify-center w-12 h-12 bg-dusty-grape text-parchment rounded-lg transition-colors duration-150 ease-in-out cursor-pointer">
+        <button onclick="toggleTheme()" class="flex items-center justify-center w-12 h-12 bg-dusty-grape text-parchment rounded-lg transition-colors duration-150 cursor-pointer">
           <i data-lucide="sun" class="w-5 h-5 hidden dark-icon"></i>
           <i data-lucide="moon" class="w-5 h-5 light-icon"></i>
         </button>
-        <button class="flex items-center justify-center w-12 h-12 bg-parchment text-space-indigo rounded-lg transition-colors duration-150 ease-in-out cursor-pointer text-sm font-medium">EN</button>
+        <button class="flex items-center justify-center w-12 h-12 bg-parchment text-space-indigo rounded-lg transition-colors duration-150 cursor-pointer text-sm font-medium">EN</button>
       </div>
     </div>
   </div>
-    <script src="assets/lucide.min.js"></script>
+
+  <!-- SCRIPTS -->
+  <script src="assets/lucide.min.js"></script>
+  <script src="src/js/theme.js"></script>
+  <script src="src/js/main.js"></script>
+
+  <!-- Slot Box -->
   <script>
-    lucide.createIcons();
+    (function(){
+      var words = [
+        {t:'سریع\u200Cتر', i:'M13 2L3 14h9l-1 8 10-12h-9l1-8z'},
+        {t:'حرفه\u200Cای\u200Cتر', i:'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'},
+        {t:'ساده\u200Cتر', i:'M20 6L9 17l-5-5'},
+        {t:'قابل توسعه\u200Cتر', i:'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'},
+        {t:'روان\u200Cتر', i:'M8 12l3 3 5-5'},
+        {t:'مدیریت\u200Cپذیرتر', i:'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z'},
+        {t:'آماده رشد', i:'M7 17l9.2-9.2M17 17V7H7'}
+      ];
+      var n = words.length;
+      var idx = 0;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const menuBtn = document.getElementById('menu-btn');
-    const menuClose = document.getElementById('menu-close');
-    const menuOverlay = document.getElementById('menu-overlay');
-    const menuPanel = document.getElementById('menu-panel');
+      var desk = document.getElementById('slot-desktop');
+      var mob = document.getElementById('slot-mobile');
 
-    function openMenu() {
-      menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
-      menuOverlay.classList.add('opacity-100', 'pointer-events-auto');
-      menuPanel.classList.remove('translate-x-full');
-      menuPanel.classList.add('translate-x-0');
-      document.getElementById('mobile-menu').classList.remove('pointer-events-none');
-      document.getElementById('mobile-menu').classList.add('pointer-events-auto');
-      document.getElementById('main-content').classList.add('blur-sm');
-    }
+      function build(container, h, fs, iconS) {
+        if (!container) return;
+        container.innerHTML = '';
+        for (var i = 0; i < n; i++) {
+          var row = document.createElement('div');
+          row.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform 0.7s cubic-bezier(.23,1,.32,1),opacity 0.7s cubic-bezier(.23,1,.32,1),filter 0.7s cubic-bezier(.23,1,.32,1);font-size:' + fs + 'px;font-weight:600;color:var(--tw-text-color);';
 
-    function closeMenu() {
-      menuOverlay.classList.remove('opacity-100', 'pointer-events-auto');
-      menuOverlay.classList.add('opacity-0', 'pointer-events-none');
-      menuPanel.classList.remove('translate-x-0');
-      menuPanel.classList.add('translate-x-full');
-      document.getElementById('mobile-menu').classList.remove('pointer-events-auto');
-      document.getElementById('mobile-menu').classList.add('pointer-events-none');
-      document.getElementById('main-content').classList.remove('blur-sm');
-    }
+          var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+          svg.setAttribute('width', iconS);
+          svg.setAttribute('height', iconS);
+          svg.setAttribute('viewBox','0 0 24 24');
+          svg.setAttribute('fill','none');
+          svg.setAttribute('stroke','currentColor');
+          svg.setAttribute('stroke-width','2');
+          svg.setAttribute('stroke-linecap','round');
+          svg.setAttribute('stroke-linejoin','round');
+          svg.innerHTML = '<path d="' + words[i].i + '"/>';
 
-    menuBtn.addEventListener('click', openMenu);
-    menuClose.addEventListener('click', closeMenu);
-    menuOverlay.addEventListener('click', closeMenu);
+          var txt = document.createElement('span');
+          txt.textContent = words[i].t;
 
-    const words = ['سریع\u200Cتر', 'حرفه\u200Cای\u200Cتر', 'ساده\u200Cتر', 'تمیزتر', 'بهینه\u200Cتر', 'قابل توسعه\u200Cتر', 'روان\u200Cتر'];
-    const animatedWord = document.getElementById('animated-word');
-    let wordIndex = 0;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function animateWord() {
-      if (prefersReducedMotion) {
-        animatedWord.textContent = words[0];
-        return;
+          row.appendChild(txt);
+          row.appendChild(svg);
+          container.appendChild(row);
+        }
       }
-      animatedWord.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
-      animatedWord.style.opacity = '0';
-      animatedWord.style.transform = 'translateY(8px)';
-      setTimeout(() => {
-        wordIndex = (wordIndex + 1) % words.length;
-        animatedWord.textContent = words[wordIndex];
-        animatedWord.style.transform = 'translateY(-8px)';
-        requestAnimationFrame(() => {
-          animatedWord.style.opacity = '1';
-          animatedWord.style.transform = 'translateY(0)';
-        });
-      }, 500);
-    }
 
-    if (animatedWord) {
-      animatedWord.textContent = words[0];
-      if (!prefersReducedMotion) {
-        setInterval(animateWord, 2300);
+      function render(container, h) {
+        if (!container) return;
+        var els = container.children;
+        for (var i = 0; i < els.length; i++) {
+          var off = ((i - idx) % n + n) % n;
+          if (off > n / 2) off -= n;
+          var abs = Math.abs(off);
+
+          els[i].style.transform = 'translateY(' + (off * h) + 'px)';
+          els[i].style.opacity = abs === 0 ? '1' : abs === 1 ? '0.5' : '0';
+          els[i].style.filter = abs === 0 ? 'blur(0)' : abs === 1 ? 'blur(1.5px)' : 'blur(4px)';
+        }
       }
-    }
+
+      function tick() {
+        idx = (idx + 1) % n;
+        render(desk, 50);
+        render(mob, 36);
+      }
+
+      build(desk, 50, 26, 20);
+      build(mob, 36, 18, 14);
+      render(desk, 50);
+      render(mob, 36);
+
+      if (!reduce) setInterval(tick, 2200);
+    })();
   </script>
 </body>
 </html>
