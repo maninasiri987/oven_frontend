@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-space-indigo: #0a0908;
+  --color-dusty-grape: #5e503f;
+  --color-lilac-ash: #eae0d5;
+  --color-almond-silk: #c6ac8f;
+  --color-parchment: #eae0d5;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: rgba(94, 80, 63, 0.25);
+}
+
+@keyframes wiggle {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-15deg) scale(1.1); }
+  50% { transform: rotate(10deg) scale(1.1); }
+  75% { transform: rotate(-5deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.social-ig, .social-tg { position: relative; overflow: hidden; }
+.social-ig::after, .social-tg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  z-index: 0;
+}
+.social-ig::after { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+.social-tg::after { background: linear-gradient(45deg, #2AABEE, #229ED9); }
+.social-ig:hover::after, .social-tg:hover::after { opacity: 1; }
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:active, button:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+.faq-answer {
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+.faq-answer.open {
+  max-height: 200px;
+  opacity: 1;
+}
+.faq-answer.closed {
+  max-height: 0;
+  opacity: 0;
+}
+
+@media (hover: none) {
+  a:hover, button:hover, label:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-color: inherit !important;
+  }
+}
