@@ -52,7 +52,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div data-scroll-container className="transition-all duration-300 ease-in-out md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
+    <div data-scroll-container className="md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
       <Hero />
       <QuickSelection />
       <ProcessTimeline />
