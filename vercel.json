@@ -1,5 +1,4 @@
 {
   "version": 2,
-  "buildCommand": "next build",
-  "outputDirectory": "/tmp/next-cache/output"
+  "buildCommand": "next build"
 }
