@@ -41,12 +41,20 @@ const webFeatures = [
 
 function ProjectForm() {
   const searchParams = useSearchParams()
-  const initialPlan = searchParams.get('service') === 'web' ? 'web' : ''
-  const [step, setStep] = useState(1)
-  const [dir, setDir] = useState(1)
-  const [form, setForm] = useState({ plan: initialPlan, features: [], description: '', phone: '' })
+  const serviceParam = searchParams.get('service')
+  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : 'web'
+  const initialStep = searchParams.get('step') === '2' ? 2 : searchParams.get('step') === '3' ? 3 : 1
+  const initialFeatures = searchParams.get('features')?.split(',').filter(Boolean) || []
 
-  const skipFeatures = false
+  const [step, setStep] = useState(initialStep)
+  const [dir, setDir] = useState(1)
+  const [form, setForm] = useState(() => ({
+    plan: initialPlan,
+    features: initialFeatures,
+    description: '',
+    phone: '',
+  }))
+
   const currentFeatures = form.plan === 'fast' ? fastFeatures : form.plan === 'pro' ? proFeatures : webFeatures
 
   const toggleFeature = (key) => {
@@ -68,36 +76,22 @@ function ProjectForm() {
 
   const handleNext = () => {
     if (!canNext()) return
-    if (step === 1 && skipFeatures) {
-      setDir(1)
-      setStep(3)
-    } else {
-      setDir(1)
-      setStep(step + 1)
-    }
+    setDir(1)
+    setStep(step + 1)
   }
 
   const handleBack = () => {
-    if (step === 3 && skipFeatures) {
-      setDir(-1)
-      setStep(1)
-    } else {
-      setDir(-1)
-      setStep(step - 1)
-    }
+    setDir(-1)
+    setStep(step - 1)
   }
 
   const handleSubmit = () => {
     setStep(5)
   }
 
-  const steps = skipFeatures
-    ? ['انتخاب نوع پروژه', 'توضیح کوتاه', 'شماره تماس', 'تایید']
-    : ['انتخاب نوع پروژه', 'انتخاب امکانات', 'توضیح کوتاه', 'شماره تماس', 'تایید']
+  const steps = ['انتخاب نوع پروژه', 'انتخاب امکانات', 'توضیح کوتاه', 'شماره تماس', 'تایید']
 
-  const stepMap = skipFeatures
-    ? { 1: 1, 3: 2, 4: 3, 5: 4 }
-    : { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 }
+  const stepMap = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 }
 
   return (
     <>
@@ -206,7 +200,7 @@ function ProjectForm() {
                   </motion.div>
                 )}
 
-                {!skipFeatures && step === 2 && (
+                {step === 2 && (
                   <motion.div
                     key={2}
                     custom={dir}

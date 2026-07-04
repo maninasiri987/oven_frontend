@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import localFont from 'next/font/local'
 import './globals.css'
 import ClientLayout from './client-layout'
@@ -25,11 +26,18 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies()
+  const themeCookie = cookieStore.get('oven-theme')
+  const themeClass = themeCookie?.value === 'dark' ? 'dark' : ''
+
   return (
-    <html lang="fa" className={vazirmatn.variable} suppressHydrationWarning>
+    <html lang="fa" className={`${vazirmatn.variable} ${themeClass}`} suppressHydrationWarning>
       <body className="min-h-screen overflow-x-hidden bg-parchment dark:bg-space-indigo text-space-indigo dark:text-parchment transition-colors duration-300" style={{ fontFamily: 'var(--font-vazirmatn), sans-serif' }}>
-        <ClientLayout>{children}</ClientLayout>
+        {!themeCookie && (
+          <style>{`@media(prefers-color-scheme:dark){body{background-color:#0a0908;color:#eae0d5}}`}</style>
+        )}
+        <ClientLayout initialTheme={themeCookie?.value}>{children}</ClientLayout>
       </body>
     </html>
   )

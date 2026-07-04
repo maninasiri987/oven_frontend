@@ -35,7 +35,7 @@ const Footer = dynamic(() => import('@/components/Footer'), {
 export default function Home() {
   useEffect(() => {
     function getContainer() {
-      return document.querySelector('.md\\:snap-y')
+      return document.querySelector('[data-scroll-container]')
     }
     function onKey(e) {
       if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
@@ -52,7 +52,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="transition-all duration-300 ease-in-out md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
+    <div data-scroll-container className="transition-all duration-300 ease-in-out md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
       <Hero />
       <QuickSelection />
       <ProcessTimeline />

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { MotionSection } from './Motion'
 import Checkbox from './Checkbox'
 
@@ -32,9 +32,9 @@ export default function Estimate() {
   const [features, setFeatures] = useState({})
   const [firstTime, setFirstTime] = useState(false)
 
-  const toggleFeature = (key) => setFeatures(prev => ({ ...prev, [key]: !prev[key] }))
+  const toggleFeature = useCallback((key) => setFeatures(prev => ({ ...prev, [key]: !prev[key] })), [])
 
-  const total = (() => {
+  const total = useMemo(() => {
     if (!plan) return 0
     const prices = plan === 'fast' ? fastPrices : proPrices
     let sum = prices.base
@@ -42,7 +42,7 @@ export default function Estimate() {
     feats.forEach(f => { if (features[f.key]) sum += prices[f.key] })
     if (plan === 'fast' && firstTime) sum = Math.round(sum * 0.85)
     return sum
-  })()
+  }, [plan, features, firstTime])
 
   return (
     <section className="py-12 sm:py-20 px-4 sm:px-10 md:min-h-screen w-full flex flex-col justify-center md:snap-center" dir="rtl">

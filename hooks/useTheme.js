@@ -1,16 +1,25 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
-export default function useTheme() {
-  const [isDark, setIsDark] = useState(false)
+export default function useTheme(serverTheme) {
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document === 'undefined') return serverTheme === 'dark'
+    if (document.documentElement.classList.contains('dark')) return true
+    return serverTheme === 'dark'
+  })
   const [mounted, setMounted] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const stored = localStorage.getItem('oven-theme')
-    const dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
-    setIsDark(dark)
+    const prefers = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const dark = stored ? stored === 'dark' : prefers
     document.documentElement.classList.toggle('dark', dark)
+    setIsDark(dark)
     setMounted(true)
+    if (!stored) {
+      localStorage.setItem('oven-theme', dark ? 'dark' : 'light')
+    }
+    document.cookie = `oven-theme=${dark ? 'dark' : 'light'}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
   }, [])
 
   const toggleTheme = () => {
@@ -18,6 +27,7 @@ export default function useTheme() {
       const next = !prev
       document.documentElement.classList.toggle('dark', next)
       localStorage.setItem('oven-theme', next ? 'dark' : 'light')
+      document.cookie = `oven-theme=${next ? 'dark' : 'light'}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
       return next
     })
   }

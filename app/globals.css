@@ -28,14 +28,6 @@ html {
   background: rgba(94, 80, 63, 0.25);
 }
 
-@keyframes wiggle {
-  0% { transform: rotate(0deg) scale(1); }
-  25% { transform: rotate(-15deg) scale(1.1); }
-  50% { transform: rotate(10deg) scale(1.1); }
-  75% { transform: rotate(-5deg) scale(1.05); }
-  100% { transform: rotate(0deg) scale(1); }
-}
-
 .social-ig, .social-tg { position: relative; overflow: hidden; }
 .social-ig::after, .social-tg::after {
   content: '';

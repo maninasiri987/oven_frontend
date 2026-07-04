@@ -55,6 +55,13 @@ const services = [
   },
 ]
 
+const serviceFeatureKeys = {
+  'سئو': ['seo'],
+  'طراحی قالب اختصاصی': ['sections', 'pages'],
+  'نجات سایت': ['support'],
+  'پشتیبانی': ['support'],
+}
+
 export default function ServicesPage() {
   const pathname = usePathname()
   const [highlighted, setHighlighted] = useState(null)
@@ -65,7 +72,7 @@ export default function ServicesPage() {
       const el = document.getElementById(id)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        setHighlighted(id)
+        setTimeout(() => setHighlighted(id), 0)
         const timer = setTimeout(() => setHighlighted(null), 1500)
         return () => clearTimeout(timer)
       }
@@ -79,7 +86,16 @@ export default function ServicesPage() {
           <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-4 reveal">خدمات Oven</h1>
           <p className="text-dusty-grape dark:text-almond-silk text-center mb-16 reveal" data-delay="50">هر چیزی که برای رشد آنلاینت نیاز داری</p>
           <div className="space-y-8">
-            {services.map((s, i) => (
+            {services.map((s, i) => {
+              const isPackage = s.title === 'Fast Web' || s.title === 'Pro Web'
+              const serviceParam = s.title === 'Fast Web' ? 'fast' : s.title === 'Pro Web' ? 'pro' : 'web'
+              const features = serviceFeatureKeys[s.title] || []
+              const params = new URLSearchParams({ service: serviceParam })
+              if (!isPackage) {
+                params.set('step', '2')
+                if (features.length) params.set('features', features.join(','))
+              }
+              return (
               <div key={s.title} id={s.title} className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border rounded-2xl p-8 reveal transition-all duration-700 ${highlighted === s.title ? 'border-space-indigo dark:border-parchment ring-2 ring-space-indigo/30 dark:ring-parchment/30 scale-[1.02] shadow-lg' : 'border-dusty-grape/20 dark:border-dusty-grape/30'}`} data-delay={i * 60}>
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
                   <div className="text-right flex-1">
@@ -98,11 +114,12 @@ export default function ServicesPage() {
                   <div className="text-left md:text-right md:min-w-[200px] space-y-2">
                     {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk">{s.delivery}</div>}
                     <div className="text-lg font-semibold">{s.price}</div>
-                    <Link href="/project" className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">ثبت پروژه</Link>
+                    <Link href={`/project?${params}`} className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">ثبت پروژه</Link>
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </main>

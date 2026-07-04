@@ -23,11 +23,16 @@ function SlotWords({ height, fontSize, iconSize }) {
     return () => clearInterval(id)
   }, [n])
 
-  return words.map((w, i) => {
-    const off = ((i - idx) % n + n) % n
-    const abs = off > n / 2 ? off - n : off
+  const visible = words
+    .map((w, i) => {
+      const off = ((i - idx) % n + n) % n
+      const abs = off > n / 2 ? off - n : off
+      return { ...w, i, abs }
+    })
+    .filter(({ abs }) => Math.abs(abs) <= 2)
+
+  return visible.map(({ i, text, icon: Icon, abs }) => {
     const absVal = Math.abs(abs)
-    const Icon = w.icon
     return (
       <div key={i} className="absolute w-full flex items-center justify-center gap-1.5" style={{
         height, fontSize, fontWeight: 600, top: 0, left: 0,
@@ -36,7 +41,7 @@ function SlotWords({ height, fontSize, iconSize }) {
         filter: absVal === 0 ? 'blur(0)' : absVal === 1 ? 'blur(1.5px)' : 'blur(4px)',
         transition: 'transform 700ms cubic-bezier(.23,1,.32,1), opacity 700ms cubic-bezier(.23,1,.32,1), filter 700ms cubic-bezier(.23,1,.32,1)',
       }}>
-        <span>{w.text}</span>
+        <span>{text}</span>
         <Icon size={iconSize} />
       </div>
     )

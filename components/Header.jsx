@@ -24,20 +24,28 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
   }, [pathname])
 
   useEffect(() => {
-    const onScroll = () => {
-      const scrollY = window.scrollY
-      setCompact(scrollY > 50)
+    let raf
 
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? Math.min(scrollY / docHeight, 1) : 0
-      setScrollProgress(progress)
+    const tick = () => {
+      const c = document.querySelector('[data-scroll-container]')
+      const sy = Math.max(window.scrollY, c?.scrollTop ?? 0)
+      setCompact(sy > 50)
+
+      if (c) {
+        const dh = c.scrollHeight - c.clientHeight
+        setScrollProgress(dh > 0 ? Math.min(c.scrollTop / dh, 1) : 0)
+      } else {
+        const dh = document.documentElement.scrollHeight - window.innerHeight
+        setScrollProgress(dh > 0 ? Math.min(window.scrollY / dh, 1) : 0)
+      }
+
+      raf = requestAnimationFrame(tick)
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
+    raf = requestAnimationFrame(tick)
 
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    return () => cancelAnimationFrame(raf)
+  }, [pathname])
 
   return (
     <>
@@ -72,10 +80,10 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
         </a>
       </div>
       <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 sm:hidden">
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" loading="eager" />
+        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" priority />
       </Link>
       <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 hidden sm:block md:hidden">
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" loading="eager" />
+        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" priority />
       </Link>
       <div className="flex items-center gap-2 md:gap-6">
         <nav className="hidden md:flex items-center gap-8">
@@ -94,7 +102,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
         </button>
         <div className="hidden md:block w-px h-8 bg-almond-silk dark:bg-dusty-grape"></div>
         <Link href="/" className="cursor-pointer hidden md:block">
-          <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" loading="eager" />
+          <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" priority />
         </Link>
       </div>
 
