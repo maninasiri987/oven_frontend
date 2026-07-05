@@ -104,7 +104,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
         </a>
       </div>
       <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 sm:hidden">
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" />
+        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" priority />
       </Link>
       <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 hidden sm:block md:hidden">
         <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" priority />
@@ -126,7 +126,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
         </button>
         <div className="hidden md:block w-px h-8 bg-almond-silk dark:bg-dusty-grape"></div>
         <Link href="/" className="cursor-pointer hidden md:block">
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" />
+        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" priority />
         </Link>
       </div>
 

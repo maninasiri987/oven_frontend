@@ -7,10 +7,8 @@ import SlotBox from './SlotBox'
 export default function Hero() {
   const isMobile = useIsMobile()
   const [scrollY, setScrollY] = useState(0)
-  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    setLoaded(true)
     if (isMobile) return
 
     let ticking = false
@@ -36,8 +34,6 @@ export default function Hero() {
         <div
           style={{
             transform: `translateY(${bgY}px)`,
-            opacity: loaded ? 1 : 0,
-            transition: 'opacity 0.6s ease',
           }}
         >
           <SlotBox />
@@ -45,37 +41,22 @@ export default function Hero() {
         <div
           style={{
             transform: `translateY(${titleY}px)`,
-            opacity: loaded ? 1 : 0,
-            transition: 'opacity 0.5s ease 0.15s',
           }}
+          className="-mt-8 md:mt-0"
         >
           <h1
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right"
-            style={{
-              transform: loaded ? 'translateY(0)' : 'translateY(16px)',
-              transition: 'transform 0.5s ease 0.25s',
-            }}
           >
             سایت فقط ویترین نیست؛ اهرم کسب‌وکارته
           </h1>
           <p
-            className="text-dusty-grape dark:text-almond-silk text-base sm:text-lg mb-8 leading-relaxed text-right max-w-md"
+            className="text-dusty-grape/60 dark:text-almond-silk/60 text-base sm:text-lg mb-8 leading-relaxed text-right -mt-4"
             dir="rtl"
-            style={{
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? 'translateY(0)' : 'translateY(12px)',
-              transition: 'opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s',
-            }}
           >
             وب‌سایت‌هایی می‌سازیم که فقط آنلاین نیستند؛ بلکه رشد می‌دهند.
           </p>
           <div
             className="flex flex-col sm:flex-row items-center gap-4"
-            style={{
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? 'translateY(0)' : 'translateY(12px)',
-              transition: 'opacity 0.5s ease 0.45s, transform 0.5s ease 0.45s',
-            }}
           >
             <Link href="/project" className="w-full sm:w-auto text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-all duration-200 hover:shadow-lg hover:shadow-dusty-grape/20">شروع پروژه</Link>
             <Link href="/services" className="w-full sm:w-auto text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-6 py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-200 hover:shadow-md hover:shadow-dusty-grape/10">مشاهده خدمات</Link>
