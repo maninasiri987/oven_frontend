@@ -27,16 +27,33 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
   useEffect(() => {
     let raf
+    let cachedContainer = null
+    let isContainerScroll = false
+
+    const detectContainer = () => {
+      const c = document.querySelector('[data-scroll-container]')
+      if (c && c.scrollHeight > c.clientHeight) {
+        const style = getComputedStyle(c)
+        cachedContainer = c
+        isContainerScroll = style.overflowY === 'auto' || style.overflowY === 'scroll'
+      } else {
+        cachedContainer = null
+        isContainerScroll = false
+      }
+    }
+
+    detectContainer()
+    window.addEventListener('resize', detectContainer)
 
     const tick = () => {
-      const c = document.querySelector('[data-scroll-container]')
-      const isContainerScroll = c && (c.scrollHeight > c.clientHeight) && (getComputedStyle(c).overflowY === 'auto' || getComputedStyle(c).overflowY === 'scroll')
-      const sy = Math.max(window.scrollY, isContainerScroll ? c.scrollTop : 0)
+      if (cachedContainer && !cachedContainer.isConnected) detectContainer()
+
+      const sy = Math.max(window.scrollY, isContainerScroll ? cachedContainer.scrollTop : 0)
       setCompact(sy > 50)
 
       if (isContainerScroll) {
-        const dh = c.scrollHeight - c.clientHeight
-        setScrollProgress(dh > 0 ? Math.min(c.scrollTop / dh, 1) : 0)
+        const dh = cachedContainer.scrollHeight - cachedContainer.clientHeight
+        setScrollProgress(dh > 0 ? Math.min(cachedContainer.scrollTop / dh, 1) : 0)
       } else {
         const dh = document.documentElement.scrollHeight - window.innerHeight
         setScrollProgress(dh > 0 ? Math.min(window.scrollY / dh, 1) : 0)
@@ -47,7 +64,10 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
     raf = requestAnimationFrame(tick)
 
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', detectContainer)
+    }
   }, [pathname])
 
   return (

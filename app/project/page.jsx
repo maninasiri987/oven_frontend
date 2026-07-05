@@ -64,7 +64,7 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {plans.map(p => (
               <div key={p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
-                <Checkbox checked={form.plan === p.value} onChange={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} />
+                <Checkbox checked={form.plan === p.value} />
                 <div>
                   <div className="text-sm font-medium">{p.name}</div>
                   <div className="text-xs text-dusty-grape dark:text-almond-silk/60">{p.price} تومان</div>
@@ -85,7 +85,7 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
             {currentFeatures.map(f => (
               <div key={f.key} onClick={() => toggleFeature(f.key)} className="flex items-center justify-end gap-3 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
                 <span>{f.label}</span>
-                <Checkbox checked={form.features.includes(f.key)} onChange={() => toggleFeature(f.key)} />
+                <Checkbox checked={form.features.includes(f.key)} />
               </div>
             ))}
           </div>
