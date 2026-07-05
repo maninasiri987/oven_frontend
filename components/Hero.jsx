@@ -52,9 +52,8 @@ export default function Hero() {
           <h1
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right"
             style={{
-              opacity: loaded ? 1 : 0,
               transform: loaded ? 'translateY(0)' : 'translateY(16px)',
-              transition: 'opacity 0.5s ease 0.25s, transform 0.5s ease 0.25s',
+              transition: 'transform 0.5s ease 0.25s',
             }}
           >
             سایت فقط ویترین نیست؛ اهرم کسب‌وکارته
