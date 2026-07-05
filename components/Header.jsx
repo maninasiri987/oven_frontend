@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Sun, Moon, Phone } from 'lucide-react'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 const navItems = [
   { label: 'خدمات', href: '/services' },
@@ -16,6 +17,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
   const [compact, setCompact] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const pathname = usePathname()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -50,23 +52,45 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
   return (
     <>
-    <button onClick={menuOpen ? onMenuClose : onMenuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center transition-all duration-300" style={{
+    <button onClick={menuOpen ? onMenuClose : onMenuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
       top: menuOpen ? '16px' : compact ? '14px' : '20px',
       right: menuOpen ? '16px' : compact ? 'calc(12.5vw + 16px)' : '16px',
+      transition: 'top 0.3s ease, right 0.3s ease',
     }}>
       <div className="relative w-5 h-5">
-        <span className={`absolute left-0 h-0.5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full transition-all duration-300 ease-in-out ${menuOpen ? 'top-1/2 -translate-y-1/2 rotate-45 w-5' : 'top-0.5 w-5'}`}></span>
-        <span className={`absolute left-0 top-1/2 -translate-y-1/2 h-0.5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full transition-all duration-300 ease-in-out ${menuOpen ? 'w-0' : 'w-5'}`}></span>
-        <span className={`absolute left-0 h-0.5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full transition-all duration-300 ease-in-out ${menuOpen ? 'top-1/2 -translate-y-1/2 -rotate-45 w-5' : 'bottom-0.5 w-5'}`}></span>
+        <span className="absolute left-0 top-0.5 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
+          transform: menuOpen ? 'translateY(8px) scaleX(0)' : 'none',
+          opacity: menuOpen ? 0 : 1,
+          transition: 'transform 0.3s ease, opacity 0.15s ease',
+        }}></span>
+        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
+          transform: menuOpen ? 'scaleX(0)' : 'none',
+          opacity: menuOpen ? 0 : 1,
+          transition: 'transform 0.3s ease, opacity 0.15s ease',
+        }}></span>
+        <span className="absolute left-0 bottom-0.5 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
+          transform: menuOpen ? 'translateY(-8px) scaleX(0)' : 'none',
+          opacity: menuOpen ? 0 : 1,
+          transition: 'transform 0.3s ease, opacity 0.15s ease',
+        }}></span>
+        <svg className="absolute inset-0 w-5 h-5 text-dusty-grape dark:text-almond-silk" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{
+          opacity: menuOpen ? 1 : 0,
+          transition: 'opacity 0.15s ease 0.15s',
+        }}>
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
       </div>
     </button>
 
     <header
-      className={`fixed z-30 left-1/2 -translate-x-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden${compact ? ' header-blur' : ''}`}
+      className="fixed z-30 left-1/2 -translate-x-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden"
       style={{
         width: compact ? '75%' : '100%',
         borderRadius: compact ? '9999px' : '0',
-        backgroundColor: compact ? (isDark ? '#0a0908' : '#eae0d5') : 'transparent',
+        backgroundColor: compact ? (isMobile ? (isDark ? '#0a0908' : '#eae0d5') : (isDark ? 'rgba(10,9,8,0.6)' : 'rgba(234,224,213,0.6)')) : 'transparent',
+        backdropFilter: compact && !isMobile ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: compact && !isMobile ? 'blur(20px)' : 'none',
         border: compact ? '1px solid rgba(94,80,63,0.25)' : '1px solid transparent',
         padding: compact ? '4px 16px' : undefined,
         height: compact ? '48px' : undefined,

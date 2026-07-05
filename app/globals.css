@@ -80,10 +80,3 @@ a:active, button:active {
 .page-transition {
   animation: page-fade-in 0.2s ease-in-out;
 }
-
-@media (min-width: 768px) {
-  .header-blur {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-}
