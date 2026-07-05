@@ -7,7 +7,7 @@ export default function Checkbox({ checked, onChange, id, green }) {
       role="checkbox"
       aria-checked={checked}
       id={id}
-      onClick={onChange}
+      onClick={(e) => { e.stopPropagation(); onChange?.(e) }}
       className={`w-5 h-5 shrink-0 rounded-md border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
         green
           ? checked
