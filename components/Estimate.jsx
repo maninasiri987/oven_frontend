@@ -66,7 +66,7 @@ export default function Estimate() {
                 { value: 'pro', name: 'Pro Web', sub: 'اختصاصی' },
               ].map(p => (
                 <div key={p.value} onClick={() => { setPlan(p.value); setFeatures({}); setFirstTime(false); setShowFeatures(false); setTimeout(() => setShowFeatures(true), 50) }} className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-200 w-full ${plan === p.value ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`}>
-                  <Checkbox checked={plan === p.value} onChange={() => { setPlan(p.value); setFeatures({}); setFirstTime(false) }} />
+                  <Checkbox checked={plan === p.value} onChange={() => { setPlan(p.value); setFeatures({}); setFirstTime(false); setShowFeatures(false); setTimeout(() => setShowFeatures(true), 50) }} />
                   <div>
                     <div className="text-sm font-medium">{p.name}</div>
                     <div className="text-xs text-dusty-grape dark:text-almond-silk/60">{p.sub}</div>
