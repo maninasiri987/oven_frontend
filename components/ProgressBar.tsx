@@ -7,7 +7,7 @@ interface ProgressBarProps {
 
 export default function ProgressBar({ steps, currentStep }: ProgressBarProps) {
   const stepMap = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 }
-  const currentMapped = stepMap[currentStep]
+  const currentMapped = stepMap[currentStep as keyof typeof stepMap]
 
   return (
     <div className="mb-10">
