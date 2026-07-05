@@ -45,7 +45,7 @@ export default function Hero() {
           className="-mt-8 md:mt-0"
         >
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right leading-tight"
           >
             سایت فقط ویترین نیست؛ اهرم کسب‌وکارته
           </h1>
