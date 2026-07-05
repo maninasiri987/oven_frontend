@@ -1,0 +1,155 @@
+name: PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        id: lint
+        run: npm run lint 2>&1 | tee lint-output.txt || true
+
+      - name: Type check
+        id: typecheck
+        run: npx tsc --noEmit 2>&1 | tee typecheck-output.txt || true
+
+      - name: Build
+        id: build
+        run: npm run build 2>&1 | tee build-output.txt || true
+
+      - name: Analyze changes
+        id: analyze
+        run: |
+          DIFF=$(git diff origin/${{ github.base_ref }}...HEAD --stat)
+          FILES_CHANGED=$(git diff origin/${{ github.base_ref }}...HEAD --name-only)
+          NEW_FILES=$(git diff origin/${{ github.base_ref }}...HEAD --diff-filter=A --name-only)
+          DELETED_FILES=$(git diff origin/${{ github.base_ref }}...HEAD --diff-filter=D --name-only)
+
+          echo "## Files Changed" > diff-summary.txt
+          echo '```' >> diff-summary.txt
+          echo "$DIFF" >> diff-summary.txt
+          echo '```' >> diff-summary.txt
+
+          if [ -n "$NEW_FILES" ]; then
+            echo "" >> diff-summary.txt
+            echo "### New files" >> diff-summary.txt
+            echo "$NEW_FILES" >> diff-summary.txt
+          fi
+
+          if [ -n "$DELETED_FILES" ]; then
+            echo "" >> diff-summary.txt
+            echo "### Deleted files" >> diff-summary.txt
+            echo "$DELETED_FILES" >> diff-summary.txt
+          fi
+
+          # Count changes by directory
+          echo "" >> diff-summary.txt
+          echo "### Changes by area" >> diff-summary.txt
+          echo "$FILES_CHANGED" | sed 's|/.*||' | sort | uniq -c | sort -rn >> diff-summary.txt
+
+      - name: Build review comment
+        id: comment
+        run: >
+          { echo "## PR Review";
+
+            echo "";
+
+            echo "### Checks";
+
+            echo "";
+
+            # Lint
+            if grep -q "error" lint-output.txt 2>/dev/null; then
+              echo "#### Lint" >> review.txt
+              echo '```' >> review.txt
+              tail -20 lint-output.txt >> review.txt
+              echo '```' >> review.txt
+            else
+              echo "- Lint: pass" >> review.txt
+            fi
+
+            # Type check
+            if grep -q "error TS" typecheck-output.txt 2>/dev/null; then
+              echo "#### Type check" >> review.txt
+              echo '```' >> review.txt
+              tail -30 typecheck-output.txt >> review.txt
+              echo '```' >> review.txt
+            else
+              echo "- Type check: pass" >> review.txt
+            fi
+
+            # Build
+            if [ -f build-output.txt ] && grep -q "error\|Error\|ERROR" build-output.txt 2>/dev/null; then
+              echo "#### Build" >> review.txt
+              echo '```' >> review.txt
+              tail -30 build-output.txt >> review.txt
+              echo '```' >> review.txt
+            else
+              echo "- Build: pass" >> review.txt
+            fi
+
+            echo "";
+
+            echo "### Summary";
+
+            cat diff-summary.txt >> review.txt;
+
+            echo "";
+
+            echo "---";
+
+            echo "*Automated review by pr-review workflow*";
+
+          } > review.txt
+
+      - name: Post comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('review.txt', 'utf8');
+
+            // Find existing review comment to update
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const marker = 'Automated review by pr-review workflow';
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
