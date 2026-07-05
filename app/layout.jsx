@@ -5,7 +5,6 @@ import ClientLayout from './client-layout'
 
 const vazirmatn = localFont({
   src: [
-    { path: '../public/assets/fonts/Vazirmatn-Regular.ttf', weight: '400', style: 'normal' },
     { path: '../public/assets/fonts/Vazirmatn-SemiBold.ttf', weight: '600', style: 'normal' },
   ],
   display: 'swap',
@@ -32,6 +31,9 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="fa" className={`${vazirmatn.variable} ${themeClass} overflow-y-auto`} suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/assets/logo.webp" as="image" fetchPriority="high" />
+      </head>
       <body className="min-h-screen bg-parchment dark:bg-space-indigo text-space-indigo dark:text-parchment transition-colors duration-300" style={{ fontFamily: 'var(--font-vazirmatn), sans-serif' }}>
         {!themeCookie && (
           <style>{`@media(prefers-color-scheme:dark){body{background-color:#0a0908;color:#eae0d5}}`}</style>
