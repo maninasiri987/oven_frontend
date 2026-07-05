@@ -28,10 +28,11 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
     const tick = () => {
       const c = document.querySelector('[data-scroll-container]')
-      const sy = Math.max(window.scrollY, c?.scrollTop ?? 0)
+      const isContainerScroll = c && (c.scrollHeight > c.clientHeight) && (getComputedStyle(c).overflowY === 'auto' || getComputedStyle(c).overflowY === 'scroll')
+      const sy = Math.max(window.scrollY, isContainerScroll ? c.scrollTop : 0)
       setCompact(sy > 50)
 
-      if (c) {
+      if (isContainerScroll) {
         const dh = c.scrollHeight - c.clientHeight
         setScrollProgress(dh > 0 ? Math.min(c.scrollTop / dh, 1) : 0)
       } else {
