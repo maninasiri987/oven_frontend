@@ -63,13 +63,13 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <h3 className="text-lg font-semibold mb-4">انتخاب نوع پروژه</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {plans.map(p => (
-              <label key={p.value} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
+              <div key={p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
                 <Checkbox checked={form.plan === p.value} onChange={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} />
                 <div>
                   <div className="text-sm font-medium">{p.name}</div>
                   <div className="text-xs text-dusty-grape dark:text-almond-silk/60">{p.price} تومان</div>
                 </div>
-              </label>
+              </div>
             ))}
           </div>
           {form.plan === 'web' && (
@@ -83,10 +83,10 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <h3 className="text-lg font-semibold mb-4">انتخاب امکانات</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {currentFeatures.map(f => (
-              <label key={f.key} className="flex items-center justify-end gap-3 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+              <div key={f.key} onClick={() => toggleFeature(f.key)} className="flex items-center justify-end gap-3 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
                 <span>{f.label}</span>
                 <Checkbox checked={form.features.includes(f.key)} onChange={() => toggleFeature(f.key)} />
-              </label>
+              </div>
             ))}
           </div>
         </>
@@ -143,7 +143,7 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
 function ProjectForm() {
   const searchParams = useSearchParams()
   const serviceParam = searchParams.get('service')
-  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : 'web'
+  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : ''
   const initialStep = searchParams.get('step') === '2' ? 2 : searchParams.get('step') === '3' ? 3 : 1
   const initialFeatures = searchParams.get('features')?.split(',').filter(Boolean) || []
 
