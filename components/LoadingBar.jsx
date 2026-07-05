@@ -33,7 +33,7 @@ export default function LoadingBar() {
       timer = setTimeout(() => {
         started = true
         setLoading(true)
-      }, 300)
+      }, 500)
     }
 
     document.addEventListener('click', handleClick, true)
@@ -54,7 +54,7 @@ export default function LoadingBar() {
   if (!loading) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-parchment/80 dark:bg-space-indigo/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-parchment/60 dark:bg-space-indigo/60">
       <div className="loading-spinner" />
     </div>
   )
