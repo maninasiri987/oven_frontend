@@ -1,7 +1,10 @@
-'use client'
-import Footer from '@/components/Footer'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Target, Heart, Lightbulb } from 'lucide-react'
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="h-64" />,
+})
 
 const beliefs = [
   { icon: Target, title: 'تمرکز بر رشد', desc: 'هر وب‌سایتی که می‌سازیم باید به رشد کسب‌وکار شما کمک کنه. طراحی زیبا مهمه، ولی نتیجه مهم‌تره.' },

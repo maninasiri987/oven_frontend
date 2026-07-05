@@ -1,8 +1,12 @@
 'use client'
-import Footer from '@/components/Footer'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="h-64" />,
+})
 
 const services = [
   {

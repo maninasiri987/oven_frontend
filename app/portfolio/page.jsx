@@ -1,6 +1,9 @@
-'use client'
-import Footer from '@/components/Footer'
+import dynamic from 'next/dynamic'
 import { ShoppingBag, HeartPulse, Rocket, Store, GraduationCap, Building2 } from 'lucide-react'
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="h-64" />,
+})
 
 const projects = [
   { icon: ShoppingBag, title: 'فروشگاهی', desc: 'فروشگاه آنلاین مدرن با تجربه خرید روان.', type: 'نمونه مفهومی', delay: '0' },

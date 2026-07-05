@@ -62,13 +62,11 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
     </button>
 
     <header
-      className="fixed z-30 left-1/2 -translate-x-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden"
+      className={`fixed z-30 left-1/2 -translate-x-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden${compact ? ' header-blur' : ''}`}
       style={{
         width: compact ? '75%' : '100%',
         borderRadius: compact ? '9999px' : '0',
-        backgroundColor: compact ? (isDark ? 'rgba(10,9,8,0.85)' : 'rgba(255,255,255,0.85)') : 'transparent',
-        backdropFilter: compact ? 'blur(10px)' : 'none',
-        WebkitBackdropFilter: compact ? 'blur(10px)' : 'none',
+        backgroundColor: compact ? (isDark ? '#0a0908' : '#eae0d5') : 'transparent',
         border: compact ? '1px solid rgba(94,80,63,0.25)' : '1px solid transparent',
         padding: compact ? '4px 16px' : undefined,
         height: compact ? '48px' : undefined,
