@@ -6,7 +6,6 @@ import ClientLayout from './client-layout'
 const vazirmatn = localFont({
   src: [
     { path: '../public/assets/fonts/Vazirmatn-Regular.ttf', weight: '400', style: 'normal' },
-    { path: '../public/assets/fonts/Vazirmatn-Medium.ttf', weight: '500', style: 'normal' },
     { path: '../public/assets/fonts/Vazirmatn-SemiBold.ttf', weight: '600', style: 'normal' },
   ],
   display: 'swap',

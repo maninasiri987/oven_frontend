@@ -25,7 +25,9 @@ export default function MobileMenu({ isOpen, onClose, isDark, toggleTheme }) {
         className={`fixed top-0 right-0 z-50 w-full sm:w-72 h-full bg-white dark:bg-space-indigo flex flex-col py-12 px-6 md:hidden transition-all duration-300 ease-in-out will-change-transform ${isOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0 pointer-events-none'}`}
         style={{ boxShadow: isOpen ? '0 0 40px rgba(0,0,0,0.15)' : 'none' }}
       >
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20 mb-8 self-center" />
+        <Link href="/" onClick={onClose} className="mb-8 self-center">
+          <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" />
+        </Link>
         <nav className="flex flex-col w-full">
           {links.map((link, i) => {
             const isActive = pathname === link.href

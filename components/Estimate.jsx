@@ -31,6 +31,7 @@ export default function Estimate() {
   const [plan, setPlan] = useState('')
   const [features, setFeatures] = useState({})
   const [firstTime, setFirstTime] = useState(false)
+  const [showFeatures, setShowFeatures] = useState(false)
 
   const toggleFeature = useCallback((key) => setFeatures(prev => ({ ...prev, [key]: !prev[key] })), [])
 
@@ -64,44 +65,64 @@ export default function Estimate() {
                 { value: 'fast', name: 'Fast Web', sub: 'وردپرسی' },
                 { value: 'pro', name: 'Pro Web', sub: 'اختصاصی' },
               ].map(p => (
-                <label key={p.value} className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-200 w-full ${plan === p.value ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`}>
+                <div key={p.value} onClick={() => { setPlan(p.value); setFeatures({}); setFirstTime(false); setShowFeatures(false); setTimeout(() => setShowFeatures(true), 50) }} className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-200 w-full ${plan === p.value ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`}>
                   <Checkbox checked={plan === p.value} onChange={() => { setPlan(p.value); setFeatures({}); setFirstTime(false) }} />
                   <div>
                     <div className="text-sm font-medium">{p.name}</div>
                     <div className="text-xs text-dusty-grape dark:text-almond-silk/60">{p.sub}</div>
                   </div>
-                </label>
+                </div>
               ))}
             </div>
           </div>
 
           {plan === 'fast' && (
-            <div className="mb-8 text-right">
+            <div className="mb-8 text-right" style={{
+              opacity: showFeatures ? 1 : 0,
+              transform: showFeatures ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}>
               <label className="text-sm font-medium mb-4 block">امکانات اضافی</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {fastFeatures.map(f => (
-                  <label key={f.key} className={`flex items-center justify-between gap-3 text-sm p-4 rounded-xl border cursor-pointer transition-all duration-200 ${features[f.key] ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15 hover:border-dusty-grape/40 dark:hover:border-almond-silk/40'}`}>
+                {fastFeatures.map((f, i) => (
+                  <div key={f.key} onClick={() => toggleFeature(f.key)} className={`flex items-center justify-between gap-3 text-sm p-4 rounded-xl border cursor-pointer transition-all duration-200 ${features[f.key] ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15 hover:border-dusty-grape/40 dark:hover:border-almond-silk/40'}`} style={{
+                    opacity: showFeatures ? 1 : 0,
+                    transform: showFeatures ? 'translateY(0)' : 'translateY(8px)',
+                    transition: `opacity 0.4s ease ${i * 0.06}s, transform 0.4s ease ${i * 0.06}s`,
+                  }}>
                     <span>{f.label}</span>
                     <Checkbox checked={!!features[f.key]} onChange={() => toggleFeature(f.key)} />
-                  </label>
+                  </div>
                 ))}
               </div>
-              <label className={`flex items-center justify-between gap-3 text-sm p-4 mt-4 rounded-xl border cursor-pointer transition-all duration-200 ${firstTime ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15 hover:border-dusty-grape/40 dark:hover:border-almond-silk/40'}`}>
-                <span className="text-dusty-grape dark:text-almond-silk font-medium">این اولین همکاری من با Oven است (۱۵٪ تخفیف)</span>
-                <Checkbox checked={firstTime} onChange={() => setFirstTime(!firstTime)} />
-              </label>
+              <div onClick={() => setFirstTime(!firstTime)} className={`flex items-center justify-between gap-3 text-sm p-4 mt-4 rounded-xl cursor-pointer transition-all duration-200 ${firstTime ? 'bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700' : 'bg-green-50/50 dark:bg-green-900/10 border border-green-200/50 dark:border-green-800/50 hover:border-green-300 dark:hover:border-green-700'}`} style={{
+                opacity: showFeatures ? 1 : 0,
+                transform: showFeatures ? 'translateY(0)' : 'translateY(8px)',
+                transition: `opacity 0.4s ease ${fastFeatures.length * 0.06}s, transform 0.4s ease ${fastFeatures.length * 0.06}s`,
+              }}>
+                <span className="text-green-700 dark:text-green-400 font-medium">این اولین همکاری من با Oven است (۱۵٪ تخفیف)</span>
+                <Checkbox checked={firstTime} onChange={() => setFirstTime(!firstTime)} green />
+              </div>
             </div>
           )}
 
           {plan === 'pro' && (
-            <div className="mb-8 text-right">
+            <div className="mb-8 text-right" style={{
+              opacity: showFeatures ? 1 : 0,
+              transform: showFeatures ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.4s ease, transform 0.4s ease',
+            }}>
               <label className="text-sm font-medium mb-4 block">امکانات اضافی</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {proFeatures.map(f => (
-                  <label key={f.key} className={`flex items-center justify-between gap-3 text-sm p-4 rounded-xl border cursor-pointer transition-all duration-200 ${features[f.key] ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15 hover:border-dusty-grape/40 dark:hover:border-almond-silk/40'}`}>
+                {proFeatures.map((f, i) => (
+                  <div key={f.key} onClick={() => toggleFeature(f.key)} className={`flex items-center justify-between gap-3 text-sm p-4 rounded-xl border cursor-pointer transition-all duration-200 ${features[f.key] ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15 hover:border-dusty-grape/40 dark:hover:border-almond-silk/40'}`} style={{
+                    opacity: showFeatures ? 1 : 0,
+                    transform: showFeatures ? 'translateY(0)' : 'translateY(8px)',
+                    transition: `opacity 0.4s ease ${i * 0.06}s, transform 0.4s ease ${i * 0.06}s`,
+                  }}>
                     <span>{f.label}</span>
                     <Checkbox checked={!!features[f.key]} onChange={() => toggleFeature(f.key)} />
-                  </label>
+                  </div>
                 ))}
               </div>
             </div>
