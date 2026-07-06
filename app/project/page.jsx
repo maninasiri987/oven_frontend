@@ -184,8 +184,29 @@ function ProjectForm() {
     setStep(step - 1)
   }
 
-  const handleSubmit = () => {
-    setStep(5)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+
+  const handleSubmit = async () => {
+    setSubmitting(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setStep(5)
+      } else {
+        const data = await res.json()
+        setSubmitError(data.error || 'خطا در ارسال اطلاعات')
+      }
+    } catch {
+      setSubmitError('خطا در اتصال به سرور')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const steps = ['انتخاب نوع پروژه', 'انتخاب امکانات', 'توضیح کوتاه', 'شماره تماس', 'تایید']
@@ -242,6 +263,10 @@ function ProjectForm() {
 
             {/* Navigation */}
             {step < 5 && (
+              <>
+              {submitError && (
+                <p className="text-sm text-red-500 text-center mt-4">{submitError}</p>
+              )}
               <div className="flex items-center justify-between mt-8">
                   {step > 1 ? (
                     <button onClick={handleBack} className="text-sm text-dusty-grape dark:text-almond-silk hover:underline cursor-pointer">مرحله قبل</button>
@@ -249,9 +274,10 @@ function ProjectForm() {
                   {step < 4 ? (
                     <button onClick={handleNext} disabled={!canNext()} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">مرحله بعد</button>
                 ) : (
-                  <button onClick={handleSubmit} disabled={!canNext()} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">ارسال</button>
+                  <button onClick={handleSubmit} disabled={!canNext() || submitting} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">{submitting ? 'در حال ارسال...' : 'ارسال'}</button>
                 )}
               </div>
+              </>
             )}
           </div>
         </div>

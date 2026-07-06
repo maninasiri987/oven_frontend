@@ -18,11 +18,16 @@ export default function ClientLayout({ children, initialTheme }) {
   const { isDark, toggleTheme } = useTheme(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+  const isHiddenPage = pathname === '/project' || pathname.startsWith('/dashboard')
 
   return (
     <MobileProvider>
-      <Header isDark={isDark} toggleTheme={toggleTheme} menuOpen={menuOpen} onMenuOpen={() => setMenuOpen(true)} onMenuClose={() => setMenuOpen(false)} />
-      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} isDark={isDark} toggleTheme={toggleTheme} />
+      {!isHiddenPage && (
+        <>
+          <Header isDark={isDark} toggleTheme={toggleTheme} menuOpen={menuOpen} onMenuOpen={() => setMenuOpen(true)} onMenuClose={() => setMenuOpen(false)} />
+          <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} isDark={isDark} toggleTheme={toggleTheme} />
+        </>
+      )}
       <LoadingBar />
       <div key={pathname} className="page-transition">
         {children}
