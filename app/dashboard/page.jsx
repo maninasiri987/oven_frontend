@@ -22,10 +22,19 @@ const featureLabels = {
   custom: 'سیستم سفارشی',
 }
 
+const statusOptions = ['بررسی نشده', 'رد شده', 'تایید شده']
+
+const statusStyles = {
+  'بررسی نشده': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+  'رد شده': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+  'تایید شده': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+}
+
 export default function DashboardPage() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [updatingId, setUpdatingId] = useState(null)
   const router = useRouter()
 
   const fetchProjects = async () => {
@@ -50,6 +59,24 @@ export default function DashboardPage() {
     fetchProjects()
   }, [])
 
+  const handleStatusChange = async (id, newStatus) => {
+    setUpdatingId(id)
+    try {
+      const res = await fetch('/api/projects', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus }),
+      })
+      if (res.ok) {
+        setProjects(prev => prev.map(p => p.id === id ? { ...p, status: newStatus } : p))
+      }
+    } catch {
+      setError('خطا در بروزرسانی وضعیت')
+    } finally {
+      setUpdatingId(null)
+    }
+  }
+
   const handleLogout = async () => {
     await fetch('/api/dashboard/auth', { method: 'DELETE' })
     router.push('/dashboard/login')
@@ -67,8 +94,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen p-6 sm:p-10">
-      <div className="max-w-5xl mx-auto">
+    <main className="min-h-screen p-6 sm:p-10" dir="rtl">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl font-semibold">درخواست‌های پروژه</h1>
@@ -110,19 +138,20 @@ export default function DashboardPage() {
               <table className="w-full text-sm" dir="rtl">
                 <thead>
                   <tr className="border-b border-dusty-grape/10 dark:border-dusty-grape/20">
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">#</th>
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">نوع پروژه</th>
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">امکانات</th>
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">شماره تماس</th>
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">توضیحات</th>
-                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk">تاریخ</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">#</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">نوع پروژه</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">امکانات</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">شماره تماس</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">توضیحات</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">وضعیت</th>
+                    <th className="text-right px-4 py-3 font-medium text-dusty-grape dark:text-almond-silk whitespace-nowrap">تاریخ</th>
                   </tr>
                 </thead>
                 <tbody>
                   {projects.map((p, i) => (
-                    <tr key={p.id} className="border-b border-dusty-grape/5 dark:border-dusty-grape/10 last:border-0 hover:bg-dusty-grape/3 dark:hover:bg-almond-silk/3">
-                      <td className="px-4 py-3 text-dusty-grape/60 dark:text-almond-silk/60">{projects.length - i}</td>
-                      <td className="px-4 py-3">
+                    <tr key={p.id} className="border-b border-dusty-grape/5 dark:border-dusty-grape/10 last:border-0 hover:bg-dusty-grape/3 dark:hover:bg-almond-silk/3 align-top">
+                      <td className="px-4 py-3 text-dusty-grape/60 dark:text-almond-silk/60 whitespace-nowrap">{projects.length - i}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-space-indigo/5 dark:bg-parchment/5">
                           {planLabels[p.plan] || p.plan}
                         </span>
@@ -130,7 +159,7 @@ export default function DashboardPage() {
                       <td className="px-4 py-3">
                         <div className="flex flex-wrap gap-1">
                           {(p.features || []).map((f) => (
-                            <span key={f} className="inline-block px-2 py-0.5 rounded text-[11px] bg-almond-silk/15 dark:bg-dusty-grape/15">
+                            <span key={f} className="inline-block px-2 py-0.5 rounded text-[11px] bg-almond-silk/15 dark:bg-dusty-grape/15 whitespace-nowrap">
                               {featureLabels[f] || f}
                             </span>
                           ))}
@@ -139,9 +168,19 @@ export default function DashboardPage() {
                           )}
                         </div>
                       </td>
-                      <td className="px-4 py-3" dir="ltr">{p.phone}</td>
-                      <td className="px-4 py-3 max-w-[200px] truncate" title={p.description}>
-                        {p.description || <span className="text-dusty-grape/40 dark:text-almond-silk/40">-</span>}
+                      <td className="px-4 py-3 whitespace-nowrap" dir="ltr" style={{ textAlign: 'right' }}>{p.phone}</td>
+                      <td className="px-4 py-3 min-w-[180px] max-w-[280px] break-words">{p.description || <span className="text-dusty-grape/40 dark:text-almond-silk/40">-</span>}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <select
+                          value={p.status || 'بررسی نشده'}
+                          onChange={(e) => handleStatusChange(p.id, e.target.value)}
+                          disabled={updatingId === p.id}
+                          className={`text-xs font-medium px-2.5 py-1 rounded-full border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-space-indigo/20 dark:focus:ring-parchment/20 ${statusStyles[p.status || 'بررسی نشده']} disabled:opacity-50`}
+                        >
+                          {statusOptions.map(s => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
                       </td>
                       <td className="px-4 py-3 text-xs text-dusty-grape/60 dark:text-almond-silk/60 whitespace-nowrap">{formatDate(p.created_at)}</td>
                     </tr>
@@ -158,11 +197,21 @@ export default function DashboardPage() {
                     <span className="text-xs text-dusty-grape/60 dark:text-almond-silk/60">#{projects.length - i}</span>
                     <span className="text-xs text-dusty-grape/60 dark:text-almond-silk/60">{formatDate(p.created_at)}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-space-indigo/5 dark:bg-parchment/5">
                       {planLabels[p.plan] || p.plan}
                     </span>
-                    <span className="text-sm" dir="ltr">{p.phone}</span>
+                    <span className="text-sm" dir="ltr" style={{ textAlign: 'right' }}>{p.phone}</span>
+                    <select
+                      value={p.status || 'بررسی نشده'}
+                      onChange={(e) => handleStatusChange(p.id, e.target.value)}
+                      disabled={updatingId === p.id}
+                      className={`text-xs font-medium px-2.5 py-1 rounded-full border-0 cursor-pointer focus:outline-none ${statusStyles[p.status || 'بررسی نشده']} disabled:opacity-50`}
+                    >
+                      {statusOptions.map(s => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
                   </div>
                   {p.features && p.features.length > 0 && (
                     <div className="flex flex-wrap gap-1">
@@ -174,7 +223,7 @@ export default function DashboardPage() {
                     </div>
                   )}
                   {p.description && (
-                    <p className="text-xs text-dusty-grape/70 dark:text-almond-silk/70">{p.description}</p>
+                    <p className="text-xs text-dusty-grape/70 dark:text-almond-silk/70 break-words">{p.description}</p>
                   )}
                 </div>
               ))}

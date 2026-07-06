@@ -21,7 +21,7 @@ export async function POST(request) {
     const result = await getPool().sql`
       INSERT INTO project_requests (plan, features, description, phone)
       VALUES (${plan}, ${features || []}, ${description || ''}, ${phone})
-      RETURNING id, plan, features, description, phone, created_at
+      RETURNING id, plan, features, description, phone, status, created_at
     `
 
     return NextResponse.json({ success: true, project: result.rows[0] }, { status: 201 })
@@ -34,7 +34,7 @@ export async function POST(request) {
 export async function GET() {
   try {
     const result = await getPool().sql`
-      SELECT id, plan, features, description, phone, created_at
+      SELECT id, plan, features, description, phone, status, created_at
       FROM project_requests
       ORDER BY created_at DESC
     `
@@ -43,5 +43,34 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching projects:', error)
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request) {
+  try {
+    const { id, status } = await request.json()
+
+    if (!id || !status) {
+      return NextResponse.json({ error: 'id and status are required' }, { status: 400 })
+    }
+
+    const validStatuses = ['بررسی نشده', 'رد شده', 'تایید شده']
+    if (!validStatuses.includes(status)) {
+      return NextResponse.json({ error: 'Invalid status' }, { status: 400 })
+    }
+
+    const result = await getPool().sql`
+      UPDATE project_requests SET status = ${status} WHERE id = ${id}
+      RETURNING id, plan, features, description, phone, status, created_at
+    `
+
+    if (result.rows.length === 0) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 })
+    }
+
+    return NextResponse.json({ success: true, project: result.rows[0] })
+  } catch (error) {
+    console.error('Error updating project:', error)
+    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 })
   }
 }
