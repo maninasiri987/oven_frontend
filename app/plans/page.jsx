@@ -59,7 +59,7 @@ export default function Plans() {
                   <span className="font-medium text-space-indigo dark:text-parchment">وردپرس</span>
                 </div>
               </div>
-              <Link href="/project" className="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</Link>
+              <Link href="/project?service=fast" className="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</Link>
             </div>
 
             <div className="bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-8 reveal" data-delay="100">
@@ -90,7 +90,7 @@ export default function Plans() {
                   <span className="font-medium text-space-indigo dark:text-parchment">اختصاصی</span>
                 </div>
               </div>
-              <Link href="/project" className="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</Link>
+              <Link href="/project?service=pro" className="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</Link>
             </div>
           </div>
 

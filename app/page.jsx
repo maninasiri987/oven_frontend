@@ -53,6 +53,22 @@ export default function Home() {
 
   return (
     <div data-scroll-container className="md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
+      <h1 className="sr-only">طراحی سایت حرفه‌ای برای رشد واقعی کسب‌وکار</h1>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              { '@type': 'Question', name: 'چقدر زمان می‌برد؟', acceptedAnswer: { '@type': 'Answer', text: 'بسته به پلن انتخابی: Fast Web بین ۷ تا ۱۰ روز و Pro Web بین ۱ تا ۲ ماه زمان می‌برد.' } },
+              { '@type': 'Question', name: 'هزینه‌ها چطور محاسبه می‌شود؟', acceptedAnswer: { '@type': 'Answer', text: 'هزینه بر اساس پلن پایه و امکانات اضافی محاسبه می‌شود. با استفاده از ابزار برآورد اولیه می‌توانید هزینه تقریبی را ببینید.' } },
+              { '@type': 'Question', name: 'بعد از تحویل چه می‌شود؟', acceptedAnswer: { '@type': 'Answer', text: 'مالکیت کامل سایت و فایل‌ها به شما منتقل می‌شود. امکان اضافه کردن پشتیبانی ماهانه هم وجود دارد.' } },
+              { '@type': 'Question', name: 'پشتیبانی دارید؟', acceptedAnswer: { '@type': 'Answer', text: 'بله، پشتیبانی ماهانه با هزینه جداگانه قابل اضافه شدن است. شامل بروزرسانی، پشتیبانی فنی و رفع مشکلات می‌شود.' } },
+            ],
+          }),
+        }}
+      />
       <Hero />
       <QuickSelection />
       <ProcessTimeline />

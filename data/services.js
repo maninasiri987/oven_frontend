@@ -46,6 +46,11 @@ const services = [
       buttonText: 'ثبت پروژه',
     },
     relatedServices: ['seo', 'support'],
+    recommendation: {
+      text: 'اگر به امکانات اختصاصی و توسعه کاملاً سفارشی نیاز دارید، سرویس طراحی قالب اختصاصی انتخاب مناسب‌تری برای شماست.',
+      link: '/services/pro-web',
+      linkText: 'Pro Web',
+    },
   },
 
   {
@@ -98,6 +103,11 @@ const services = [
       buttonText: 'مشاوره رایگان',
     },
     relatedServices: ['custom-theme', 'custom-ui', 'seo'],
+    recommendation: {
+      text: 'اگر پس از راه‌اندازی سایت به افزایش بازدید و جذب مشتری نیاز دارید، سرویس سئو بهترین مرحله بعدی است.',
+      link: '/services/seo',
+      linkText: 'سئو',
+    },
   },
 
   {
@@ -149,6 +159,11 @@ const services = [
       buttonText: 'شروع سئو',
     },
     relatedServices: ['fast-web', 'support', 'rescue'],
+    recommendation: {
+      text: 'اگر هنوز وب‌سایت حرفه‌ای ندارید، ابتدا با سرویس طراحی قالب اختصاصی زیرساخت مناسبی برای سئو ایجاد کنید.',
+      link: '/services/pro-web',
+      linkText: 'Pro Web',
+    },
   },
 
   {
@@ -200,6 +215,11 @@ const services = [
       buttonText: 'سفارش طراحی قالب',
     },
     relatedServices: ['pro-web', 'seo', 'custom-ui'],
+    recommendation: {
+      text: 'بعد از طراحی سایت، با استفاده از سرویس سئو می‌توانید رتبه سایت خود را در گوگل افزایش دهید.',
+      link: '/services/seo',
+      linkText: 'سئو',
+    },
   },
 
   {
@@ -251,6 +271,11 @@ const services = [
       buttonText: 'بررسی رایگان سایت',
     },
     relatedServices: ['seo', 'support', 'fast-web'],
+    recommendation: {
+      text: 'پس از رفع مشکلات سایت، سرویس پشتیبانی به حفظ امنیت، سرعت و عملکرد پایدار وب‌سایت کمک می‌کند.',
+      link: '/services/support',
+      linkText: 'پشتیبانی',
+    },
   },
 
   {
@@ -301,6 +326,11 @@ const services = [
       buttonText: 'شروع پشتیبانی',
     },
     relatedServices: ['seo', 'rescue', 'fast-web'],
+    recommendation: {
+      text: 'اگر قصد افزایش ورودی گوگل را دارید، سرویس سئو بهترین مکمل برای پشتیبانی سایت شماست.',
+      link: '/services/seo',
+      linkText: 'سئو',
+    },
   },
 ]
 

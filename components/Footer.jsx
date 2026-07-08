@@ -1,4 +1,3 @@
-'use client'
 import { FadeIn } from './Motion'
 
 export default function Footer() {

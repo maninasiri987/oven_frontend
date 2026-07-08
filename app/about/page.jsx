@@ -40,7 +40,7 @@ export default function About() {
                     <b.icon className="w-5 h-5 text-dusty-grape dark:text-almond-silk" />
                   </div>
                   <h3 className="font-semibold mb-2">{b.title}</h3>
-                  <p className="text-sm text-dusty-grape dark:text-almond-silk/80 leading-relaxed">{b.desc}</p>
+                  <p className="text-sm text-dusty-grape/70 dark:text-almond-silk/60 leading-relaxed">{b.desc}</p>
                 </div>
               ))}
             </div>

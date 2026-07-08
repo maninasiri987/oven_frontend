@@ -1,4 +1,3 @@
-'use client'
 import { Eye, CalendarCheck, Headphones, Sparkles, Award, TrendingUp } from 'lucide-react'
 import { MotionSection, StaggerGroup, StaggerItem } from './Motion'
 

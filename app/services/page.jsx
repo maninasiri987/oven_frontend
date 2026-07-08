@@ -92,12 +92,11 @@ export default function ServicesPage() {
           <div className="space-y-8">
             {services.map((s, i) => {
               return (
-              <div key={s.title} id={s.title} className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border rounded-2xl p-8 reveal transition-all duration-700 ${highlighted === s.title ? 'border-space-indigo dark:border-parchment ring-2 ring-space-indigo/30 dark:ring-parchment/30 scale-[1.02] shadow-lg' : 'border-dusty-grape/20 dark:border-dusty-grape/30'}`} data-delay={i * 60}>
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-                  <div className="text-right flex-1">
+              <div key={s.title} id={s.title} className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border rounded-2xl overflow-hidden reveal transition-all duration-700 ${highlighted === s.title ? 'border-space-indigo dark:border-parchment ring-2 ring-space-indigo/30 dark:ring-parchment/30 scale-[1.02] shadow-lg' : 'border-dusty-grape/20 dark:border-dusty-grape/30'}`} data-delay={i * 60}>
+                <div className="flex flex-col md:flex-row">
+                  <div className="flex-1 p-6 md:p-8 text-right">
                     <h3 className="text-xl font-semibold mb-2">{s.title}</h3>
-                    <p className="text-sm text-dusty-grape dark:text-almond-silk/80 mb-3">{s.desc}</p>
-                    {s.suited && <p className="text-xs text-dusty-grape dark:text-almond-silk mb-4">{s.suited}</p>}
+                    <p className="text-sm text-dusty-grape dark:text-almond-silk/80 mb-4 leading-relaxed">{s.desc}</p>
                     <ul className="space-y-2">
                       {s.features.map(f => (
                         <li key={f} className="flex items-center gap-2 text-sm text-dusty-grape dark:text-almond-silk/80 text-right">
@@ -107,10 +106,12 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="text-left md:text-right md:min-w-[200px] space-y-2">
-                    {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk">{s.delivery}</div>}
-                    <div className="text-lg font-semibold">{s.price}</div>
-                    <Link href={`/services/${s.slug}`} className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">بیشتر ←</Link>
+                  <div className="md:w-72 p-6 md:p-8 flex flex-row md:flex-col items-center md:items-stretch justify-between md:justify-center gap-4 border-t md:border-t-0 md:border-r border-dusty-grape/10 dark:border-almond-silk/10 bg-white/20 dark:bg-space-indigo/60">
+                    <div className="text-center">
+                      {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk mb-1">{s.delivery}</div>}
+                      <div className="text-xl font-semibold whitespace-nowrap">{s.price}</div>
+                    </div>
+                    <Link href={`/services/${s.slug}`} className="shrink-0 text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300 whitespace-nowrap">بیشتر ←</Link>
                   </div>
                 </div>
               </div>

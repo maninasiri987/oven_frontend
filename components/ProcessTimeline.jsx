@@ -1,4 +1,3 @@
-'use client'
 import { ClipboardCheck, Search, Palette, HeadphonesIcon } from 'lucide-react'
 import { MotionSection } from './Motion'
 

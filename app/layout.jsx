@@ -13,24 +13,36 @@ const vazirmatn = localFont({
 
 export const metadata = {
   title: {
-    default: 'Oven - طراحی سایت حرفه‌ای',
+    default: 'Oven - طراحی سایت',
     template: '%s | Oven',
   },
-  description: 'طراحی سایت حرفه‌ای، سریع و مدرن با اوون. سئو، پشتیبانی و توسعه وب‌سایت اختصاصی.',
+  description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
   keywords: ['طراحی سایت', 'طراحی وب سایت', 'سئو', 'بهینه سازی سایت', 'وردپرس', 'نیکست جی‌اس', 'توسعه وب', 'Oven', 'طراحی سایت حرفه‌ای'],
   metadataBase: new URL('https://ovenweb.vercel.app'),
+  alternates: {
+    canonical: 'https://ovenweb.vercel.app',
+  },
   openGraph: {
-    title: 'Oven - طراحی سایت حرفه‌ای',
-    description: 'طراحی سایت حرفه‌ای، سریع و مدرن با اوون',
+    title: 'Oven - طراحی سایت',
+    description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
     url: 'https://ovenweb.vercel.app',
     siteName: 'Oven',
     locale: 'fa_IR',
     type: 'website',
+    images: [
+      {
+        url: 'https://ovenweb.vercel.app/og-telegram.png',
+        width: 1200,
+        height: 630,
+        alt: 'Oven - طراحی سایت حرفه‌ای',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Oven - طراحی سایت حرفه‌ای',
-    description: 'طراحی سایت حرفه‌ای، سریع و مدرن با اوون',
+    title: 'Oven - طراحی سایت',
+    description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
+    images: ['https://ovenweb.vercel.app/og-telegram.png'],
   },
   robots: {
     index: true,
@@ -65,6 +77,18 @@ export default async function RootLayout({ children }) {
               logo: 'https://ovenweb.vercel.app/assets/logo.webp',
               description: 'طراحی سایت حرفه‌ای، سریع و مدرن',
               sameAs: [],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Oven',
+              url: 'https://ovenweb.vercel.app',
+              inLanguage: 'fa-IR',
             }),
           }}
         />

@@ -200,8 +200,8 @@ export default function ServicePage({ params }) {
               </div>
             </section>
 
-            <Link href="/services/pro-web" className="block text-center py-8 text-dusty-grape dark:text-almond-silk text-base leading-relaxed opacity-70 hover:opacity-100 transition-opacity duration-200">
-                اگر نیاز به وب‌سایت اختصاصی دارید، <span className="text-space-indigo dark:text-parchment font-semibold">Pro Web</span> بهترین انتخاب است.
+            <Link href={service.recommendation.link} className="block text-center py-8 text-dusty-grape dark:text-almond-silk text-base leading-relaxed opacity-70 hover:opacity-100 transition-opacity duration-200">
+                {service.recommendation.text} <span className="text-space-indigo dark:text-parchment font-semibold">{service.recommendation.linkText}</span>
             </Link>
 
           </div>

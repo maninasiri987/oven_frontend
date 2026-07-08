@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="46%" r="35%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Black background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Dot pattern -->
+  <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+    <circle cx="20" cy="20" r="0.8" fill="#ffffff" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Subtle glow behind text -->
+  <ellipse cx="600" cy="290" rx="300" ry="150" fill="url(#glow)"/>
+
+  <!-- Corner decorations - top left -->
+  <line x1="50" y1="50" x2="50" y2="90" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+  <line x1="50" y1="50" x2="90" y2="50" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+
+  <!-- Corner decorations - top right -->
+  <line x1="1150" y1="50" x2="1150" y2="90" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+  <line x1="1150" y1="50" x2="1110" y2="50" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+
+  <!-- Corner decorations - bottom left -->
+  <line x1="50" y1="580" x2="50" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+  <line x1="50" y1="580" x2="90" y2="580" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+
+  <!-- Corner decorations - bottom right -->
+  <line x1="1150" y1="580" x2="1150" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+  <line x1="1150" y1="580" x2="1110" y2="580" stroke="#ffffff" stroke-width="1" opacity="0.15"/>
+
+  <!-- Centered "oven" text -->
+  <text x="600" y="310" font-family="Arial, Helvetica, sans-serif" font-size="140" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="8">oven</text>
+
+  <!-- Accent line under logo -->
+  <rect x="440" y="330" width="320" height="2" rx="1" fill="#ffffff" opacity="0.3"/>
+
+  <!-- Tagline below -->
+  <text x="600" y="390" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#ffffff" opacity="0.45" text-anchor="middle" letter-spacing="6">WEB DESIGN  •  SEO  •  SUPPORT</text>
+
+  <!-- Bottom URL -->
+  <text x="600" y="590" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#ffffff" opacity="0.25" text-anchor="middle">ovenweb.vercel.app</text>
+</svg>

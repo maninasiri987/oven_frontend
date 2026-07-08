@@ -1,4 +1,3 @@
-'use client'
 import { Clock } from 'lucide-react'
 import Link from 'next/link'
 import { MotionSection, StaggerGroup, StaggerItem } from './Motion'
