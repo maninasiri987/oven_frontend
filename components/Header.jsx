@@ -72,7 +72,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
   return (
     <>
-    {pathname !== '/project' && <button onClick={menuOpen ? onMenuClose : onMenuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
+    {pathname !== '/project' && !pathname.startsWith('/services/') && <button onClick={menuOpen ? onMenuClose : onMenuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
       top: menuOpen ? '16px' : compact ? '14px' : '20px',
       right: menuOpen ? '16px' : compact ? 'calc(12.5vw + 16px)' : '16px',
       transition: 'top 0.3s ease, right 0.3s ease',
@@ -106,7 +106,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
     <header
       className="fixed z-30 left-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden"
       style={{
-        transform: pathname === '/project' ? 'translate(-50%, -100%)' : 'translate(-50%, 0)',
+        transform: pathname === '/project' || pathname.startsWith('/services/') ? 'translate(-50%, -120%)' : 'translate(-50%, 0)',
         width: compact ? '75%' : '100%',
         borderRadius: compact ? '9999px' : '0',
         backgroundColor: compact ? (isMobile ? (isDark ? '#0a0908' : '#eae0d5') : (isDark ? 'rgba(10,9,8,0.6)' : 'rgba(234,224,213,0.6)')) : 'transparent',

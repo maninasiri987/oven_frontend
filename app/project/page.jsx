@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Checkbox from '@/components/Checkbox'
 
 import { Suspense, useState, useEffect, useRef } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Check } from 'lucide-react'
 
@@ -142,9 +142,10 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
 
 function ProjectForm() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const serviceParam = searchParams.get('service')
-  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : ''
-  const initialStep = searchParams.get('step') === '2' ? 2 : searchParams.get('step') === '3' ? 3 : 1
+  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : serviceParam === 'web' ? 'web' : ''
+  const initialStep = serviceParam ? 2 : 1
   const initialFeatures = searchParams.get('features')?.split(',').filter(Boolean) || []
 
   const [step, setStep] = useState(initialStep)
@@ -215,9 +216,9 @@ function ProjectForm() {
 
   return (
     <>
-    <Link href="/" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200">
+    <button onClick={() => router.back()} className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200 cursor-pointer">
       <ArrowLeft className="w-5 h-5" />
-    </Link>
+    </button>
     <main className="pt-24 pb-20 px-6 sm:px-10">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-4 reveal">ثبت پروژه</h1>

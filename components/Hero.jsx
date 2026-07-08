@@ -1,12 +1,13 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import SlotBox from './SlotBox'
 
 export default function Hero() {
   const isMobile = useIsMobile()
-  const [scrollY, setScrollY] = useState(0)
+  const bgRef = useRef(null)
+  const titleRef = useRef(null)
 
   useEffect(() => {
     if (isMobile) return
@@ -15,7 +16,9 @@ export default function Hero() {
     const onScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setScrollY(window.scrollY)
+          const sy = window.scrollY
+          if (bgRef.current) bgRef.current.style.transform = `translateY(${Math.min(sy * -0.0625, -25)}px)`
+          if (titleRef.current) titleRef.current.style.transform = `translateY(${Math.min(sy * -0.025, -10)}px)`
           ticking = false
         })
         ticking = true
@@ -25,25 +28,13 @@ export default function Hero() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [isMobile])
 
-  const bgY = isMobile ? 0 : Math.min(scrollY * -0.0625, -25)
-  const titleY = isMobile ? 0 : Math.min(scrollY * -0.025, -10)
-
   return (
     <section className="md:h-screen min-h-screen w-full flex items-center px-6 sm:px-10 lg:px-16 overflow-hidden md:snap-center">
       <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center">
-        <div
-          style={{
-            transform: `translateY(${bgY}px)`,
-          }}
-        >
+        <div ref={bgRef}>
           <SlotBox />
         </div>
-        <div
-          style={{
-            transform: `translateY(${titleY}px)`,
-          }}
-          className="-mt-8 md:mt-0"
-        >
+        <div ref={titleRef} className="-mt-8 md:mt-0">
           <h1
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right leading-tight"
           >

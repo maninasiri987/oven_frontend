@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Zap, Star, Check, Box, CircleCheck, Grid3X3, ArrowUpRight } from 'lucide-react'
 
 const words = [
@@ -15,12 +15,24 @@ const words = [
 function SlotWords({ height, fontSize, iconSize }) {
   const [idx, setIdx] = useState(0)
   const n = words.length
+  const ref = useRef(null)
 
   useEffect(() => {
     const prefers = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefers) return
-    const id = setInterval(() => setIdx(prev => (prev + 1) % n), 2200)
-    return () => clearInterval(id)
+    let id = null
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!id) id = setInterval(() => setIdx(prev => (prev + 1) % n), 2200)
+        } else {
+          if (id) { clearInterval(id); id = null }
+        }
+      },
+      { threshold: 0.1 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => { observer.disconnect(); if (id) clearInterval(id) }
   }, [n])
 
   const visible = words
@@ -31,21 +43,25 @@ function SlotWords({ height, fontSize, iconSize }) {
     })
     .filter(({ abs }) => Math.abs(abs) <= 2)
 
-  return visible.map(({ i, text, icon: Icon, abs }) => {
-    const absVal = Math.abs(abs)
-    return (
-      <div key={i} className="absolute w-full flex items-center justify-center gap-1.5" style={{
-        height, fontSize, fontWeight: 600, top: 0, left: 0,
-        transform: `translateY(${abs * height}px)`,
-        opacity: absVal === 0 ? 1 : absVal === 1 ? 0.5 : 0,
-        filter: absVal === 0 ? 'blur(0)' : absVal === 1 ? 'blur(1.5px)' : 'blur(4px)',
-        transition: 'transform 700ms cubic-bezier(.23,1,.32,1), opacity 700ms cubic-bezier(.23,1,.32,1), filter 700ms cubic-bezier(.23,1,.32,1)',
-      }}>
-        <span>{text}</span>
-        <Icon size={iconSize} />
-      </div>
-    )
-  })
+  return (
+    <div ref={ref} className="relative w-full h-full">
+      {visible.map(({ i, text, icon: Icon, abs }) => {
+        const absVal = Math.abs(abs)
+        return (
+          <div key={i} className="absolute w-full flex items-center justify-center gap-1.5" style={{
+            height, fontSize, fontWeight: 600, top: 0, left: 0,
+            transform: `translateY(${abs * height}px)`,
+            opacity: absVal === 0 ? 1 : absVal === 1 ? 0.5 : 0,
+            filter: absVal === 0 ? 'blur(0)' : absVal === 1 ? 'blur(1.5px)' : 'blur(4px)',
+            transition: 'transform 700ms cubic-bezier(.23,1,.32,1), opacity 700ms cubic-bezier(.23,1,.32,1), filter 700ms cubic-bezier(.23,1,.32,1)',
+          }}>
+            <span>{text}</span>
+            <Icon size={iconSize} />
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function SlotBox() {

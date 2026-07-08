@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import servicesData from '@/data/services'
 
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,
@@ -11,6 +12,7 @@ const Footer = dynamic(() => import('@/components/Footer'), {
 const services = [
   {
     title: 'Fast Web',
+    slug: 'fast-web',
     desc: 'سایت وردپرسی سریع و حرفه‌ای برای شروع سریع کسب‌وکار.',
     features: ['طراحی ریسپانسیو', 'سرعت بالا', 'SEO پایه', 'پنل مدیریت وردپرس'],
     suited: 'مناسب کسب‌وکارهای نوپا',
@@ -19,6 +21,7 @@ const services = [
   },
   {
     title: 'Pro Web',
+    slug: 'pro-web',
     desc: 'وب‌سایت اختصاصی با امکانات سفارشی و طراحی منحصربفرد.',
     features: ['طراحی اختصاصی', 'امکانات سفارشی', 'پنل مدیریت', 'سئو حرفه‌ای'],
     suited: 'مناسب کسب‌وکارهای رشدیافته',
@@ -27,6 +30,7 @@ const services = [
   },
   {
     title: 'سئو',
+    slug: 'seo',
     desc: 'بهینه‌سازی سایت برای موتورهای جستجو و افزایش ترافیک.',
     features: ['آنالیز سئو', 'بهینه‌سازی محتوا', 'لینک‌سازی', 'گزارش ماهانه'],
     suited: 'مناسب همه سایت‌ها',
@@ -35,6 +39,7 @@ const services = [
   },
   {
     title: 'طراحی قالب اختصاصی',
+    slug: 'custom-theme',
     desc: 'طراحی و کدنویسی قالب وردپرسی متناسب با برند شما.',
     features: ['طراحی UI/UX', 'کدنویسی تمیز', 'ریسپانسیو', 'سازگار با افزونه‌ها'],
     suited: 'مناسب برندهای خاص',
@@ -43,6 +48,7 @@ const services = [
   },
   {
     title: 'نجات سایت',
+    slug: 'rescue',
     desc: 'اصلاح و بازسازی سایت‌های آسیب‌دیده یا کند.',
     features: ['آنالیز مشکلات', 'اصلاح کدها', 'بهینه‌سازی سرعت', 'بازیابی امنیتی'],
     suited: 'مناسب سایت‌های مشکل‌دار',
@@ -51,6 +57,7 @@ const services = [
   },
   {
     title: 'پشتیبانی',
+    slug: 'support',
     desc: 'نگهداری، بروزرسانی و پشتیبانی فنی مداوم سایت شما.',
     features: ['بروزرسانی افزونه‌ها', 'پشتیبانی فنی', 'رفع مشکلات', 'گزارش ماهانه'],
     suited: 'مناسب همه سایت‌ها',
@@ -58,13 +65,6 @@ const services = [
     price: 'شروع از ۷۹۰٬۰۰۰ تومان/ماه',
   },
 ]
-
-const serviceFeatureKeys = {
-  'سئو': ['seo'],
-  'طراحی قالب اختصاصی': ['sections', 'pages'],
-  'نجات سایت': ['support'],
-  'پشتیبانی': ['support'],
-}
 
 export default function ServicesPage() {
   const pathname = usePathname()
@@ -91,14 +91,6 @@ export default function ServicesPage() {
           <p className="text-dusty-grape dark:text-almond-silk text-center mb-16 reveal" data-delay="50">هر چیزی که برای رشد آنلاینت نیاز داری</p>
           <div className="space-y-8">
             {services.map((s, i) => {
-              const isPackage = s.title === 'Fast Web' || s.title === 'Pro Web'
-              const serviceParam = s.title === 'Fast Web' ? 'fast' : s.title === 'Pro Web' ? 'pro' : 'web'
-              const features = serviceFeatureKeys[s.title] || []
-              const params = new URLSearchParams({ service: serviceParam })
-              if (!isPackage) {
-                params.set('step', '2')
-                if (features.length) params.set('features', features.join(','))
-              }
               return (
               <div key={s.title} id={s.title} className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border rounded-2xl p-8 reveal transition-all duration-700 ${highlighted === s.title ? 'border-space-indigo dark:border-parchment ring-2 ring-space-indigo/30 dark:ring-parchment/30 scale-[1.02] shadow-lg' : 'border-dusty-grape/20 dark:border-dusty-grape/30'}`} data-delay={i * 60}>
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
@@ -118,7 +110,7 @@ export default function ServicesPage() {
                   <div className="text-left md:text-right md:min-w-[200px] space-y-2">
                     {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk">{s.delivery}</div>}
                     <div className="text-lg font-semibold">{s.price}</div>
-                    <Link href={`/project?${params}`} className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">ثبت پروژه</Link>
+                    <Link href={`/services/${s.slug}`} className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">بیشتر ←</Link>
                   </div>
                 </div>
               </div>

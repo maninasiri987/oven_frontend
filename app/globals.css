@@ -56,7 +56,7 @@ a:active, button:active {
   transition: max-height 0.35s ease, opacity 0.25s ease;
 }
 .faq-answer.open {
-  max-height: 200px;
+  max-height: 400px;
   opacity: 1;
 }
 .faq-answer.closed {
@@ -180,3 +180,6 @@ a:active, button:active {
   opacity: 0;
   transform: translateX(80px);
 }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
