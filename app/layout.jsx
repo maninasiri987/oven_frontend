@@ -76,7 +76,7 @@ export default async function RootLayout({ children }) {
               url: 'https://ovenweb.vercel.app',
               logo: 'https://ovenweb.vercel.app/assets/logo.webp',
               description: 'طراحی سایت حرفه‌ای، سریع و مدرن',
-              sameAs: [],
+              sameAs: ['https://t.me/ovenweb'],
             }),
           }}
         />

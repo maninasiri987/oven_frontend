@@ -24,7 +24,7 @@ export default function About() {
             <div className="text-right reveal">
               <h2 className="text-xl font-semibold mb-4">داستان Oven</h2>
               <p className="text-dusty-grape dark:text-almond-silk/80 leading-relaxed mb-4">
-                Oven از یک باور ساده شروع شد: وب‌سایت‌ها نباید پیچیده، گران یا غیرقابل فهم باشند.
+                Oven از یک باور ساده شروع شد، وب‌سایت‌ها نباید پیچیده، گران یا غیرقابل فهم باشند.
                 ما می‌خواهیم هر کسب‌وکاری، صرف نظر از اندازه‌اش، به یک وب‌سایت حرفه‌ای و مؤثر دسترسی داشته باشد.
               </p>
               <p className="text-dusty-grape dark:text-almond-silk/80 leading-relaxed">

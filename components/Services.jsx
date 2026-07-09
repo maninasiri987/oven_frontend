@@ -31,7 +31,7 @@ export default function Services() {
                     بیشتر
                     <span className="absolute -bottom-0.5 right-0 w-0 h-[1px] bg-current transition-all duration-300 sm:group-hover:w-full"></span>
                   </span>
-                  <span className="transition-transform duration-300 sm:group-hover:-translate-x-1">←</span>
+                  <span aria-hidden="true" className="transition-transform duration-300 sm:group-hover:-translate-x-1">←</span>
                 </Link>
               </div>
             </StaggerItem>

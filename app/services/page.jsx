@@ -111,7 +111,7 @@ export default function ServicesPage() {
                       {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk mb-1">{s.delivery}</div>}
                       <div className="text-xl font-semibold whitespace-nowrap">{s.price}</div>
                     </div>
-                    <Link href={`/services/${s.slug}`} className="shrink-0 text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300 whitespace-nowrap">بیشتر ←</Link>
+                    <Link href={`/services/${s.slug}`} className="shrink-0 text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300 whitespace-nowrap">بیشتر <span aria-hidden="true">←</span></Link>
                   </div>
                 </div>
               </div>

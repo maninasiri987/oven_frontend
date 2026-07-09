@@ -36,7 +36,7 @@ export default function Hero() {
         </div>
         <div ref={titleRef} className="-mt-8 md:mt-0">
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-right leading-[1.4]"
           >
             سایت فقط ویترین نیست؛ اهرم کسب‌وکارته
           </h1>
@@ -44,7 +44,7 @@ export default function Hero() {
             className="text-dusty-grape/60 dark:text-almond-silk/60 text-base sm:text-lg mb-8 leading-relaxed text-right -mt-4"
             dir="rtl"
           >
-            وب‌سایت‌هایی می‌سازیم که فقط آنلاین نیستند؛ بلکه رشد می‌دهند.
+            oven مجموعه‌ای تخصصی در زمینه طراحی سایت، سئو و توسعه وب است. ما وب‌سایت‌هایی سریع، مدرن و بهینه می‌سازیم که علاوه بر ظاهر حرفه‌ای، برای رشد واقعی کسب‌وکار شما طراحی شده‌اند.
           </p>
           <div
             className="flex flex-col sm:flex-row items-center gap-4"
