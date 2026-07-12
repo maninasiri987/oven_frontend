@@ -9,8 +9,14 @@ export async function generateMetadata({ params }) {
   const service = services.find(s => s.slug === slug)
   if (!service) return {}
 
+  const customTitles = {
+    'fast-web': 'طراحی سایت وردپرسی — تحویل سریع و تخفیف | oven',
+    'pro-web': 'طراحی سایت اختصاصی — پروژه‌های کدنویسی‌شده | oven',
+    'custom-theme': 'طراحی قالب اختصاصی وردپرس — قالب سفارشی | oven',
+  }
+
   return {
-    title: service.title,
+    title: customTitles[slug] ? { absolute: customTitles[slug] } : service.title,
     description: service.shortDesc,
     alternates: {
       canonical: `https://ovenweb.vercel.app/services/${service.slug}`,
@@ -47,7 +53,7 @@ export default async function ServiceSlugLayout({ children, params }) {
     description: service.shortDesc,
     provider: {
       '@type': 'Organization',
-      name: 'Oven',
+      name: 'اوون وب',
       url: 'https://ovenweb.vercel.app',
     },
     url: `https://ovenweb.vercel.app/services/${service.slug}`,

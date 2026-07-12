@@ -13,8 +13,8 @@ const vazirmatn = localFont({
 
 export const metadata = {
   title: {
-    default: 'Oven - طراحی سایت',
-    template: '%s | Oven',
+    default: 'طراحی سایت اوون وب — طراحی مدرن و حرفه‌ای | oven',
+    template: '%s | اوون وب',
   },
   description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
   keywords: ['طراحی سایت', 'طراحی وب سایت', 'سئو', 'بهینه سازی سایت', 'وردپرس', 'نیکست جی‌اس', 'توسعه وب', 'Oven', 'طراحی سایت حرفه‌ای'],
@@ -23,10 +23,10 @@ export const metadata = {
     canonical: 'https://ovenweb.vercel.app',
   },
   openGraph: {
-    title: 'Oven - طراحی سایت',
+    title: 'طراحی سایت اوون وب — طراحی مدرن و حرفه‌ای | oven',
     description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
     url: 'https://ovenweb.vercel.app',
-    siteName: 'Oven',
+    siteName: 'اوون وب',
     locale: 'fa_IR',
     type: 'website',
     images: [
@@ -40,7 +40,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Oven - طراحی سایت',
+    title: 'طراحی سایت اوون وب — طراحی مدرن و حرفه‌ای | oven',
     description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
     images: ['https://ovenweb.vercel.app/og-telegram.png'],
   },
@@ -72,7 +72,7 @@ export default async function RootLayout({ children }) {
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              name: 'Oven',
+              name: 'اوون وب',
               url: 'https://ovenweb.vercel.app',
               logo: 'https://ovenweb.vercel.app/assets/logo.webp',
               description: 'طراحی سایت حرفه‌ای، سریع و مدرن',
@@ -86,7 +86,8 @@ export default async function RootLayout({ children }) {
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              name: 'Oven',
+              name: 'اوون وب',
+              alternateName: 'oven',
               url: 'https://ovenweb.vercel.app',
               inLanguage: 'fa-IR',
             }),
