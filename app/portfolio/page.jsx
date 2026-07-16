@@ -1,17 +1,36 @@
 import dynamic from 'next/dynamic'
-import { ShoppingBag, HeartPulse, Rocket, Store, GraduationCap, Building2 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,
 })
 
 const projects = [
-  { icon: ShoppingBag, title: 'فروشگاهی', desc: 'فروشگاه آنلاین مدرن با تجربه خرید روان.', type: 'نمونه مفهومی', delay: '0' },
-  { icon: HeartPulse, title: 'کلینیک', desc: 'سایت کلینیک پزشکی با نوبت‌دهی آنلاین.', type: 'نمونه مفهومی', delay: '80' },
-  { icon: Rocket, title: 'استارتاپ', desc: 'لندینگ پیج استارتاپ با تمرکز بر تبدیل.', type: 'نمونه مفهومی', delay: '160' },
-  { icon: Store, title: 'خدماتی', desc: 'سایت شرکت خدماتی با فرم درخواست آنلاین.', type: 'نمونه مفهومی', delay: '240' },
-  { icon: GraduationCap, title: 'آموزشی', desc: 'پلتفرم آموزش آنلاین با سیستم دوره.', type: 'نمونه مفهومی', delay: '320' },
-  { icon: Building2, title: 'شرکتی', desc: 'سایت شرکتی مدرن با معرفی خدمات.', type: 'نمونه مفهومی', delay: '400' },
+  {
+    title: 'پوشاک آرا',
+    desc: 'فروشگاه آنلاین پوشاک با طراحی مدرن و تجربه خرید روان.',
+    type: 'Fast Web',
+    image: '/portfolio/cloth-store.png',
+    link: 'https://maninasiri987.github.io/cloth_website/',
+    delay: '0',
+  },
+  {
+    title: 'بلاگی',
+    desc: 'سیستم بلاگ حرفه‌ای با قابلیت جستجوی هوشمند مقالات.',
+    type: 'Fast Web',
+    image: '/portfolio/blog-system.png',
+    link: 'https://maninasiri987.github.io/blog_system/',
+    delay: '80',
+  },
+  {
+    title: 'GrowthBox',
+    desc: 'اپلیکیشن مدیریت کارها و یادداشت‌ها با داشبورد تعاملی.',
+    type: 'Pro Web',
+    image: '/portfolio/growthbox.png',
+    link: 'https://groowth-box.vercel.app/dashboard',
+    delay: '160',
+  },
 ]
 
 export default function PortfolioPage() {
@@ -20,12 +39,24 @@ export default function PortfolioPage() {
     <main className="pt-24 pb-20 px-6 sm:px-10">
         <div className="max-w-6xl mx-auto" dir="rtl">
           <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-4 reveal">نمونه کار</h1>
-          <p className="text-dusty-grape dark:text-almond-silk text-center mb-16 reveal" data-delay="50">پروژه‌های مفهومی Oven</p>
+          <p className="text-dusty-grape dark:text-almond-silk text-center mb-16 reveal" data-delay="50">پروژه‌های واقعی Oven</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((p) => (
-              <div key={p.title} className="bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl overflow-hidden reveal shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300" data-delay={p.delay}>
-                <div className="h-48 bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo flex items-center justify-center">
-                  <p.icon className="w-12 h-12 text-dusty-grape/40 dark:text-almond-silk/40" />
+              <Link
+                key={p.title}
+                href={p.link}
+                target="_blank"
+                className="group bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl overflow-hidden reveal shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300"
+                data-delay={p.delay}
+              >
+                <div className="relative h-48 bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo overflow-hidden">
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                 </div>
                 <div className="p-5 text-right">
                   <div className="flex items-center justify-between mb-2">
@@ -34,7 +65,7 @@ export default function PortfolioPage() {
                   </div>
                   <p className="text-sm text-dusty-grape dark:text-almond-silk/80">{p.desc}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
