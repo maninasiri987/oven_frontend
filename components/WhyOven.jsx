@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useState, useEffect } from 'react'
 import { Eye, CalendarCheck, Headphones, Sparkles, Award, TrendingUp } from 'lucide-react'
 import { MotionSection, StaggerGroup, StaggerItem } from './Motion'
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -13,11 +13,39 @@ const items = [
   { icon: TrendingUp, title: 'قابل توسعه', desc: 'سایتی که با شما رشد می‌کنه.' },
 ]
 
-function TiltCard({ item }) {
+const mobileEntrance = [
+  { from: 'rotateY(-35deg) translateX(-40px)', delay: 0 },
+  { from: 'rotateY(35deg) translateX(40px)', delay: 80 },
+  { from: 'rotateX(35deg) translateY(40px)', delay: 160 },
+  { from: 'rotateY(-35deg) translateX(-40px)', delay: 240 },
+  { from: 'rotateY(35deg) translateX(40px)', delay: 320 },
+  { from: 'rotateX(35deg) translateY(40px)', delay: 400 },
+]
+
+function TiltCard({ item, index }) {
   const cardRef = useRef(null)
   const glowRef = useRef(null)
   const iconRef = useRef(null)
   const isMobile = useIsMobile()
+  const [entered, setEntered] = useState(false)
+
+  useEffect(() => {
+    if (!isMobile) return
+    const el = cardRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setEntered(true), mobileEntrance[index].delay)
+          observer.unobserve(el)
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [isMobile, index])
 
   const handleMouseMove = useCallback((e) => {
     const card = cardRef.current
@@ -55,13 +83,19 @@ function TiltCard({ item }) {
     if (icon) icon.style.transform = 'translate(0px, 0px) rotate(0deg)'
   }, [])
 
+  const mobileStyle = isMobile ? {
+    transform: entered ? 'perspective(600px) rotateX(0deg) rotateY(0deg) translateX(0) translateY(0) scale(1)' : `perspective(600px) ${mobileEntrance[index].from} scale(0.9)`,
+    opacity: entered ? 1 : 0,
+    transition: 'transform 0.6s cubic-bezier(.23,1,.32,1), opacity 0.5s ease',
+  } : { transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease' }
+
   return (
     <div
       ref={cardRef}
       onMouseMove={!isMobile ? handleMouseMove : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       className="relative bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-5 sm:p-6 text-right shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20"
-      style={!isMobile ? { transition: 'transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease' } : undefined}
+      style={mobileStyle}
     >
       {!isMobile && <div ref={glowRef} className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none transition-opacity duration-300" />}
       <div className="relative z-10 flex sm:block items-start gap-4">
@@ -87,9 +121,9 @@ export default function WhyOven() {
           <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-12 text-right">چرا Oven؟</h2>
         </MotionSection>
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item) => (
+          {items.map((item, i) => (
             <StaggerItem key={item.title}>
-              <TiltCard item={item} />
+              <TiltCard item={item} index={i} />
             </StaggerItem>
           ))}
         </StaggerGroup>

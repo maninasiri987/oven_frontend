@@ -38,15 +38,15 @@ function NextIcon({ className }) {
 
 export default function QuickSelection() {
   return (
-    <section className="py-20 px-6 sm:px-10 md:h-screen min-h-screen flex flex-col justify-center md:snap-center bg-almond-silk/20 dark:bg-dusty-grape/10">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-20 px-4 sm:px-6 lg:px-10 md:h-screen min-h-screen flex flex-col justify-center md:snap-center bg-almond-silk/20 dark:bg-dusty-grape/10" dir="rtl">
+      <div className="max-w-2xl mx-auto w-full">
         <MotionSection>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right">انتخاب سریع</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4">انتخاب سریع</h2>
           <p className="text-dusty-grape dark:text-almond-silk text-center mb-12">کدوم پلن مناسب کسب‌وکارته؟</p>
         </MotionSection>
         <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <StaggerItem>
-            <div className="bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-8 shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300">
+          <StaggerItem className="flex">
+            <div className="flex flex-col flex-1 bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-6 sm:p-8 shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300">
               <div className="mb-6 text-right">
                 <div className="flex items-center gap-2 mb-2">
                   <WPIcon className="w-5 h-5 text-dusty-grape dark:text-almond-silk" />
@@ -55,21 +55,23 @@ export default function QuickSelection() {
                 <h3 className="text-xl font-semibold mb-3">Fast Web</h3>
               </div>
               <div className="space-y-3 mb-6 text-right">
-                <div className="flex items-center gap-2 text-sm text-dusty-grape dark:text-almond-silk/80" dir="rtl">
+                <div className="flex items-center gap-2 text-sm text-dusty-grape dark:text-almond-silk/80">
                   <Clock className="w-4 h-4 shrink-0" />
                   <span>۷ تا ۱۰ روز</span>
                 </div>
                 <div className="text-sm text-dusty-grape dark:text-almond-silk/80">شروع از</div>
                 <div className="text-lg font-semibold">۶٬۹۰۰٬۰۰۰ تومان</div>
               </div>
-              <div className="bg-dusty-grape/10 dark:bg-parchment/10 rounded-xl p-3 mb-6" dir="rtl">
-                <span className="text-xs text-dusty-grape dark:text-almond-silk font-medium">اولین همکاری با Oven؟ ۱۵٪ تخفیف شروع همکاری</span>
+              <div className="bg-dusty-grape/10 dark:bg-parchment/10 rounded-xl p-3 mb-6">
+                <span className="text-xs text-dusty-grape dark:text-almond-silk font-medium">۱۵٪ تخفیف شروع همکاری</span>
               </div>
-              <Link href="/plans" className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">مشاهده</Link>
+              <div className="mt-auto">
+                <Link href="/plans" className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">مشاهده</Link>
+              </div>
             </div>
           </StaggerItem>
-          <StaggerItem>
-            <div className="bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-8 shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300">
+          <StaggerItem className="flex">
+            <div className="flex flex-col flex-1 bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-6 sm:p-8 shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300">
               <div className="mb-6 text-right">
                 <div className="flex items-center gap-2 mb-2">
                   <NextIcon className="w-4 h-4 text-dusty-grape dark:text-almond-silk" />
@@ -78,15 +80,16 @@ export default function QuickSelection() {
                 <h3 className="text-xl font-semibold mb-3">Pro Web</h3>
               </div>
               <div className="space-y-3 mb-6 text-right">
-                <div className="flex items-center gap-2 text-sm text-dusty-grape dark:text-almond-silk/80" dir="rtl">
+                <div className="flex items-center gap-2 text-sm text-dusty-grape dark:text-almond-silk/80">
                   <Clock className="w-4 h-4 shrink-0" />
                   <span>۱ تا ۲ ماه</span>
                 </div>
                 <div className="text-sm text-dusty-grape dark:text-almond-silk/80">شروع از</div>
                 <div className="text-lg font-semibold">۲۴٬۹۰۰٬۰۰۰ تومان</div>
               </div>
-              <div className="h-[52px] mb-6"></div>
-              <Link href="/plans" className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">مشاهده</Link>
+              <div className="mt-auto">
+                <Link href="/plans" className="block w-full text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300">مشاهده</Link>
+              </div>
             </div>
           </StaggerItem>
         </StaggerGroup>
