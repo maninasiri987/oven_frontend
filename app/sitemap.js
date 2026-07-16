@@ -14,7 +14,6 @@ export default function sitemap() {
     })),
     { url: `${base}/plans`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/portfolio`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${base}/project`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ]
 }

@@ -4,7 +4,7 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/dashboard/'],
+        disallow: ['/api/', '/dashboard/', '/project'],
       },
     ],
     sitemap: 'https://ovenweb.vercel.app/sitemap.xml',
