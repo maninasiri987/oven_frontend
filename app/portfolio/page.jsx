@@ -46,6 +46,7 @@ export default function PortfolioPage() {
                 key={p.title}
                 href={p.link}
                 target="_blank"
+                rel="nofollow noopener noreferrer"
                 className="group bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl overflow-hidden reveal shadow-md shadow-dusty-grape/10 dark:shadow-space-indigo/20 hover:shadow-lg hover:shadow-dusty-grape/20 dark:hover:shadow-parchment/10 hover:border-dusty-grape/40 dark:hover:border-dusty-grape/50 transition-all duration-300"
                 data-delay={p.delay}
               >
