@@ -279,7 +279,7 @@ export default function BlackHole({
             const outerRad = outerRadiusFor(w, h)
             const voidCx = w / 2
             const voidCy = h / 2
-            const sizeBoost = w < 640 ? 1.35 : 1 // slightly bigger dots on mobile
+            const sizeBoost = w < 640 ? 0.8 : 1 // finer particle grain on mobile
 
             const pts = particlesRef.current
             const tiltRad = (tilt * Math.PI) / 180

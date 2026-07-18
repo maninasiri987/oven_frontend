@@ -37,7 +37,7 @@ export default function Hero() {
             <BlackHole />
           </div>
           {/* Mobile: compact eclipse */}
-          <div className="md:hidden relative mx-auto w-[280px] sm:w-[300px] aspect-square">
+          <div className="md:hidden relative mx-auto w-[320px] sm:w-[340px] aspect-square">
             <BlackHole />
           </div>
         </div>
