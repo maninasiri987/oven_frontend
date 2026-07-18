@@ -39,6 +39,8 @@ export default function Home() {
     }
     function onKey(e) {
       if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+      // never hijack arrows while the user is typing in a form field or editable area
+      if (e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable="true"]')) return
       const c = getContainer()
       if (!c) return
       e.preventDefault()
@@ -53,7 +55,7 @@ export default function Home() {
 
   return (
     <div data-scroll-container className="md:snap-y md:snap-mandatory md:overflow-y-auto md:h-screen">
-      <h1 className="sr-only">طراحی سایت حرفه‌ای برای رشد واقعی کسب‌وکار</h1>
+      <p className="sr-only">طراحی سایت حرفه‌ای برای رشد واقعی کسب‌وکار</p>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

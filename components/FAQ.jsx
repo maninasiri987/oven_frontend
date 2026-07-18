@@ -17,17 +17,23 @@ export default function FAQ() {
     <section className="py-20 px-6 sm:px-10 md:h-screen min-h-screen w-full flex flex-col justify-center md:snap-center bg-almond-silk/20 dark:bg-dusty-grape/10" dir="rtl">
       <div className="max-w-2xl mx-auto">
         <MotionSection>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-12 text-right">سوالات متداول</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-12">سوالات متداول</h2>
         </MotionSection>
         <StaggerGroup className="space-y-3">
           {faqs.map((faq, i) => (
             <StaggerItem key={i}>
-              <div className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-white/20 dark:border-dusty-grape/30 rounded-xl overflow-hidden cursor-pointer ${openIdx === i ? 'open' : ''}`} onClick={() => setOpenIdx(openIdx === i ? null : i)}>
-                <div className="w-full flex items-center justify-between p-5 text-right">
+              <div className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-white/20 dark:border-dusty-grape/30 rounded-xl overflow-hidden ${openIdx === i ? 'open' : ''}`}>
+                <button
+                  type="button"
+                  aria-expanded={openIdx === i}
+                  aria-controls={`faq-answer-${i}`}
+                  onClick={() => setOpenIdx(openIdx === i ? null : i)}
+                  className="w-full flex items-center justify-between p-5 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk"
+                >
                   <span className="text-sm font-medium">{faq.q}</span>
                   <ChevronDown className={`w-4 h-4 text-dusty-grape dark:text-almond-silk shrink-0 transition-transform duration-250 ${openIdx === i ? 'rotate-180' : ''}`} />
-                </div>
-                <div className={`faq-answer ${openIdx === i ? 'open' : 'closed'} px-5 pb-5`}>
+                </button>
+                <div id={`faq-answer-${i}`} role="region" className={`faq-answer ${openIdx === i ? 'open' : 'closed'} px-5 pb-5`}>
                   <p className="text-sm text-dusty-grape dark:text-almond-silk/80 leading-relaxed">{faq.a}</p>
                 </div>
               </div>

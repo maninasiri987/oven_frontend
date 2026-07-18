@@ -2,11 +2,10 @@ import { Check } from 'lucide-react'
 
 export default function Checkbox({ checked, id, green }) {
   return (
-    <div
-      role="checkbox"
-      aria-checked={checked}
+    <span
+      aria-hidden="true"
       id={id}
-      className={`w-5 h-5 shrink-0 rounded-md border-2 flex items-center justify-center transition-all duration-200 ${
+      className={`inline-flex w-5 h-5 shrink-0 rounded-md border-2 items-center justify-center transition-all duration-200 ${
         green
           ? checked
             ? 'bg-green-500 border-green-500'
@@ -21,6 +20,6 @@ export default function Checkbox({ checked, id, green }) {
           green ? 'text-space-indigo' : 'text-parchment dark:text-space-indigo'
         } ${checked ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
       />
-    </div>
+    </span>
   )
 }

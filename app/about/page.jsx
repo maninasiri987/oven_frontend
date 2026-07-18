@@ -2,6 +2,12 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Target, Heart, Lightbulb } from 'lucide-react'
 
+export const metadata = {
+  title: 'درباره ما',
+  description: 'با تیم اوون وب آشنا شوید — مجموعه‌ای تخصصی در طراحی سایت، سئو و توسعه وب که سایت‌هایی ساده، سریع و مناسب رشد کسب‌وکار می‌سازد.',
+  alternates: { canonical: 'https://ovenweb.vercel.app/about' },
+}
+
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,
 })

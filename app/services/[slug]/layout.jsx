@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: customTitles[slug] ? { absolute: customTitles[slug] } : service.title,
+    title: customTitles[slug] ? { absolute: customTitles[slug] } : { absolute: `${service.title} | اوون وب` },
     description: service.shortDesc,
     alternates: {
       canonical: `https://ovenweb.vercel.app/services/${service.slug}`,

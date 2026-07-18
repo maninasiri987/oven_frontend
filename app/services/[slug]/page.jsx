@@ -37,6 +37,7 @@ export default function ServicePage({ params }) {
 
   useEffect(() => {
     const onKey = (e) => {
+      if (e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable="true"]')) return
       if (e.key === 'ArrowLeft') { e.preventDefault(); scrollGallery('left') }
       if (e.key === 'ArrowRight') { e.preventDefault(); scrollGallery('right') }
     }
@@ -60,7 +61,7 @@ export default function ServicePage({ params }) {
 
   return (
     <>
-      <Link href="/services" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full md:bg-white/80 md:dark:bg-space-indigo/80 md:backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200">
+      <Link href="/services" aria-label="بازگشت به خدمات" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full md:bg-white/80 md:dark:bg-space-indigo/80 md:backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200">
         <ArrowLeft className="w-5 h-5" />
       </Link>
 
@@ -70,7 +71,7 @@ export default function ServicePage({ params }) {
           <div className="mb-8 text-right">
             <h1 className="text-3xl sm:text-4xl font-semibold mb-4">{service.title}</h1>
             {service.deliveryTime && (
-              <div className="text-sm text-dusty-grape/60 dark:text-almond-silk/50 mb-4">زمان تحویل: {service.deliveryTime}</div>
+              <div className="text-sm text-dusty-grape/80 dark:text-almond-silk/70 mb-4">زمان تحویل: {service.deliveryTime}</div>
             )}
             <div className="flex flex-wrap gap-2 mb-4">
               {service.technologies.map((t, i) => (
@@ -83,7 +84,7 @@ export default function ServicePage({ params }) {
                 ))}
                 <div className="shrink-0 w-1 h-1"></div>
               </div>
-            <p className="text-dusty-grape/60 dark:text-almond-silk/50 text-base leading-relaxed max-w-2xl">{service.introduction}</p>
+            <p className="text-dusty-grape/80 dark:text-almond-silk/70 text-base leading-relaxed max-w-2xl">{service.introduction}</p>
           </div>
 
           <div className="flex items-center justify-between mb-12" dir="rtl">
@@ -93,10 +94,10 @@ export default function ServicePage({ params }) {
 
           {(slug === 'fast-web' || slug === 'pro-web') && (
             <div className="mb-12 relative px-1">
-              <button onClick={() => scrollGallery('right')} className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer md:-right-3">
+              <button onClick={() => scrollGallery('right')} aria-label="اسلاید قبلی" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer md:-right-3">
                 <ChevronRight className="w-5 h-5" />
               </button>
-              <button onClick={() => scrollGallery('left')} className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer md:-left-3">
+              <button onClick={() => scrollGallery('left')} aria-label="اسلاید بعدی" className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer md:-left-3">
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <div className="rounded-2xl overflow-hidden">
@@ -113,7 +114,7 @@ export default function ServicePage({ params }) {
                     <p.icon className="w-10 h-10 sm:w-12 sm:h-12 text-dusty-grape/40 dark:text-almond-silk/40" />
                     <div className="text-center px-2">
                       <h4 className="font-semibold text-xs sm:text-sm">{p.title}</h4>
-                      <p className="text-[10px] sm:text-xs text-dusty-grape/60 dark:text-almond-silk/50">{p.desc}</p>
+                      <p className="text-[10px] sm:text-xs text-dusty-grape/80 dark:text-almond-silk/70">{p.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -121,7 +122,7 @@ export default function ServicePage({ params }) {
               </div>
               <div className="flex justify-center gap-2 mt-3">
                 {Array.from({ length: galleryItems }).map((_, i) => (
-                  <button key={i} onClick={() => scrollToSlide(i)} className={`h-2 rounded-full transition-all duration-200 cursor-pointer ${activeSlide === i ? 'bg-dusty-grape dark:bg-almond-silk w-6' : 'bg-dusty-grape/30 dark:bg-almond-silk/30 w-2'}`} />
+                  <button key={i} onClick={() => scrollToSlide(i)} aria-label={`رفتن به اسلاید ${i + 1}`} aria-current={activeSlide === i || undefined} className={`h-2 rounded-full transition-all duration-200 cursor-pointer ${activeSlide === i ? 'bg-dusty-grape dark:bg-almond-silk w-6' : 'bg-dusty-grape/30 dark:bg-almond-silk/30 w-2'}`} />
                 ))}
               </div>
             </div>
@@ -171,7 +172,7 @@ export default function ServicePage({ params }) {
                     <div className="shrink-0 w-8 h-8 rounded-full bg-dusty-grape dark:bg-almond-silk flex items-center justify-center text-sm font-semibold text-parchment dark:text-space-indigo">{p.step}</div>
                     <div>
                       <h3 className="font-semibold mb-1">{p.title}</h3>
-                      <p className="text-sm text-dusty-grape/60 dark:text-almond-silk/50 leading-relaxed">{p.desc}</p>
+                      <p className="text-sm text-dusty-grape/80 dark:text-almond-silk/70 leading-relaxed">{p.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -186,12 +187,18 @@ export default function ServicePage({ params }) {
               <div className="space-y-3">
                 {service.faq.map((item, i) => (
                   <div key={i}>
-                    <div className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-white/20 dark:border-dusty-grape/30 rounded-xl overflow-hidden cursor-pointer ${openFaq === i ? 'open' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                      <div className="w-full flex items-center justify-between p-5 text-right">
+                    <div className={`bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-white/20 dark:border-dusty-grape/30 rounded-xl overflow-hidden ${openFaq === i ? 'open' : ''}`}>
+                      <button
+                        type="button"
+                        aria-expanded={openFaq === i}
+                        aria-controls={`service-faq-answer-${i}`}
+                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                        className="w-full flex items-center justify-between p-5 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk"
+                      >
                         <span className="text-sm font-medium">{item.q}</span>
                         <ChevronDown className={`w-4 h-4 text-dusty-grape dark:text-almond-silk shrink-0 transition-transform duration-250 ${openFaq === i ? 'rotate-180' : ''}`} />
-                      </div>
-                      <div className={`faq-answer ${openFaq === i ? 'open' : 'closed'} px-5 pb-5`}>
+                      </button>
+                      <div id={`service-faq-answer-${i}`} role="region" className={`faq-answer ${openFaq === i ? 'open' : 'closed'} px-5 pb-5`}>
                         <p className="text-sm text-dusty-grape dark:text-almond-silk/80 leading-relaxed">{item.a}</p>
                       </div>
                     </div>

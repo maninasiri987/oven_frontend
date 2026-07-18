@@ -40,7 +40,7 @@ export default function MobileMenu({ isOpen, onClose, isDark, toggleTheme }) {
           })}
         </nav>
         <div className="mt-auto flex items-center justify-center">
-          <button onClick={toggleTheme} className="w-12 h-12 flex items-center justify-center rounded-lg bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk cursor-pointer hover:bg-dusty-grape/20 dark:hover:bg-almond-silk/20 transition-all group">
+          <button onClick={toggleTheme} aria-label="تغییر تم" className="w-12 h-12 flex items-center justify-center rounded-lg bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk cursor-pointer hover:bg-dusty-grape/20 dark:hover:bg-almond-silk/20 transition-all group">
             {isDark ? <Sun key="dark" className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" /> : <Moon key="light" className="w-5 h-5 group-hover:-rotate-12 transition-transform duration-300" />}
           </button>
         </div>

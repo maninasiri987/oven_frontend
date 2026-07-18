@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import useTheme from '@/hooks/useTheme'
 import { MobileProvider } from '@/contexts/MobileContext'
-import LoadingBar from '@/components/LoadingBar'
 import RevealInit from '@/components/RevealInit'
 
 const Header = dynamic(() => import('@/components/Header'), {
@@ -19,7 +18,7 @@ export default function ClientLayout({ children, initialTheme }) {
   const { isDark, toggleTheme } = useTheme(initialTheme)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-  const isHiddenPage = pathname === '/project' || pathname.startsWith('/dashboard')
+  const isHiddenPage = pathname.startsWith('/dashboard')
 
   return (
     <MobileProvider>
@@ -29,7 +28,6 @@ export default function ClientLayout({ children, initialTheme }) {
           <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} isDark={isDark} toggleTheme={toggleTheme} />
         </>
       )}
-      <LoadingBar />
       <RevealInit />
       <div key={pathname} className="page-transition">
         {children}

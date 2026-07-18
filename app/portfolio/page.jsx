@@ -2,6 +2,12 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'نمونه کارها',
+  description: 'پروژه‌های واقعی اوون وب: فروشگاه اینترنتی، سیستم جستجوی هوشمند و اپلیکیشن مدیریت — نمونه‌سایت‌هایی سریع، مدرن و بهینه.',
+  alternates: { canonical: 'https://ovenweb.vercel.app/portfolio' },
+}
+
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,
 })

@@ -57,13 +57,13 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <h3 className="text-lg font-semibold mb-4">انتخاب نوع پروژه</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {plans.map(p => (
-              <div key={p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
+              <button key={p.value} type="button" aria-pressed={form.plan === p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
                 <Checkbox checked={form.plan === p.value} />
-                <div>
-                  <div className="text-sm font-medium">{p.name}</div>
-                  <div className="text-xs text-dusty-grape dark:text-almond-silk/60">{p.price} تومان</div>
-                </div>
-              </div>
+                <span>
+                  <span className="block text-sm font-medium">{p.name}</span>
+                  <span className="block text-xs text-dusty-grape dark:text-almond-silk/60">{p.price} تومان</span>
+                </span>
+              </button>
             ))}
           </div>
           {form.plan === 'web' && (
@@ -77,10 +77,10 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <h3 className="text-lg font-semibold mb-4">انتخاب امکانات</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {currentFeatures.map(f => (
-              <div key={f.key} onClick={() => toggleFeature(f.key)} className="flex items-center justify-end gap-3 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors">
+              <button key={f.key} type="button" aria-pressed={form.features.includes(f.key)} onClick={() => toggleFeature(f.key)} className="flex items-center justify-end gap-3 text-sm p-3 rounded-lg hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 cursor-pointer transition-colors text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk">
                 <span>{f.label}</span>
                 <Checkbox checked={form.features.includes(f.key)} />
-              </div>
+              </button>
             ))}
           </div>
         </>
@@ -210,7 +210,7 @@ function ProjectForm() {
 
   return (
     <>
-    <button onClick={() => router.back()} className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200 cursor-pointer">
+    <button onClick={() => router.back()} aria-label="بازگشت" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200 cursor-pointer">
       <ArrowLeft className="w-5 h-5" />
     </button>
     <main className="pt-24 pb-20 px-6 sm:px-10">
@@ -241,8 +241,8 @@ function ProjectForm() {
                       current
                         ? 'text-space-indigo dark:text-parchment font-semibold'
                         : done
-                          ? 'text-dusty-grape/50 dark:text-almond-silk/50'
-                          : 'text-dusty-grape/30 dark:text-almond-silk/30'
+                          ? 'text-dusty-grape/80 dark:text-almond-silk/80'
+                          : 'text-dusty-grape/60 dark:text-almond-silk/60'
                     }`}>{s}</span>
                   </div>
                 )

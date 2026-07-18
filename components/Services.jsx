@@ -16,7 +16,7 @@ export default function Services() {
     <section className="py-20 px-6 sm:px-10 md:h-screen min-h-screen w-full flex flex-col justify-center md:snap-center bg-almond-silk/20 dark:bg-dusty-grape/10" dir="rtl">
       <div className="max-w-6xl mx-auto">
         <MotionSection>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4 text-right">خدمات</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-4">خدمات</h2>
           <p className="text-dusty-grape dark:text-almond-silk text-center mb-12">هر چیزی که برای رشد آنلاینت نیاز داری</p>
         </MotionSection>
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -72,7 +72,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
   return (
     <>
-    {pathname !== '/project' && !pathname.startsWith('/services/') && <button onClick={menuOpen ? onMenuClose : onMenuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
+    {<button onClick={menuOpen ? onMenuClose : onMenuOpen} aria-label={menuOpen ? 'بستن منو' : 'باز کردن منو'} aria-expanded={menuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
       top: menuOpen ? '16px' : compact ? '14px' : '20px',
       right: menuOpen ? '16px' : compact ? 'calc(12.5vw + 16px)' : '16px',
       transition: 'top 0.3s ease, right 0.3s ease',
@@ -106,6 +106,8 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
     <header
       className="fixed z-30 left-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden"
       style={{
+        // On wizard & service detail pages the pill bar stays hidden (focus mode),
+        // but the mobile hamburger (rendered separately below) stays available.
         transform: pathname === '/project' || pathname.startsWith('/services/') ? 'translate(-50%, -120%)' : 'translate(-50%, 0)',
         width: compact ? '75%' : '100%',
         borderRadius: compact ? '9999px' : '0',
@@ -141,7 +143,7 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
             )
           })}
         </nav>
-        <button onClick={toggleTheme} className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-all duration-150 cursor-pointer group">
+        <button onClick={toggleTheme} aria-label="تغییر تم" className="hidden md:flex items-center justify-center w-9 h-9 rounded-lg hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-all duration-150 cursor-pointer group">
           {isDark ? <Sun className="w-4 h-4 text-almond-silk group-hover:rotate-180 transition-transform duration-500" /> : <Moon className="w-4 h-4 text-dusty-grape group-hover:-rotate-12 transition-transform duration-300" />}
         </button>
         <div className="hidden md:block w-px h-8 bg-almond-silk dark:bg-dusty-grape"></div>

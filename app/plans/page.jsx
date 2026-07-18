@@ -1,6 +1,12 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'پلن‌ها و قیمت‌ها',
+  description: 'قیمت‌گذاری شفاف و بدون پنهانکاری: پلن Fast Web برای شروع سریع از ۶٫۹ میلیون تومان و پلن Pro Web برای ساخت وب‌سایت کاملاً اختصاصی — همراه با امکانات اضافی.',
+  alternates: { canonical: 'https://ovenweb.vercel.app/plans' },
+}
+
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,
 })
@@ -30,8 +36,9 @@ export default function Plans() {
           <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-4 reveal">پلن‌های Oven</h1>
           <p className="text-dusty-grape dark:text-almond-silk text-center mb-16 reveal" data-delay="50">قیمت‌گذاری شفاف و بدون پنهانکاری</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-8 reveal" data-delay="0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+            <div className="relative bg-white/40 dark:bg-space-indigo/40 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 rounded-2xl p-8 reveal" data-delay="0">
+              <span className="absolute -top-3.5 right-8 bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md shadow-dusty-grape/20">محبوب‌ترین</span>
               <div className="text-right mb-6">
                 <span className="text-xs text-dusty-grape dark:text-almond-silk font-medium bg-dusty-grape/10 dark:bg-parchment/10 px-3 py-1 rounded-full">وردپرسی</span>
                 <h3 className="text-2xl font-semibold mt-3 mb-2">Fast Web</h3>
@@ -93,6 +100,11 @@ export default function Plans() {
               <Link href="/project?service=pro" className="block w-full text-center bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium py-3 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">شروع پروژه</Link>
             </div>
           </div>
+
+          <p className="text-sm text-dusty-grape dark:text-almond-silk text-center mt-10 reveal" data-delay="150">
+            دنبال خدمات جزئی مثل سئو، پشتیبانی یا نجات سایت هستید؟{' '}
+            <Link href="/project?service=web" className="text-space-indigo dark:text-parchment font-semibold hover:underline underline-offset-4">درخواست خدمات وب</Link>
+          </p>
 
           <div className="mt-16">
             <h2 className="text-2xl font-semibold text-center mb-8 reveal">امکانات اضافی</h2>

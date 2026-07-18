@@ -180,6 +180,7 @@ export default function DashboardPage() {
                       <td className="px-4 py-3 min-w-[180px] max-w-[280px] break-words">{p.description || <span className="text-dusty-grape/40 dark:text-almond-silk/40">-</span>}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <select
+                          aria-label="تغییر وضعیت درخواست"
                           value={p.status || 'بررسی نشده'}
                           onChange={(e) => handleStatusChange(p.id, e.target.value)}
                           disabled={updatingId === p.id}
@@ -211,6 +212,7 @@ export default function DashboardPage() {
                     </span>
                     <span className="text-sm" dir="ltr" style={{ textAlign: 'right' }}>{p.phone}</span>
                     <select
+                      aria-label="تغییر وضعیت درخواست"
                       value={p.status || 'بررسی نشده'}
                       onChange={(e) => handleStatusChange(p.id, e.target.value)}
                       disabled={updatingId === p.id}

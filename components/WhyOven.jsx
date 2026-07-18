@@ -118,7 +118,7 @@ export default function WhyOven() {
     <section className="py-12 sm:py-20 px-4 sm:px-6 lg:px-10 md:min-h-screen w-full flex flex-col justify-center md:snap-center bg-almond-silk/20 dark:bg-dusty-grape/10" dir="rtl">
       <div className="max-w-6xl mx-auto">
         <MotionSection>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-12 text-right">چرا Oven؟</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-12">چرا Oven؟</h2>
         </MotionSection>
         <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item, i) => (
