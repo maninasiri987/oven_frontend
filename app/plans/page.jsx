@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'پلن‌ها و قیمت‌ها',
+  title: { absolute: 'پلن‌ها و قیمت طراحی سایت — Fast Web و Pro Web | oven' },
   description: 'قیمت‌گذاری شفاف و بدون پنهانکاری: پلن Fast Web برای شروع سریع از ۶٫۹ میلیون تومان و پلن Pro Web برای ساخت وب‌سایت کاملاً اختصاصی — همراه با امکانات اضافی.',
   alternates: { canonical: 'https://ovenweb.vercel.app/plans' },
 }

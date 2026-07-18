@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Target, Heart, Lightbulb } from 'lucide-react'
 
 export const metadata = {
-  title: 'درباره ما',
+  title: { absolute: 'درباره اوون وب — تجربه و دیدگاه به آینده | oven' },
   description: 'با تیم اوون وب آشنا شوید — مجموعه‌ای تخصصی در طراحی سایت، سئو و توسعه وب که سایت‌هایی ساده، سریع و مناسب رشد کسب‌وکار می‌سازد.',
   alternates: { canonical: 'https://ovenweb.vercel.app/about' },
 }
