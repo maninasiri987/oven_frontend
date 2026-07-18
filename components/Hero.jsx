@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import SlotBox from './SlotBox'
+import BlackHole from './BlackHole'
 
 export default function Hero() {
   const isMobile = useIsMobile()
@@ -31,8 +31,15 @@ export default function Hero() {
   return (
     <section className="md:h-screen min-h-screen w-full flex items-center px-6 sm:px-10 lg:px-16 overflow-hidden md:snap-center">
       <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center">
-        <div ref={bgRef}>
-          <SlotBox />
+        <div ref={bgRef} className="flex items-center justify-center">
+          {/* Desktop: large eclipse */}
+          <div className="hidden md:block relative w-full max-w-md lg:max-w-lg aspect-square">
+            <BlackHole />
+          </div>
+          {/* Mobile: compact eclipse */}
+          <div className="md:hidden relative mx-auto w-[280px] sm:w-[300px] aspect-square">
+            <BlackHole />
+          </div>
         </div>
         <div ref={titleRef} className="-mt-8 md:mt-0">
           <h1

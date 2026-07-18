@@ -183,3 +183,14 @@ a:active, button:active {
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Page-enter reveal (activated by RevealInit) */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: none;
+}

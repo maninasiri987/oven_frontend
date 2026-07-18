@@ -30,14 +30,8 @@ const proFeatures = [
   { key: 'custom', label: 'سیستم سفارشی' },
 ]
 
-const webFeatures = [
-  { key: 'seo', label: 'سئو' },
-  { key: 'sections', label: 'بخش‌های سفارشی' },
-  { key: 'pages', label: 'صفحات اضافه' },
-  { key: 'blog', label: 'وبلاگ' },
-  { key: 'support', label: 'پشتیبانی' },
-  { key: 'animation', label: 'انیمیشن' },
-]
+// "خدمات وب" currently offers the same add-ons as Fast Web
+const webFeatures = fastFeatures
 
 function StepContent({ step, form, setForm, toggleFeature, dir }) {
   const currentFeatures = form.plan === 'fast' ? fastFeatures : form.plan === 'pro' ? proFeatures : webFeatures

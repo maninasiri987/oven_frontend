@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server'
 import { createPool } from '@vercel/postgres'
+import { isValidSession } from '@/lib/auth'
 
+let pool
 function getPool() {
-  return createPool()
+  if (!pool) pool = createPool()
+  return pool
 }
 
+async function isAuthorized(request) {
+  return isValidSession(request.cookies.get('dashboard_session')?.value)
+}
+
+// Public: project request form submission
 export async function POST(request) {
   try {
     const body = await request.json()
@@ -31,7 +39,12 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+// Dashboard only
+export async function GET(request) {
+  if (!(await isAuthorized(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const result = await getPool().sql`
       SELECT id, plan, features, description, phone, status, created_at
@@ -46,7 +59,12 @@ export async function GET() {
   }
 }
 
+// Dashboard only
 export async function PATCH(request) {
+  if (!(await isAuthorized(request))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const { id, status } = await request.json()
 

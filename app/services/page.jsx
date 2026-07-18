@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import servicesData from '@/data/services'
 
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="h-64" />,

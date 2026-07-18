@@ -42,6 +42,10 @@ export default function DashboardPage() {
     setError('')
     try {
       const res = await fetch('/api/projects')
+      if (res.status === 401) {
+        router.push('/dashboard/login')
+        return
+      }
       const data = await res.json()
       if (res.ok) {
         setProjects(data.projects)
@@ -67,6 +71,10 @@ export default function DashboardPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: newStatus }),
       })
+      if (res.status === 401) {
+        router.push('/dashboard/login')
+        return
+      }
       if (res.ok) {
         setProjects(prev => prev.map(p => p.id === id ? { ...p, status: newStatus } : p))
       }

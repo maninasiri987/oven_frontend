@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createSessionValue, safeEqual } from '@/lib/auth'
 
 export async function POST(request) {
   try {
@@ -14,13 +15,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
     }
 
-    if (password !== dashboardPassword) {
+    if (!safeEqual(password, dashboardPassword)) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
     }
 
+    const sessionValue = await createSessionValue()
+
     const response = NextResponse.json({ success: true })
 
-    response.cookies.set('dashboard_session', 'authenticated', {
+    response.cookies.set('dashboard_session', sessionValue, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

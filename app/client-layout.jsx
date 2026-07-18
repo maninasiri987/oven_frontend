@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import useTheme from '@/hooks/useTheme'
 import { MobileProvider } from '@/contexts/MobileContext'
 import LoadingBar from '@/components/LoadingBar'
+import RevealInit from '@/components/RevealInit'
 
 const Header = dynamic(() => import('@/components/Header'), {
   loading: () => <header className="fixed z-30 left-1/2 -translate-x-1/2 top-2 h-16 w-full" />,
@@ -29,6 +30,7 @@ export default function ClientLayout({ children, initialTheme }) {
         </>
       )}
       <LoadingBar />
+      <RevealInit />
       <div key={pathname} className="page-transition">
         {children}
       </div>
