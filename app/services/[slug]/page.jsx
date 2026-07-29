@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect, use } from 'react'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { ArrowLeft, ChevronDown, ChevronLeft, ChevronRight, Check, Users, Star, Layers, HelpCircle, ShoppingBag, HeartPulse, Rocket, Store, GraduationCap, Building2 } from 'lucide-react'
 import services from '@/data/services'
 import Footer from '@/components/Footer'
@@ -13,6 +13,10 @@ function findService(slug) {
 
 export default function ServicePage({ params }) {
   const { slug } = use(params)
+  // فروشگاهی and شرکتی are plans now, redirect to plans page
+  if (slug === 'froshgahi' || slug === 'sherkati') {
+    redirect(`/plans/${slug}`)
+  }
   const service = findService(slug)
   if (!service) notFound()
 
@@ -89,10 +93,10 @@ export default function ServicePage({ params }) {
 
           <div className="flex items-center justify-between mb-12" dir="rtl">
             <div className="text-xl font-semibold text-space-indigo dark:text-parchment">{service.startingPrice}</div>
-            <Link href={`/project?service=${slug === 'fast-web' ? 'fast' : slug === 'pro-web' ? 'pro' : 'web'}${slug === 'seo' ? '&features=seo' : slug === 'custom-theme' ? '&features=sections' : slug === 'rescue' || slug === 'support' ? '&features=support' : ''}`} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-base font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">ثبت پروژه</Link>
+            <Link href={slug === 'froshgahi' || slug === 'sherkati' ? `/plans/${slug}` : `/project?service=web${slug === 'seo' ? '&features=seo' : slug === 'custom-theme' ? '&features=sections' : slug === 'rescue' || slug === 'support' ? '&features=support' : ''}`} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-base font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150">{slug === 'froshgahi' || slug === 'sherkati' ? 'مشاهده پلن‌ها' : 'ثبت پروژه'}</Link>
           </div>
 
-          {(slug === 'fast-web' || slug === 'pro-web') && (
+          {(slug === 'froshgahi' || slug === 'sherkati') && (
             <div className="mb-12 relative px-1">
               <button onClick={() => scrollGallery('right')} aria-label="اسلاید قبلی" className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer md:-right-3">
                 <ChevronRight className="w-5 h-5" />
@@ -102,13 +106,12 @@ export default function ServicePage({ params }) {
               </button>
               <div className="rounded-2xl overflow-hidden">
                 <div ref={galleryRef} className="flex gap-4 overflow-x-auto snap-x snap-mandatory snap-center scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-                {[
-                  { icon: ShoppingBag, title: 'فروشگاهی', desc: 'فروشگاه آنلاین مدرن با تجربه خرید روان.' },
+                {[                  {icon: ShoppingBag, title: 'فروشگاهی مدرن', desc: 'فروشگاه اینترنتی با تجربه خرید روان.' },
                   { icon: HeartPulse, title: 'کلینیک', desc: 'سایت کلینیک پزشکی با نوبت‌دهی آنلاین.' },
                   { icon: Rocket, title: 'استارتاپ', desc: 'لندینگ پیج استارتاپ با تمرکز بر تبدیل.' },
                   { icon: Store, title: 'خدماتی', desc: 'سایت شرکت خدماتی با فرم درخواست آنلاین.' },
                   { icon: GraduationCap, title: 'آموزشی', desc: 'پلتفرم آموزش آنلاین با سیستم دوره.' },
-                  { icon: Building2, title: 'شرکتی', desc: 'سایت شرکتی مدرن با معرفی خدمات.' },
+                  { icon: Building2, title: 'شرکتی مدرن', desc: 'سایت شرکتی با معرفی خدمات.' },
                 ].map((p, i) => (
                   <div key={i} className={`shrink-0 w-[75%] sm:w-[80%] snap-center rounded-2xl overflow-hidden bg-gradient-to-br from-dusty-grape/20 to-almond-silk/20 dark:from-dusty-grape/30 dark:to-space-indigo aspect-[16/9] flex flex-col items-center justify-center gap-2 border border-dusty-grape/20 dark:border-dusty-grape/30 transition-transform duration-300 ${activeSlide === i ? 'scale-[0.95]' : 'scale-100'}`}>
                     <p.icon className="w-10 h-10 sm:w-12 sm:h-12 text-dusty-grape/40 dark:text-almond-silk/40" />

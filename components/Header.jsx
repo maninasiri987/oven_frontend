@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Sun, Moon, Phone } from 'lucide-react'
+import { Sun, Moon, Phone, MessageCircle, ArrowLeft } from 'lucide-react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
 const navItems = [
@@ -15,6 +15,7 @@ const navItems = [
 
 export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMenuClose }) {
   const [compact, setCompact] = useState(false)
+  const [callHovered, setCallHovered] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const pathname = usePathname()
   const isMobile = useIsMobile()
@@ -120,21 +121,35 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
       }}
     >
       <div className="flex items-center gap-2 md:gap-6">
-        <a href="tel:09105362403" className="group flex items-center justify-center gap-2 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 whitespace-nowrap">
+        {/* Back button — shows on plans sub-pages */}
+        {pathname.startsWith('/plans/') && (
+          <Link
+            href={
+              pathname.match(/^\/plans\/[^/]+\/[^/]+$/) 
+                ? pathname.replace(/\/[^/]+$/, '')  // /plans/[cat]/[plan] → /plans/[cat]
+                : '/plans'  // /plans/[cat] → /plans
+            }
+            aria-label="بازگشت"
+            className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-all duration-200 group"
+          >
+            <ArrowLeft className="w-4 h-4 text-dusty-grape dark:text-almond-silk group-hover:-translate-x-0.5 transition-transform duration-200" />
+          </Link>
+        )}
+        <a href="tel:09105362403" className="hidden md:flex items-center justify-center gap-2 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 whitespace-nowrap">
           <Phone className="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
-          <span className="pt-1 hidden sm:inline" dir="ltr">09105362403</span>
+          <span className="pt-1" dir="ltr">09105362403</span>
         </a>
+        <Link href="/" className="cursor-pointer sm:hidden">
+          <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" priority />
+        </Link>
       </div>
-      <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 sm:hidden">
-        <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={56} height={56} className="h-14" priority />
-      </Link>
       <Link href="/" className="cursor-pointer absolute left-1/2 -translate-x-1/2 hidden sm:block md:hidden">
         <Image src="/assets/logo.webp" alt="Oven - طراحی سایت" width={80} height={80} className="h-20" priority />
       </Link>
       <div className="flex items-center gap-2 md:gap-6">
         <nav className="hidden md:flex items-center gap-8">
           {navItems.map(item => {
-            const isActive = pathname === item.href
+            const isActive = item.href === '/plans' ? pathname.startsWith('/plans') : pathname === item.href
             return (
               <Link key={item.label} href={item.href} className={`relative pb-1 text-sm font-medium transition-colors duration-150 group ${isActive ? 'text-space-indigo dark:text-parchment' : 'text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment'}`}>
                 {item.label}
@@ -173,6 +188,18 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
         ></div>
       </div>
     </header>
+
+    {/* Fixed call button — mobile only */}
+    <a
+      href="tel:09105362403"
+      aria-label="تماس با ما"
+      onMouseEnter={() => setCallHovered(true)}
+      onMouseLeave={() => setCallHovered(false)}
+      className="fixed z-50 md:hidden bottom-6 left-6 w-14 h-14 rounded-full bg-space-indigo dark:bg-parchment flex items-center justify-center shadow-lg shadow-dusty-grape/30 dark:shadow-space-indigo/40 transition-all duration-300 hover:scale-110 active:scale-95"
+    >
+      <Phone className={`w-5 h-5 absolute transition-all duration-300 text-parchment dark:text-space-indigo ${callHovered ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`} />
+      <MessageCircle className={`w-5 h-5 absolute transition-all duration-300 text-parchment dark:text-space-indigo ${callHovered ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} />
+    </a>
     </>
   )
 }

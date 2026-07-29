@@ -10,22 +10,22 @@ const Footer = dynamic(() => import('@/components/Footer'), {
 
 const services = [
   {
-    title: 'Fast Web',
-    slug: 'fast-web',
-    desc: 'سایت وردپرسی سریع و حرفه‌ای برای شروع سریع کسب‌وکار.',
-    features: ['طراحی ریسپانسیو', 'سرعت بالا', 'SEO پایه', 'پنل مدیریت وردپرس'],
-    suited: 'مناسب کسب‌وکارهای نوپا',
-    delivery: '۷ تا ۱۰ روز',
-    price: 'شروع از ۶٬۹۰۰٬۰۰۰ تومان',
+    title: 'فروشگاهی',
+    slug: 'froshgahi',
+    desc: 'فروشگاه اینترنتی کامل با پلن‌های اقتصادی، حرفه‌ای و اختصاصی.',
+    features: ['پنل مدیریت فروشگاه', 'درگاه پرداخت', 'مدیریت محصولات', 'دامنه .ir رایگان'],
+    suited: 'مناسب فروشگاه‌های اینترنتی',
+    delivery: '۷ روز تا ۳ ماه',
+    price: 'شروع از ۲۵٬۰۰۰٬۰۰۰ تومان',
   },
   {
-    title: 'Pro Web',
-    slug: 'pro-web',
-    desc: 'وب‌سایت اختصاصی با امکانات سفارشی و طراحی منحصربفرد.',
-    features: ['طراحی اختصاصی', 'امکانات سفارشی', 'پنل مدیریت', 'سئو حرفه‌ای'],
-    suited: 'مناسب کسب‌وکارهای رشدیافته',
-    delivery: '۱ تا ۲ ماه',
-    price: 'شروع از ۲۴٬۹۰۰٬۰۰۰ تومان',
+    title: 'شرکتی',
+    slug: 'sherkati',
+    desc: 'سایت شرکتی مدرن با پلن‌های اقتصادی، حرفه‌ای و اختصاصی.',
+    features: ['طراحی حرفه‌ای', 'مدیریت محتوا', 'فرم تماس', 'دامنه .ir رایگان'],
+    suited: 'مناسب شرکت‌ها و سازمان‌ها',
+    delivery: '۷ روز تا ۳ ماه',
+    price: 'شروع از ۲۵٬۰۰۰٬۰۰۰ تومان',
   },
   {
     title: 'سئو',
@@ -34,7 +34,7 @@ const services = [
     features: ['آنالیز سئو', 'بهینه‌سازی محتوا', 'لینک‌سازی', 'گزارش ماهانه'],
     suited: 'مناسب همه سایت‌ها',
     delivery: '۱ تا ۳ ماه',
-    price: 'شروع از ۲٬۴۹۰٬۰۰۰ تومان',
+    price: 'شروع از ۱۵٬۰۰۰٬۰۰۰ تومان/ماه',
   },
   {
     title: 'طراحی قالب اختصاصی',
@@ -61,7 +61,7 @@ const services = [
     features: ['بروزرسانی افزونه‌ها', 'پشتیبانی فنی', 'رفع مشکلات', 'گزارش ماهانه'],
     suited: 'مناسب همه سایت‌ها',
     delivery: 'ماهانه',
-    price: 'شروع از ۷۹۰٬۰۰۰ تومان/ماه',
+    price: 'شروع از ۱۵٬۰۰۰٬۰۰۰ تومان/ماه',
   },
 ]
 
@@ -105,12 +105,12 @@ export default function ServicesPage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="md:w-72 p-6 md:p-8 flex flex-row md:flex-col items-center md:items-stretch justify-between md:justify-center gap-4 border-t md:border-t-0 md:border-r border-dusty-grape/10 dark:border-almond-silk/10 bg-white/20 dark:bg-space-indigo/60">
+                  <div className="md:w-72 p-6 md:p-8 flex flex-col items-stretch justify-between md:justify-center gap-4 border-t md:border-t-0 md:border-r border-dusty-grape/10 dark:border-almond-silk/10 bg-white/20 dark:bg-space-indigo/60">
                     <div className="text-center">
                       {s.delivery && <div className="text-sm text-dusty-grape dark:text-almond-silk mb-1">{s.delivery}</div>}
                       <div className="text-xl font-semibold whitespace-nowrap">{s.price}</div>
                     </div>
-                    <Link href={`/services/${s.slug}`} className="shrink-0 text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300 whitespace-nowrap">بیشتر <span aria-hidden="true">←</span></Link>
+                    <Link href={s.slug === 'froshgahi' || s.slug === 'sherkati' ? `/plans/${s.slug}` : `/services/${s.slug}`} className="shrink-0 text-center border border-dusty-grape dark:border-almond-silk text-dusty-grape dark:text-almond-silk text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-dusty-grape/10 dark:hover:bg-almond-silk/10 transition-all duration-300 whitespace-nowrap">بیشتر <span aria-hidden="true">←</span></Link>
                   </div>
                 </div>
               </div>

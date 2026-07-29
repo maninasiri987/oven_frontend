@@ -79,7 +79,7 @@ export default function Portfolio() {
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-semibold">{item.title}</h3>
                     <span className="text-xs bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk px-2 py-0.5 rounded-full">
-                      {item.title === 'GrowthBox' ? 'Pro Web' : 'Fast Web'}
+                      {'طراحی شده توسط Oven'}
                     </span>
                   </div>
                   <p className="text-sm text-dusty-grape dark:text-almond-silk/80">{item.desc}</p>

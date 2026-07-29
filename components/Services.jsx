@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { MotionSection, StaggerGroup, StaggerItem } from './Motion'
 
 const services = [
-  { title: 'Fast Web', desc: 'سایت وردپرسی سریع و حرفه‌ای برای شروع سریع کسب‌وکار.', suited: 'مناسب کسب‌وکارهای نوپا' },
-  { title: 'Pro Web', desc: 'وب‌سایت اختصاصی با امکانات سفارشی و طراحی منحصربفرد.', suited: 'مناسب کسب‌وکارهای رشدیافته' },
+  { title: 'فروشگاهی', desc: 'فروشگاه اینترنتی کامل با پلن‌های اقتصادی، حرفه‌ای و اختصاصی.', suited: 'مناسب فروشگاه‌های اینترنتی', link: '/plans/froshgahi' },
+  { title: 'شرکتی', desc: 'سایت شرکتی مدرن با پلن‌های اقتصادی، حرفه‌ای و اختصاصی.', suited: 'مناسب شرکت‌ها و سازمان‌ها', link: '/plans/sherkati' },
   { title: 'سئو', desc: 'بهینه‌سازی سایت برای موتورهای جستجو و افزایش ترافیک.', suited: 'مناسب همه سایت‌ها' },
   { title: 'طراحی قالب اختصاصی', desc: 'طراحی و کدنویسی قالب وردپرسی متناسب با برند شما.', suited: 'مناسب برندهای خاص' },
   { title: 'نجات سایت', desc: 'اصلاح و بازسازی سایت‌های آسیب‌دیده یا کند.', suited: 'مناسب سایت‌های مشکل‌دار' },
@@ -26,7 +26,7 @@ export default function Services() {
                 <h3 className="font-semibold mb-2">{s.title}</h3>
                 <p className="text-sm text-dusty-grape dark:text-almond-silk/80 mb-3">{s.desc}</p>
                 <p className="text-xs text-dusty-grape dark:text-almond-silk mb-4">{s.suited}</p>
-                <Link href={`/services#${s.title}`} className="group inline-flex items-center gap-1 text-sm text-dusty-grape dark:text-almond-silk">
+                <Link href={s.link || `/services#${s.title}`} className="group inline-flex items-center gap-1 text-sm text-dusty-grape dark:text-almond-silk">
                   <span className="relative">
                     بیشتر
                     <span className="absolute -bottom-0.5 right-0 w-0 h-[1px] bg-current transition-all duration-300 sm:group-hover:w-full"></span>

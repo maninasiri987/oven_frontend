@@ -8,33 +8,36 @@ import Link from 'next/link'
 import { ArrowLeft, Check } from 'lucide-react'
 
 const plans = [
-  { value: 'fast', name: 'Fast Web', price: '۶٬۹۰۰٬۰۰۰' },
-  { value: 'pro', name: 'Pro Web', price: '۲۴٬۹۰۰٬۰۰۰' },
-  { value: 'web', name: 'خدمات وب', price: 'نیازمند بررسی' },
+  { value: 'froshgahi', name: 'فروشگاهی', cat: true },
+  { value: 'sherkati', name: 'شرکتی', cat: true },
+  { value: 'web', name: 'خدمات وب (سئو، پشتیبانی، ...)', extra: true },
 ]
 
-const fastFeatures = [
+const subPlans = {
+  froshgahi: [
+    { value: 'froshgahi-eghtesadi', name: 'اقتصادی', price: '۲۵٬۰۰۰٬۰۰۰' },
+    { value: 'froshgahi-herfei', name: 'حرفه‌ای', price: '۸۵٬۰۰۰٬۰۰۰' },
+    { value: 'froshgahi-ekhtesasi', name: 'اختصاصی', price: '۱۱۵٬۰۰۰٬۰۰۰' },
+  ],
+  sherkati: [
+    { value: 'sherkati-eghtesadi', name: 'اقتصادی', price: '۲۵٬۰۰۰٬۰۰۰' },
+    { value: 'sherkati-herfei', name: 'حرفه‌ای', price: '۸۵٬۰۰۰٬۰۰۰' },
+    { value: 'sherkati-ekhtesasi', name: 'اختصاصی', price: '۱۱۵٬۰۰۰٬۰۰۰' },
+  ],
+}
+
+const allFeatures = [
   { key: 'seo', label: 'سئو' },
+  { key: 'support', label: 'پشتیبانی' },
   { key: 'sections', label: 'بخش‌های سفارشی' },
   { key: 'pages', label: 'صفحات اضافه' },
   { key: 'blog', label: 'وبلاگ' },
-  { key: 'support', label: 'پشتیبانی' },
   { key: 'animation', label: 'انیمیشن' },
-]
-
-const proFeatures = [
-  { key: 'admin', label: 'پنل مدیریت' },
-  { key: 'seo', label: 'سئو حرفه‌ای' },
   { key: 'multilang', label: 'چند زبانه' },
-  { key: 'animation', label: 'انیمیشن' },
-  { key: 'custom', label: 'سیستم سفارشی' },
 ]
-
-// "خدمات وب" currently offers the same add-ons as Fast Web
-const webFeatures = fastFeatures
 
 function StepContent({ step, form, setForm, toggleFeature, dir }) {
-  const currentFeatures = form.plan === 'fast' ? fastFeatures : form.plan === 'pro' ? proFeatures : webFeatures
+  const currentFeatures = form.plan && form.plan.includes('-') ? allFeatures : allFeatures
   const [animClass, setAnimClass] = useState('step-enter-active')
   const prevStep = useRef(step)
 
@@ -57,13 +60,34 @@ function StepContent({ step, form, setForm, toggleFeature, dir }) {
           <h3 className="text-lg font-semibold mb-4">انتخاب نوع پروژه</h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {plans.map(p => (
-              <button key={p.value} type="button" aria-pressed={form.plan === p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
-                <Checkbox checked={form.plan === p.value} />
-                <span>
-                  <span className="block text-sm font-medium">{p.name}</span>
-                  <span className="block text-xs text-dusty-grape dark:text-almond-silk/60">{p.price} تومان</span>
-                </span>
-              </button>
+              <div key={p.value}>
+                {p.cat ? (
+                  <>
+                    <button type="button" aria-pressed={form.plan?.startsWith(p.value)} onClick={() => setForm(prev => ({ ...prev, plan: `${p.value}-eghtesadi`, features: [] }))} className={`flex items-center gap-4 p-4 mb-2 rounded-xl border cursor-pointer transition-all duration-200 text-right w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk ${form.plan?.startsWith(p.value) ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
+                      <Checkbox checked={form.plan?.startsWith(p.value)} />
+                      <span className="block text-sm font-medium">{p.name}</span>
+                    </button>
+                    {form.plan?.startsWith(p.value) && (
+                      <div className="pr-8 pb-3 space-y-2">
+                        {subPlans[p.value].map(sp => (
+                          <button key={sp.value} type="button" aria-pressed={form.plan === sp.value} onClick={() => setForm(prev => ({ ...prev, plan: sp.value, features: [] }))} className={`flex items-center gap-4 p-3 rounded-xl border cursor-pointer transition-all duration-200 text-right w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk ${form.plan === sp.value ? 'border-dusty-grape dark:border-almond-silk bg-dusty-grape/5 dark:bg-almond-silk/5' : 'border-dusty-grape/15 dark:border-almond-silk/15'}`} dir="rtl">
+                            <Checkbox checked={form.plan === sp.value} />
+                            <span>
+                              <span className="block text-sm font-medium">{sp.name}</span>
+                              <span className="block text-xs text-dusty-grape dark:text-almond-silk/60">{sp.price} تومان</span>
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <button type="button" aria-pressed={form.plan === p.value} onClick={() => setForm(prev => ({ ...prev, plan: p.value, features: [] }))} className={`flex items-center gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200 text-right w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-dusty-grape dark:focus-visible:ring-almond-silk ${form.plan === p.value ? 'border-space-indigo dark:border-parchment bg-space-indigo/5 dark:bg-parchment/5' : 'border-dusty-grape/20 dark:border-almond-silk/20'}`} dir="rtl">
+                    <Checkbox checked={form.plan === p.value} />
+                    <span className="block text-sm font-medium">{p.name}</span>
+                  </button>
+                )}
+              </div>
             ))}
           </div>
           {form.plan === 'web' && (
@@ -138,7 +162,8 @@ function ProjectForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const serviceParam = searchParams.get('service')
-  const initialPlan = serviceParam === 'fast' ? 'fast' : serviceParam === 'pro' ? 'pro' : serviceParam === 'web' ? 'web' : ''
+  const planParam = searchParams.get('plan')
+  const initialPlan = serviceParam === 'froshgahi' && planParam ? `${serviceParam}-${planParam}` : serviceParam === 'sherkati' && planParam ? `${serviceParam}-${planParam}` : serviceParam === 'web' ? 'web' : ''
   const initialStep = serviceParam ? 2 : 1
   const initialFeatures = searchParams.get('features')?.split(',').filter(Boolean) || []
 

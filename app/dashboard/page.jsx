@@ -5,8 +5,12 @@ import { useRouter } from 'next/navigation'
 import { LogOut, RefreshCw } from 'lucide-react'
 
 const planLabels = {
-  fast: 'Fast Web',
-  pro: 'Pro Web',
+  'froshgahi-eghtesadi': 'فروشگاهی - اقتصادی',
+  'froshgahi-herfei': 'فروشگاهی - حرفه‌ای',
+  'froshgahi-ekhtesasi': 'فروشگاهی - اختصاصی',
+  'sherkati-eghtesadi': 'شرکتی - اقتصادی',
+  'sherkati-herfei': 'شرکتی - حرفه‌ای',
+  'sherkati-ekhtesasi': 'شرکتی - اختصاصی',
   web: 'خدمات وب',
 }
 
@@ -17,9 +21,8 @@ const featureLabels = {
   blog: 'وبلاگ',
   support: 'پشتیبانی',
   animation: 'انیمیشن',
-  admin: 'پنل مدیریت',
   multilang: 'چند زبانه',
-  custom: 'سیستم سفارشی',
+  'custom-form': 'فرم سفارشی',
 }
 
 const statusOptions = ['بررسی نشده', 'رد شده', 'تایید شده']
