@@ -2,7 +2,7 @@
 import { use, useMemo } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ShoppingBag, Building2, Check, ChevronLeft, Globe } from 'lucide-react'
+import { ShoppingBag, Building2, Check, ChevronLeft, Globe } from 'lucide-react'
 import categories from '@/data/plans'
 import Footer from '@/components/Footer'
 
@@ -37,9 +37,6 @@ const planFeatures = {
   ],
 }
 
-function formatPrice(n) {
-  return n.toLocaleString('fa-IR') + ' تومان'
-}
 
 export default function CategoryPage({ params }) {
   const { category } = use(params)
@@ -100,7 +97,7 @@ export default function CategoryPage({ params }) {
                       </div>
                     ))}
                     <div className="text-sm text-space-indigo dark:text-parchment font-medium pt-1">
-                      <Link href={`/plans/${cat.id}/${plan.id}`} className="hover:underline underline-offset-2">
+                      <Link href={`/plans/${cat.id}/${plan.id}`} className="hover:underline underline-offset-2 transition-all duration-200">
                         + مشاهده همه امکانات
                       </Link>
                     </div>

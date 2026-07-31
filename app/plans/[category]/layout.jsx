@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
       locale: 'fa_IR',
       images: [
         {
-          url: 'https://ovenweb.vercel.app/og-telegram.png',
+          url: 'https://ovenweb.vercel.app/og-telegram.webp',
           width: 1200,
           height: 630,
           alt: `${cat.title} | Oven`,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       title: data.title,
       description: data.description,
-      images: ['https://ovenweb.vercel.app/og-telegram.png'],
+      images: ['https://ovenweb.vercel.app/og-telegram.webp'],
     },
   }
 }

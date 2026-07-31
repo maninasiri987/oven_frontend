@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, use } from 'react'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
-import { ArrowLeft, ChevronDown, ChevronLeft, ChevronRight, Check, Users, Star, Layers, HelpCircle, ShoppingBag, HeartPulse, Rocket, Store, GraduationCap, Building2 } from 'lucide-react'
+import { ChevronDown, ChevronLeft, ChevronRight, Check, Users, Star, Layers, HelpCircle, ShoppingBag, HeartPulse, Rocket, Store, GraduationCap, Building2, Code2 } from 'lucide-react'
 import services from '@/data/services'
 import Footer from '@/components/Footer'
 import techIcons from '@/components/TechIcons'
@@ -39,16 +39,6 @@ export default function ServicePage({ params }) {
     return () => el.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable="true"]')) return
-      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollGallery('left') }
-      if (e.key === 'ArrowRight') { e.preventDefault(); scrollGallery('right') }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
-
   const scrollToSlide = (idx) => {
     if (galleryRef.current) {
       const w = galleryRef.current.offsetWidth * 0.8
@@ -63,12 +53,18 @@ export default function ServicePage({ params }) {
     }
   }
 
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.target instanceof Element && e.target.closest('input, textarea, select, [contenteditable="true"]')) return
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollGallery('left') }
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollGallery('right') }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
     <>
-      <Link href="/services" aria-label="بازگشت به خدمات" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full md:bg-white/80 md:dark:bg-space-indigo/80 md:backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200">
-        <ArrowLeft className="w-5 h-5" />
-      </Link>
-
       <main className="pt-24 pb-20 px-6 sm:px-10">
         <div className="max-w-4xl mx-auto" dir="rtl">
 
@@ -80,9 +76,7 @@ export default function ServicePage({ params }) {
             <div className="flex flex-wrap gap-2 mb-4">
               {service.technologies.map((t, i) => (
                 <div key={i} className="flex items-center gap-1.5 text-xs font-medium bg-dusty-grape/10 dark:bg-almond-silk/10 text-dusty-grape dark:text-almond-silk px-2.5 py-1.5 rounded-full">
-                  {techIcons[t] || (
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.2"/><text x="12" y="16" textAnchor="middle" fontSize="7">{t.charAt(0)}</text></svg>
-                  )}
+                  {techIcons[t] || <Code2 className="w-4 h-4" />}
                   <span>{t}</span>
                 </div>
                 ))}

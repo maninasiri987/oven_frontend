@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { MotionSection } from './Motion'
 
 const items = [
-  { title: 'پوشاک آرا', desc: 'فروشگاه آنلاین پوشاک با طراحی مدرن.', image: '/portfolio/cloth-store.png', link: 'https://maninasiri987.github.io/cloth_website/' },
-  { title: 'بلاگی', desc: 'سیستم بلاگ حرفه‌ای با جستجوی هوشمند.', image: '/portfolio/blog-system.png', link: 'https://maninasiri987.github.io/blog_system/' },
-  { title: 'GrowthBox', desc: 'اپلیکیشن مدیریت کارها و یادداشت‌ها.', image: '/portfolio/growthbox.png', link: 'https://groowth-box.vercel.app/dashboard' },
+  { title: 'پوشاک آرا', desc: 'فروشگاه آنلاین پوشاک با طراحی مدرن.', image: '/portfolio/cloth-store.webp', link: 'https://maninasiri987.github.io/cloth_website/' },
+  { title: 'بلاگی', desc: 'سیستم بلاگ حرفه‌ای با جستجوی هوشمند.', image: '/portfolio/blog-system.webp', link: 'https://maninasiri987.github.io/blog_system/' },
+  { title: 'GrowthBox', desc: 'اپلیکیشن مدیریت کارها و یادداشت‌ها.', image: '/portfolio/growthbox.webp', link: 'https://groowth-box.vercel.app/dashboard' },
 ]
 
 export default function Portfolio() {

@@ -10,6 +10,9 @@ const vazirmatn = localFont({
     { path: '../public/assets/fonts/Vazirmatn-SemiBold.ttf', weight: '600', style: 'normal' },
   ],
   display: 'swap',
+  // Don't eagerly preload all three weights — only the ones actually used
+  // on the initial page get loaded, avoiding "preload was not used" warnings.
+  preload: false,
   variable: '--font-vazirmatn',
 })
 
@@ -33,7 +36,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://ovenweb.vercel.app/og-telegram.png',
+        url: 'https://ovenweb.vercel.app/og-telegram.webp',
         width: 1200,
         height: 630,
         alt: 'Oven - طراحی سایت حرفه‌ای',
@@ -44,7 +47,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'طراحی سایت اوون وب — طراحی مدرن و حرفه‌ای | oven',
     description: 'طراحی سایت اختصاصی، سئو حرفه‌ای و توسعه وب با تمرکز بر سرعت، تجربه کاربری و رشد واقعی کسب‌وکار. با Oven وب‌سایتی مدرن، سریع و بهینه برای موتورهای جستجو داشته باشید.',
-    images: ['https://ovenweb.vercel.app/og-telegram.png'],
+    images: ['https://ovenweb.vercel.app/og-telegram.webp'],
   },
   robots: {
     index: true,

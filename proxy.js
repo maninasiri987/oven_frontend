@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { isValidSession } from '@/lib/auth'
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname } = request.nextUrl
 
   if (pathname.startsWith('/dashboard') && pathname !== '/dashboard/login') {

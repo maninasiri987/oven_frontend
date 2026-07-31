@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
       type: 'website',
       images: [
         {
-          url: 'https://ovenweb.vercel.app/og-telegram.png',
+          url: 'https://ovenweb.vercel.app/og-telegram.webp',
           width: 1200,
           height: 630,
           alt: `${service.title} - Oven`,
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      images: ['https://ovenweb.vercel.app/og-telegram.png'],
+      images: ['https://ovenweb.vercel.app/og-telegram.webp'],
     },
   }
 }

@@ -235,7 +235,7 @@ function ProjectForm() {
 
   return (
     <>
-    <button onClick={() => router.back()} aria-label="بازگشت" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border-0 md:border md:border-dusty-grape/20 md:dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk md:hover:bg-dusty-grape md:hover:text-parchment md:dark:hover:bg-almond-silk md:dark:hover:text-space-indigo transition-all duration-200 cursor-pointer">
+    <button onClick={() => router.back()} aria-label="بازگشت" className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-space-indigo/80 backdrop-blur-sm border border-dusty-grape/20 dark:border-almond-silk/20 text-dusty-grape dark:text-almond-silk hover:bg-dusty-grape hover:text-parchment dark:hover:bg-almond-silk dark:hover:text-space-indigo transition-all duration-200 cursor-pointer">
       <ArrowLeft className="w-5 h-5" />
     </button>
     <main className="pt-24 pb-20 px-6 sm:px-10">
@@ -289,7 +289,7 @@ function ProjectForm() {
               )}
               <div className="flex items-center justify-between mt-8">
                   {step > 1 ? (
-                    <button onClick={handleBack} className="text-sm text-dusty-grape dark:text-almond-silk hover:underline cursor-pointer">مرحله قبل</button>
+                    <button onClick={handleBack} className="text-sm text-dusty-grape dark:text-almond-silk hover:underline cursor-pointer transition-all duration-200">مرحله قبل</button>
                   ) : <div></div>}
                   {step < 4 ? (
                     <button onClick={handleNext} disabled={!canNext()} className="bg-space-indigo dark:bg-parchment text-parchment dark:text-space-indigo text-sm font-medium px-6 py-2.5 rounded-lg hover:bg-dusty-grape dark:hover:bg-almond-silk transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">مرحله بعد</button>

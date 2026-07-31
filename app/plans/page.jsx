@@ -113,7 +113,7 @@ export default function Plans() {
 
           <p className="text-sm text-dusty-grape dark:text-almond-silk text-center mt-16 reveal" data-delay="100">
             دنبال خدمات تخصصی مثل سئو، پشتیبانی یا نجات سایت هستید؟{' '}
-            <Link href="/services" className="text-space-indigo dark:text-parchment font-semibold hover:underline underline-offset-4">مشاهده خدمات</Link>
+            <Link href="/services" className="text-space-indigo dark:text-parchment font-semibold hover:underline underline-offset-4 transition-all duration-200">مشاهده خدمات</Link>
           </p>
         </div>
       </main>

@@ -3,33 +3,47 @@ import { useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Hero from '@/components/Hero'
 import QuickSelection from '@/components/QuickSelection'
+import { firstLoadDone } from '@/lib/first-load'
+
+// Show the animated spinner only on the very first load of the site (fresh
+// page load). On client-side navigations the dynamic chunks are already in
+// cache, so we render an empty placeholder instead of a loading animation.
+// The flag lives in lib/first-load.js and is flipped by the persistent shell
+// (client-layout) on first mount of any route.
+function LoadingFallback({ className }) {
+  return (
+    <div className={className}>
+      {firstLoadDone ? null : <div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" />}
+    </div>
+  )
+}
 
 const ProcessTimeline = dynamic(() => import('@/components/ProcessTimeline'), {
-  loading: () => <div className="md:h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen flex items-center justify-center" />,
 })
 
 const Services = dynamic(() => import('@/components/Services'), {
-  loading: () => <div className="md:h-screen w-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen w-full flex items-center justify-center" />,
 })
 
 const Estimate = dynamic(() => import('@/components/Estimate'), {
-  loading: () => <div className="md:h-screen w-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen w-full flex items-center justify-center" />,
 })
 
 const WhyOven = dynamic(() => import('@/components/WhyOven'), {
-  loading: () => <div className="md:h-screen w-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen w-full flex items-center justify-center" />,
 })
 
 const Portfolio = dynamic(() => import('@/components/Portfolio'), {
-  loading: () => <div className="md:h-screen w-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen w-full flex items-center justify-center" />,
 })
 
 const FAQ = dynamic(() => import('@/components/FAQ'), {
-  loading: () => <div className="md:h-screen w-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="md:h-screen w-full flex items-center justify-center" />,
 })
 
 const Footer = dynamic(() => import('@/components/Footer'), {
-  loading: () => <div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-2 border-space-indigo dark:border-parchment border-t-transparent rounded-full animate-spin" /></div>,
+  loading: () => <LoadingFallback className="h-64 flex items-center justify-center" />,
 })
 
 export default function Home() {

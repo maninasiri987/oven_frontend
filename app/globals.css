@@ -10,6 +10,21 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* Only apply hover styles on devices that actually support hover.
+   iOS Safari keeps elements stuck in their :hover state after a tap,
+   which made solid buttons look disappeared until refresh. Gating the
+   hover variant here fixes that for every hover: utility site-wide.
+   Note: the & must wrap @slot so utilities are emitted as
+   '.hover\:x:hover { ... }' INSIDE the media query (a bare @slot here
+   would drop the :hover selector and kill all desktop hover styles). */
+@custom-variant hover {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -40,15 +55,31 @@ html {
 }
 .social-ig::after { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
 .social-tg::after { background: linear-gradient(45deg, #2AABEE, #229ED9); }
-.social-ig:hover::after, .social-tg:hover::after { opacity: 1; }
+@media (hover: hover) {
+  .social-ig:hover::after, .social-tg:hover::after { opacity: 1; }
+}
 
 a, button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Press / click feedback: buttons and links shrink slightly while clicked.
+   (Restored from the original design; the iOS disappearing-button issue is
+   handled by the hover gating above and the repaint/snap hook in
+   client-layout, not by removing this press effect.) */
 a:active, button:active {
   transform: scale(0.97);
-  transition: transform 0.1s ease;
+}
+
+/* Touch devices: stronger press + smooth release so every tap feels
+   confirmed (on mobile there is no hover, so the tap itself is the only
+   feedback). The release transition lives in the :active rule so it animates
+   back smoothly even on buttons that only have transition-colors. */
+@media (hover: none) {
+  a:active, button:active {
+    transform: scale(0.95);
+    transition: transform 0.15s ease;
+  }
 }
 
 .faq-answer {
@@ -64,13 +95,6 @@ a:active, button:active {
   opacity: 0;
 }
 
-@media (hover: none) {
-  a:hover, button:hover, label:hover {
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border-color: inherit !important;
-  }
-}
 
 @keyframes page-slide-in {
   from {
@@ -83,8 +107,50 @@ a:active, button:active {
   }
 }
 
+/* First-open loading screen: shown on every fresh page load and kept until
+   the page is fully ready (window 'load'), then faded out by toggling the
+   .first-load-done class from client-layout. The overlay lives in the
+   persistent shell, which never remounts during client-side navigation, so it
+   can never reappear when moving between pages. */
+.first-load-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-parchment);
+  /* visibility is discrete: delay it until the opacity fade completes so it
+     doesn't cut the fade short at the midpoint. */
+  transition: opacity 0.45s ease, visibility 0s linear 0.45s;
+}
+.dark .first-load-overlay {
+  background: var(--color-space-indigo);
+}
+.first-load-overlay.first-load-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .page-transition {
   animation: page-slide-in 0.5s ease-out;
+}
+
+/* Toggled by client-layout on pageshow/focus/visibilitychange to force iOS
+   Safari to repaint fixed elements after returning from another app. */
+.repaint-force {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+/* Added together with .repaint-force only on true back/forward-cache restores
+   (pageshow with event.persisted): snaps any mid-flight transitions or
+   animations to their end state so elements can't stay stuck in a blank
+   intermediate state (iOS Safari bfcache compositing bug). */
+.repaint-snap *,
+.repaint-snap *::before,
+.repaint-snap *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
 }
 
 /* Loading spinner */

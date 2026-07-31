@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { LogOut, RefreshCw } from 'lucide-react'
 
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   const [updatingId, setUpdatingId] = useState(null)
   const router = useRouter()
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
@@ -60,11 +60,14 @@ export default function DashboardPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [router])
 
   useEffect(() => {
-    fetchProjects()
-  }, [])
+    // Defer the fetch out of the effect body so the synchronous
+    // setLoading(true) doesn't cascade inside the effect.
+    const raf = requestAnimationFrame(fetchProjects)
+    return () => cancelAnimationFrame(raf)
+  }, [fetchProjects])
 
   const handleStatusChange = async (id, newStatus) => {
     setUpdatingId(id)
@@ -160,7 +163,7 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {projects.map((p, i) => (
-                    <tr key={p.id} className="border-b border-dusty-grape/5 dark:border-dusty-grape/10 last:border-0 hover:bg-dusty-grape/3 dark:hover:bg-almond-silk/3 align-top">
+                    <tr key={p.id} className="border-b border-dusty-grape/5 dark:border-dusty-grape/10 last:border-0 hover:bg-dusty-grape/3 dark:hover:bg-almond-silk/3 transition-colors align-top">
                       <td className="px-4 py-3 text-dusty-grape/60 dark:text-almond-silk/60 whitespace-nowrap">{projects.length - i}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-space-indigo/5 dark:bg-parchment/5">

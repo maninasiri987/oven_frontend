@@ -1,10 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { Sun, Moon, Phone, MessageCircle, ArrowLeft } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { Sun, Moon, Phone, ArrowLeft, ChevronDown } from 'lucide-react'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import servicesData from '@/data/services'
 
 const navItems = [
   { label: 'خدمات', href: '/services' },
@@ -13,17 +14,66 @@ const navItems = [
   { label: 'درباره ما', href: '/about' },
 ]
 
+const serviceDropdown = [
+  { title: 'طراحی سایت فروشگاهی', desc: 'فروشگاه اینترنتی کامل با پلن‌های متنوع', href: '/plans/froshgahi' },
+  { title: 'طراحی سایت شرکتی', desc: 'سایت شرکتی مدرن و حرفه‌ای', href: '/plans/sherkati' },
+  ...servicesData.map(s => ({ title: s.title, desc: s.shortDesc, href: `/services/${s.slug}` })),
+]
+
 export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMenuClose }) {
   const [compact, setCompact] = useState(false)
-  const [callHovered, setCallHovered] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [servicesPos, setServicesPos] = useState(null)
+  const closeTimer = useRef(null)
+  const servicesRef = useRef(null)
+  const servicesOpenRef = useRef(false)
   const pathname = usePathname()
+  const router = useRouter()
   const isMobile = useIsMobile()
+
+  const openServices = () => {
+    clearTimeout(closeTimer.current)
+    if (servicesRef.current) {
+      const rect = servicesRef.current.getBoundingClientRect()
+      setServicesPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right })
+    }
+    setServicesOpen(true)
+  }
+
+  useEffect(() => () => clearTimeout(closeTimer.current), [])
+  useEffect(() => {
+    servicesOpenRef.current = servicesOpen
+  }, [servicesOpen])
+
+  // Close the dropdown if the viewport shrinks below md (nav item disappears).
+  useEffect(() => {
+    const onResize = () => {
+      if (servicesOpenRef.current && window.innerWidth < 768) {
+        setServicesOpen(false)
+      }
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const scheduleClose = () => {
+    clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setServicesOpen(false), 150)
+  }
+
+  const cancelClose = () => clearTimeout(closeTimer.current)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setCompact(false)
-    setScrollProgress(0)
+    // Defer the reset out of the effect body (async) to avoid synchronous
+    // setState calls that trigger cascading renders.
+    const raf = requestAnimationFrame(() => {
+      setCompact(false)
+      setScrollProgress(0)
+      setServicesOpen(false)
+    })
+    return () => cancelAnimationFrame(raf)
   }, [pathname])
 
   useEffect(() => {
@@ -52,6 +102,13 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
       const sy = Math.max(window.scrollY, isContainerScroll ? cachedContainer.scrollTop : 0)
       setCompact(sy > 50)
 
+      // Keep the services dropdown aligned under its nav item if the header
+      // resizes (e.g. transitions to the compact pill on scroll).
+      if (servicesOpenRef.current && servicesRef.current) {
+        const rect = servicesRef.current.getBoundingClientRect()
+        setServicesPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right })
+      }
+
       if (isContainerScroll) {
         const dh = cachedContainer.scrollHeight - cachedContainer.clientHeight
         setScrollProgress(dh > 0 ? Math.min(cachedContainer.scrollTop / dh, 1) : 0)
@@ -73,43 +130,35 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
 
   return (
     <>
-    {<button onClick={menuOpen ? onMenuClose : onMenuOpen} aria-label={menuOpen ? 'بستن منو' : 'باز کردن منو'} aria-expanded={menuOpen} className="fixed z-[60] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
+    {pathname !== '/project' && (
+    <button onClick={menuOpen ? onMenuClose : onMenuOpen} aria-label={menuOpen ? 'بستن منو' : 'باز کردن منو'} aria-expanded={menuOpen} className="fixed z-[90] md:hidden cursor-pointer w-9 h-9 flex items-center justify-center" style={{
       top: menuOpen ? '16px' : compact ? '14px' : '20px',
       right: menuOpen ? '16px' : compact ? 'calc(12.5vw + 16px)' : '16px',
       transition: 'top 0.3s ease, right 0.3s ease',
     }}>
       <div className="relative w-5 h-5">
         <span className="absolute left-0 top-0.5 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
-          transform: menuOpen ? 'translateY(8px) scaleX(0)' : 'none',
-          opacity: menuOpen ? 0 : 1,
-          transition: 'transform 0.3s ease, opacity 0.15s ease',
+          transform: menuOpen ? 'translateY(7px) rotate(45deg)' : 'none',
+          transition: 'transform 0.3s ease',
         }}></span>
         <span className="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
-          transform: menuOpen ? 'scaleX(0)' : 'none',
           opacity: menuOpen ? 0 : 1,
-          transition: 'transform 0.3s ease, opacity 0.15s ease',
+          transition: 'opacity 0.15s ease',
         }}></span>
         <span className="absolute left-0 bottom-0.5 h-0.5 w-5 bg-dusty-grape dark:text-almond-silk bg-current rounded-full" style={{
-          transform: menuOpen ? 'translateY(-8px) scaleX(0)' : 'none',
-          opacity: menuOpen ? 0 : 1,
-          transition: 'transform 0.3s ease, opacity 0.15s ease',
+          transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : 'none',
+          transition: 'transform 0.3s ease',
         }}></span>
-        <svg className="absolute inset-0 w-5 h-5 text-dusty-grape dark:text-almond-silk" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{
-          opacity: menuOpen ? 1 : 0,
-          transition: 'opacity 0.15s ease 0.15s',
-        }}>
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
       </div>
-    </button>}
+    </button>
+    )}
 
     <header
       className="fixed z-30 left-1/2 top-2 h-16 flex items-center justify-between px-3 sm:px-6 transition-all duration-300 ease-in-out overflow-hidden"
       style={{
-        // On wizard & service detail pages the pill bar stays hidden (focus mode),
+        // On the project wizard page the pill bar stays hidden (focus mode),
         // but the mobile hamburger (rendered separately below) stays available.
-        transform: pathname === '/project' || pathname.startsWith('/services/') ? 'translate(-50%, -120%)' : 'translate(-50%, 0)',
+        transform: pathname === '/project' ? 'translate(-50%, -120%)' : 'translate(-50%, 0)',
         width: compact ? '75%' : '100%',
         borderRadius: compact ? '9999px' : '0',
         backgroundColor: compact ? (isMobile ? (isDark ? '#0a0908' : '#eae0d5') : (isDark ? 'rgba(10,9,8,0.6)' : 'rgba(234,224,213,0.6)')) : 'transparent',
@@ -121,19 +170,15 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
       }}
     >
       <div className="flex items-center gap-2 md:gap-6">
-        {/* Back button — shows on plans sub-pages */}
-        {pathname.startsWith('/plans/') && (
-          <Link
-            href={
-              pathname.match(/^\/plans\/[^/]+\/[^/]+$/) 
-                ? pathname.replace(/\/[^/]+$/, '')  // /plans/[cat]/[plan] → /plans/[cat]
-                : '/plans'  // /plans/[cat] → /plans
-            }
+        {/* Back button — shows on the services page, plans sub-pages and service detail pages */}
+        {(pathname === '/services' || pathname.startsWith('/plans/') || pathname.startsWith('/services/')) && (
+          <button
+            onClick={() => router.back()}
             aria-label="بازگشت"
-            className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-all duration-200 group"
+            className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-almond-silk/30 dark:hover:bg-dusty-grape/30 transition-all duration-200 group cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-dusty-grape dark:text-almond-silk group-hover:-translate-x-0.5 transition-transform duration-200" />
-          </Link>
+          </button>
         )}
         <a href="tel:09105362403" className="hidden md:flex items-center justify-center gap-2 text-sm font-medium text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment transition-colors duration-150 whitespace-nowrap">
           <Phone className="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
@@ -149,7 +194,23 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
       <div className="flex items-center gap-2 md:gap-6">
         <nav className="hidden md:flex items-center gap-8">
           {navItems.map(item => {
-            const isActive = item.href === '/plans' ? pathname.startsWith('/plans') : pathname === item.href
+            const isActive = item.href === '/plans'
+              ? pathname.startsWith('/plans')
+              : item.href === '/services'
+                ? pathname === '/services' || pathname.startsWith('/services/')
+                : pathname === item.href
+
+            if (item.label === 'خدمات') {
+              return (
+                <div key={item.label} ref={servicesRef} className="relative" onMouseEnter={openServices} onMouseLeave={scheduleClose}>
+                  <Link href={item.href} className={`relative pb-1 flex items-center gap-1 text-sm font-medium transition-colors duration-150 group ${isActive ? 'text-space-indigo dark:text-parchment' : 'text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment'}`}>
+                    {item.label}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                    <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-space-indigo dark:bg-parchment transition-all duration-300 ${isActive || servicesOpen ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                  </Link>
+                </div>
+              )
+            }
             return (
               <Link key={item.label} href={item.href} className={`relative pb-1 text-sm font-medium transition-colors duration-150 group ${isActive ? 'text-space-indigo dark:text-parchment' : 'text-dusty-grape dark:text-almond-silk hover:text-space-indigo dark:hover:text-parchment'}`}>
                 {item.label}
@@ -189,16 +250,36 @@ export default function Header({ isDark, toggleTheme, menuOpen, onMenuOpen, onMe
       </div>
     </header>
 
+    {/* خدمات dropdown — desktop hover */}
+    {servicesOpen && servicesPos && (
+      <div
+        dir="rtl"
+        className="fixed z-40 w-72 rounded-2xl bg-white/90 dark:bg-space-indigo/90 backdrop-blur-xl border border-dusty-grape/20 dark:border-dusty-grape/30 shadow-xl shadow-dusty-grape/20 dark:shadow-black/30 overflow-hidden"
+        style={{ top: servicesPos.top, right: servicesPos.right }}
+        onMouseEnter={cancelClose}
+        onMouseLeave={scheduleClose}
+      >
+        <div className="py-2">
+          {serviceDropdown.map(s => (
+            <Link key={s.href} href={s.href} className="flex flex-col gap-0.5 px-4 py-2.5 hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 transition-colors">
+              <span className="text-sm font-medium text-space-indigo dark:text-parchment">{s.title}</span>
+              <span className="text-xs text-dusty-grape/80 dark:text-almond-silk/70 leading-relaxed">{s.desc}</span>
+            </Link>
+          ))}
+        </div>
+        <Link href="/services" className="block text-center text-sm font-medium py-2.5 border-t border-dusty-grape/10 dark:border-almond-silk/10 text-space-indigo dark:text-parchment hover:bg-dusty-grape/5 dark:hover:bg-almond-silk/5 transition-colors">
+          همه خدمات
+        </Link>
+      </div>
+    )}
+
     {/* Fixed call button — mobile only */}
     <a
       href="tel:09105362403"
       aria-label="تماس با ما"
-      onMouseEnter={() => setCallHovered(true)}
-      onMouseLeave={() => setCallHovered(false)}
-      className="fixed z-50 md:hidden bottom-6 left-6 w-14 h-14 rounded-full bg-space-indigo dark:bg-parchment flex items-center justify-center shadow-lg shadow-dusty-grape/30 dark:shadow-space-indigo/40 transition-all duration-300 hover:scale-110 active:scale-95"
+      className="fixed z-50 md:hidden bottom-6 left-6 w-14 h-14 rounded-full bg-space-indigo dark:bg-parchment flex items-center justify-center shadow-lg shadow-dusty-grape/30 dark:shadow-space-indigo/40 transition-all duration-300 active:scale-95"
     >
-      <Phone className={`w-5 h-5 absolute transition-all duration-300 text-parchment dark:text-space-indigo ${callHovered ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`} />
-      <MessageCircle className={`w-5 h-5 absolute transition-all duration-300 text-parchment dark:text-space-indigo ${callHovered ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'}`} />
+      <Phone className="w-5 h-5 text-parchment dark:text-space-indigo" />
     </a>
     </>
   )

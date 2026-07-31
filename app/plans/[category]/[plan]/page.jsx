@@ -2,7 +2,7 @@
 import { use, useState } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Check, Users, Star, Layers, HelpCircle, ChevronDown, ShoppingBag, Building2 } from 'lucide-react'
+import { Check, Users, Star, Layers, HelpCircle, ChevronDown, ShoppingBag, Building2 } from 'lucide-react'
 import categories from '@/data/plans'
 import Footer from '@/components/Footer'
 
